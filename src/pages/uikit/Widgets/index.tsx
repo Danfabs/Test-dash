@@ -4,8 +4,8 @@ import { Col, Row } from 'react-bootstrap';
 import { usePageTitle } from '../../../hooks';
 
 // component
-import StatisticsWidget1 from '../../../components/StatisticsWidget1';
-import StatisticsWidget2 from '../../../components/StatisticsWidget2';
+import BranchesWidget1 from '../../../components/BranchesWidget1';
+import StatisticsWidget2 from '../../../components/AmountWidget3';
 import StatisticsWidget3 from '../../../components/StatisticsWidget3';
 import TeamMembers from '../../../components/TeamMembers';
 import ContactDetails from '../../../components/ContactDetails';
@@ -45,37 +45,37 @@ const Widgets = () => {
         <>
             <Row>
                 <Col xl={3} md={6}>
-                    <StatisticsWidget1
+                    <BranchesWidget1
                         title="Total Revenue"
                         color={'#f05050'}
-                        data={50}
+                        // data={50}
                         stats={256}
                         subTitle="Revenue today"
                     />
                 </Col>
                 <Col xl={3} md={6}>
-                    <StatisticsWidget1
+                    <BranchesWidget1
                         title="Statistics"
                         color={'#ffbd4a'}
-                        data={80}
+                        // data={80}
                         stats={4569}
                         subTitle="Revenue today"
                     />
                 </Col>
                 <Col xl={3} md={6}>
-                    <StatisticsWidget1
+                    <BranchesWidget1
                         title="Total Revenue"
                         color={'#35b8e0'}
-                        data={77}
+                        // data={77}
                         stats={8545}
                         subTitle="Revenue today"
                     />
                 </Col>
                 <Col xl={3} md={6}>
-                    <StatisticsWidget1
+                    <BranchesWidget1
                         title="Statistics"
                         color={'#10c469'}
-                        data={65}
+                        // data={65}
                         stats={3562}
                         subTitle="Revenue today"
                     />

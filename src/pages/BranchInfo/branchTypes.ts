@@ -6,7 +6,7 @@ export type Message = {
     time: string;
 };
 
-export type ServicesDetail = {
+export type BranchList = {
     id: number;
     name: string;
     startDate: string;

@@ -5,16 +5,18 @@ import { usePageTitle } from '../../../hooks';
 
 // component
 import Statistics from './Statistics';
-import SalesChart from './SalesChart';
+import UsersChart from './UsersChart';
 import StatisticsChart from './StatisticsChart';
 import RevenueChart from './RevenueChart';
 import Users from './Users';
 import Inbox from './Inbox';
-import Projects from './Projects';
+import ProviderServices from './ProviderServices';
+import UserManagement from './UserManagement';
 
 // dummy data
-import { messages, projectDetails } from './data';
-
+import { messages ,ProviderServicesDetails } from './data';
+import { userMessages , usersManagmentDetails } from '../../apps/UserManagement/usersdata';
+import ReservationInfoWidget4 from '../../../components/ReservationInfoWidget4';
 const DashBoard1 = () => {
     // set pagetitle
     usePageTitle({
@@ -33,27 +35,32 @@ const DashBoard1 = () => {
             <Statistics />
 
             <Row>
-                <Col xl={4}>
-                    <SalesChart />
+                <Col>
+                    <UsersChart />
                 </Col>
-                <Col xl={4}>
+                {/* <Col xl={4}>
                     <StatisticsChart />
-                </Col>
-                <Col xl={4}>
+                </Col> */}
+                {/* <Col xl={4}>
                     <RevenueChart />
+                </Col> */}
+            </Row>
+            <Row>
+            <Col>
+                <ReservationInfoWidget4/>
                 </Col>
             </Row>
 
             <Users />
 
-            <Row>
+            {/* <Row>
                 <Col xl={4}>
                     <Inbox messages={messages} />
                 </Col>
                 <Col xl={8}>
-                    <Projects projectDetails={projectDetails} />
+                    <ProviderServices ProviderServicesDetails={ProviderServicesDetails} />
                 </Col>
-            </Row>
+            </Row> */}
         </>
     );
 };

@@ -1,4 +1,4 @@
-export type ProjectsList = {
+export type ServicesList = {
     id: number;
     title: string;
     category: string;

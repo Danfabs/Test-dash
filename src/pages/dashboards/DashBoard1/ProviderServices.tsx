@@ -1,13 +1,13 @@
 import { Badge, Card, Dropdown, Table } from 'react-bootstrap';
 
 // type
-import { ProjectDetail } from './types';
+import { ServicesDetail } from './types';
 
-type ProjectsProps = {
-    projectDetails: ProjectDetail[];
+type ProviderServicesDetailsProps = {
+    ProviderServicesDetails: ServicesDetail[];
 };
 
-const Projects = ({ projectDetails }: ProjectsProps) => {
+const ProviderServices = ({ ProviderServicesDetails }: ProviderServicesDetailsProps) => {
     return (
         <Card>
             <Card.Body>
@@ -23,7 +23,7 @@ const Projects = ({ projectDetails }: ProjectsProps) => {
                     </Dropdown.Menu>
                 </Dropdown>
 
-                <h4 className="header-title mt-0 mb-3">Latest Projects</h4>
+                New Admin Design              <h4 className="header-title mt-0 mb-3">Latest Projects</h4>
 
                 <Table responsive hover className="mb-0">
                     <thead>
@@ -37,17 +37,17 @@ const Projects = ({ projectDetails }: ProjectsProps) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {(projectDetails || []).map((projectDetail, index) => {
+                        {(ProviderServicesDetails || []).map((ServicesDetail, index) => {
                             return (
                                 <tr key={index.toString()}>
-                                    <td>{projectDetail.id}</td>
-                                    <td>{projectDetail.name}</td>
-                                    <td>{projectDetail.startDate}</td>
-                                    <td>{projectDetail.dueDate}</td>
+                                    <td>{ServicesDetail.id}</td>
+                                    <td>{ServicesDetail.name}</td>
+                                    <td>{ServicesDetail.startDate}</td>
+                                    <td>{ServicesDetail.dueDate}</td>
                                     <td>
-                                        <Badge bg={projectDetail.variant}>{projectDetail.status}</Badge>
+                                        <Badge bg={ServicesDetail.variant}>{ServicesDetail.status}</Badge>
                                     </td>
-                                    <td>{projectDetail.clients}</td>
+                                    <td>{ServicesDetail.clients}</td>
                                 </tr>
                             );
                         })}
@@ -58,4 +58,4 @@ const Projects = ({ projectDetails }: ProjectsProps) => {
     );
 };
 
-export default Projects;
+export default ProviderServices;

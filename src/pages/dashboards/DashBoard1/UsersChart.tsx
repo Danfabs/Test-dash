@@ -1,8 +1,8 @@
 import { Card, Dropdown } from 'react-bootstrap';
 import Chart from 'react-apexcharts';
 import { ApexOptions } from 'apexcharts';
-
-const SalesChart = () => {
+import '../../../assets/css/generalStyle.css';
+const UsersChart = () => {
     const apexOpts: ApexOptions = {
         chart: {
             type: 'donut',
@@ -35,7 +35,7 @@ const SalesChart = () => {
         dataLabels: {
             enabled: false,
         },
-        colors: ['#6658dd', '#ff8acc', '#35b8e0'],
+        colors: ['#FFD653FF', '#006747FF', '#F0E1B9FF'],
         legend: {
             show: true,
             position: 'bottom',
@@ -44,7 +44,7 @@ const SalesChart = () => {
                 useSeriesColors: true,
             },
         },
-        labels: ['In-Store Sales', 'Download Sales', 'Mail-Order Sales'],
+        labels: ['Customer', 'Vendor', 'Staff'],
         tooltip: {
             enabled: false,
         },
@@ -53,34 +53,43 @@ const SalesChart = () => {
     const apexData = [30, 12, 20];
 
     return (
-        <Card>
+        <div >
+        <Card >
+            
             <Card.Body>
+            
                 <Dropdown className="float-end" align="end">
                     <Dropdown.Toggle as="a" className="cursor-pointer card-drop">
                         <i className="mdi mdi-dots-vertical"></i>
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
-                        <Dropdown.Item>Action</Dropdown.Item>
-                        <Dropdown.Item>Anothther Action</Dropdown.Item>
-                        <Dropdown.Item>Something Else</Dropdown.Item>
-                        <Dropdown.Item>Separated link</Dropdown.Item>
+                        <Dropdown.Item>All Customers</Dropdown.Item>
+                        <Dropdown.Item>All Vendors</Dropdown.Item>
+                        <Dropdown.Item>All Staff</Dropdown.Item>
+                        {/* <Dropdown.Item>Separated link</Dropdown.Item> */}
                     </Dropdown.Menu>
                 </Dropdown>
 
-                <h4 className="header-title mt-0">Daily Sales</h4>
 
-                <div dir="ltr">
+               
+               
+
+                <div dir="ltr" className='card-div'>
+                <h4 className="header-title mb-3">Users Reports</h4>
                     <Chart
                         options={apexOpts}
                         series={apexData}
                         type="donut"
-                        height={302}
+                        height={502}
                         className="apex-charts mt-2"
                     />
                 </div>
+                
             </Card.Body>
+           
         </Card>
+        </div>
     );
 };
 
-export default SalesChart;
+export default UsersChart;

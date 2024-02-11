@@ -1,42 +1,47 @@
 import { Col, Row } from 'react-bootstrap';
 
 // component
-import StatisticsWidget1 from '../../../components/StatisticsWidget1';
-import StatisticsWidget2 from '../../../components/StatisticsWidget2';
+import BranchesWidget1 from '../../../components/BranchesWidget1';
+import ReservationWidget2 from '../../../components/ReservationWidget2';
+import ReservationInfoWidget4 from '../../../components/ReservationInfoWidget4';
+import AmountWidget3 from '../../../components/AmountWidget3';
 
 const Statistics = () => {
     return (
-        <Row>
-            <Col xl={3} md={6}>
-                <StatisticsWidget1
-                    title="Total Revenue"
-                    data={58}
+        <div >
+        <Row className="no-gutters">
+            <Col className="mx-auto">
+                <BranchesWidget1
+                    title="Branches"
+                    // data={58}
                     stats={256}
                     color={'#f05050'}
-                    subTitle="Revenue today"
+                    subTitle="Branches"
                 />
             </Col>
-            <Col xl={3} md={6}>
-                <StatisticsWidget2
+           
+            <Col  className="mx-auto">
+                <ReservationWidget2
+                    title="Total Reservations"
+                    color={'#ffbd4a'}
+                    // data={80}
+                    stats={256}
+                    subTitle="Reservations"
+                />
+            </Col>
+            <Col  className="mx-auto">
+                <AmountWidget3
                     variant="success"
-                    title="Sales Analytics"
-                    trendValue="32%"
+                    title="Total Amount"
+                    trendValue="12%"
                     trendIcon="mdi mdi-trending-up"
                     stats={8451}
-                    subTitle="Revenue today"
+                    subTitle="OMR"
                     progress={77}
                 />
             </Col>
-            <Col xl={3} md={6}>
-                <StatisticsWidget1
-                    title="Statistics"
-                    color={'#ffbd4a'}
-                    data={80}
-                    stats={4569}
-                    subTitle="Revenue today"
-                />
-            </Col>
-            <Col xl={3} md={6}>
+           
+            {/* <Col xl={3} md={6} className="mx-auto">
                 <StatisticsWidget2
                     variant="pink"
                     title="Daily Sales"
@@ -46,8 +51,9 @@ const Statistics = () => {
                     subTitle="Revenue today"
                     progress={77}
                 />
-            </Col>
+            </Col> */}
         </Row>
+        </div>
     );
 };
 

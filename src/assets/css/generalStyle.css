@@ -1,0 +1,7 @@
+.usersChart-card-div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 90vh;
+    margin: 0;
+}

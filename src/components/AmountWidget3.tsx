@@ -1,7 +1,8 @@
 import classNames from 'classnames';
 import { Badge, Card, Dropdown, ProgressBar } from 'react-bootstrap';
+import '../assets/css/generalStyle.css'
 
-type StatisticsWidgetProps = {
+type AmountWidget3Props = {
     variant: string;
     title: string;
     trendValue: string;
@@ -11,7 +12,7 @@ type StatisticsWidgetProps = {
     progress: number;
 };
 
-const StatisticsWidget2 = ({
+const AmountWidget3 = ({
     variant,
     title,
     trendValue,
@@ -19,7 +20,7 @@ const StatisticsWidget2 = ({
     stats,
     subTitle,
     progress,
-}: StatisticsWidgetProps) => {
+}: AmountWidget3Props) => {
     return (
         <Card>
             <Card.Body>
@@ -29,29 +30,31 @@ const StatisticsWidget2 = ({
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
                         <Dropdown.Item>Action</Dropdown.Item>
-                        <Dropdown.Item>Anothther Action</Dropdown.Item>
+                        {/* <Dropdown.Item>Anothther Action</Dropdown.Item>
                         <Dropdown.Item>Something Else</Dropdown.Item>
-                        <Dropdown.Item>Separated link</Dropdown.Item>
+                        <Dropdown.Item>Separated link</Dropdown.Item> */}
                     </Dropdown.Menu>
                 </Dropdown>
+
+                
                 <h4 className="header-title mt-0 mb-3">{title}</h4>
-                <div className="widget-box-2">
-                    <div className="widget-detail-2 text-end">
-                        <Badge bg={variant} pill className="float-start mt-3">
+                {/* <div className="widget-box-2"> */}
+                    <div className="widget-detail-1 text-center">
+                        {/* <Badge bg={variant} pill className="float-start mt-3">
                             {trendValue} <i className={trendIcon}></i>
-                        </Badge>
-                        <h2 className="fw-normal mb-1">{stats}</h2>
-                        <p className="text-muted mb-3">{subTitle}</p>
+                        </Badge> */}
+                        <h2 className="fw-normal  mb-1" >{stats}</h2>
+                        <p className="text-muted mb-1" >{subTitle}</p>
                     </div>
-                    <ProgressBar
+                    {/* <ProgressBar
                         variant={variant}
                         now={progress}
                         className={classNames('progress-sm', 'progress-bar-alt-' + variant)}
-                    ></ProgressBar>
-                </div>
+                    ></ProgressBar> */}
+                {/* </div> */}
             </Card.Body>
         </Card>
     );
 };
 
-export default StatisticsWidget2;
+export default AmountWidget3;

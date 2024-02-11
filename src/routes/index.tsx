@@ -28,13 +28,17 @@ const Logout = React.lazy(() => import('../pages/auth/Logout'));
 // dashboards
 const DashBoard1 = React.lazy(() => import('../pages/dashboards/DashBoard1/'));
 
+
 // apps
+const TroubleTickets = React.lazy(() => import('../pages/dashboards/DashBoard1/TroubleTickets'));
+const UserManagement = React.lazy(() => import('../pages/dashboards/DashBoard1/UserManagement'));
+const ViewBranch = React.lazy(() => import('../pages/dashboards/DashBoard1/ViewBranch'));
 const CalendarApp = React.lazy(() => import('../pages/apps/Calendar'));
 const ChatApp = React.lazy(() => import('../pages/apps/Chat'));
 const Inbox = React.lazy(() => import('../pages/apps/Email/Inbox'));
 const Kanban = React.lazy(() => import('../pages/apps/Tasks/Board'));
 const TaskDetail = React.lazy(() => import('../pages/apps/Tasks/Detail'));
-const Projects = React.lazy(() => import('../pages/apps/Projects'));
+const ProviderServices = React.lazy(() => import('../pages/apps/ProviderServices'));
 const List = React.lazy(() => import('../pages/apps/Contacts/List'));
 const Profile = React.lazy(() => import('../pages/apps/Contacts/Profile'));
 
@@ -113,7 +117,7 @@ const Landing = React.lazy(() => import('../pages/Landing'));
 const loading = () => <div className=""></div>;
 
 type LoadComponentProps = {
-  component: React.LazyExoticComponent<() => JSX.Element>;
+  component: React.LazyExoticComponent<React.ComponentType<any>>;
 };
 
 const LoadComponent = ({ component: Component }: LoadComponentProps) => (
@@ -193,9 +197,22 @@ const AllRoutes = () => {
           path: 'dashboard',
           element: <LoadComponent component={DashBoard1} />,
         },
+        
         {
           path: 'apps',
           children: [
+            {
+              path: 'troubletickets',
+              element: <LoadComponent component={TroubleTickets} />,
+            },
+            {
+              path: 'userManagement',
+              element: <LoadComponent component={UserManagement} />,
+            },
+            {
+              path: 'viewBranch',
+              element: <LoadComponent component={ViewBranch} />,
+            },
             {
               path: 'calendar',
               element: <LoadComponent component={CalendarApp} />,
@@ -216,9 +233,10 @@ const AllRoutes = () => {
               path: 'tasks/details',
               element: <LoadComponent component={TaskDetail} />,
             },
+            
             {
-              path: 'projects',
-              element: <LoadComponent component={Projects} />,
+              path: 'providerservices',
+              element: <LoadComponent component={ProviderServices} />,
             },
             {
               path: 'contacts/list',

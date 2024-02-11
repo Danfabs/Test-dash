@@ -1,52 +1,52 @@
 // types
-import { Message, ServicesDetail } from './types';
+import { Message, BranchList } from './branchTypes';
 
 // images
-import avatar1 from '../../../assets/images/users/user-1.jpg';
-import avatar2 from '../../../assets/images/users/user-2.jpg';
-import avatar3 from '../../../assets/images/users/user-3.jpg';
-import avatar4 from '../../../assets/images/users/user-4.jpg';
-import avatar5 from '../../../assets/images/users/user-5.jpg';
+// import avatar1 from '../../../assets/images/users/user-1.jpg';
+// import avatar2 from '../../../assets/images/users/user-2.jpg';
+// import avatar3 from '../../../assets/images/users/user-3.jpg';
+// import avatar4 from '../../../assets/images/users/user-4.jpg';
+// import avatar5 from '../../../assets/images/users/user-5.jpg';
 
-const messages: Message[] = [
+const BranchMessages: Message[] = [
     {
         id: 1,
-        avatar: avatar1,
+        avatar: "avatar1",
         sender: 'Chadengle',
         text: "Hey! there I'm available...",
         time: '13:40 PM',
     },
     {
         id: 2,
-        avatar: avatar2,
+        avatar: "avatar2",
         sender: 'Tomaslau',
         text: "I've finished it! See you so...",
         time: '13:34 PM',
     },
     {
         id: 3,
-        avatar: avatar3,
+        avatar: "avatar3",
         sender: 'Stillnotdavid',
         text: 'This theme is awesome!',
         time: '13:17 PM',
     },
     {
         id: 4,
-        avatar: avatar4,
+        avatar: "avatar4",
         sender: 'Kurafire',
         text: 'Nice to meet you',
         time: '12:20 PM',
     },
     {
         id: 5,
-        avatar: avatar5,
+        avatar: "avatar5",
         sender: 'Shahedk',
         text: "Hey! there I'm available...",
         time: '10:15 PM',
     },
 ];
 
-const ProviderServicesDetails: ServicesDetail[] = [
+const BranchDetails: BranchList[] = [
     {
         id: 1,
         name: 'Adminto Admin v1',
@@ -103,4 +103,4 @@ const ProviderServicesDetails: ServicesDetail[] = [
     },
 ];
 
-export { messages, ProviderServicesDetails };
+export { BranchMessages, BranchDetails };

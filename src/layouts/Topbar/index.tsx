@@ -22,7 +22,7 @@ import ProfileDropdown from '../../components/topbar/ProfileDropdown';
 import { notifications, profileMenus, searchOptions } from './data';
 
 // images
-import logoSm from '../../assets/images/logo-sm.png';
+import slotLogo from '../../assets/images/slot-logo.png';
 import avatar1 from '../../assets/images/users/user-1.jpg';
 import logoDark from '../../assets/images/logo-dark.png';
 import logoLight from '../../assets/images/logo-light.png';
@@ -83,16 +83,16 @@ const Topbar = ({ openLeftMenuCallBack, containerClass }: TopbarProps) => {
                 <div className="logo-box">
                     <Link to="/" className="logo logo-dark text-center">
                         <span className="logo-sm">
-                            <img src={logoSm} alt="logo-sm" height="22" />
+                            <img src={slotLogo} alt="logo-sm" height="30" />
                         </span>
                         <span className="logo-lg">
-                            <img src={logoDark} alt="logo-dark" height="16" />
+                            <img src={slotLogo} alt="logo-dark" height="30" />
                         </span>
                     </Link>
 
                     <Link to="/" className="logo logo-light text-center">
                         <span className="logo-sm">
-                            <img src={logoSm} alt="logo-sm" height="22" />
+                            <img src={slotLogo} alt="logo-sm" height="30" />
                         </span>
                         <span className="logo-lg">
                             <img src={logoLight} alt="logo-light" height="16" />
@@ -131,11 +131,11 @@ const Topbar = ({ openLeftMenuCallBack, containerClass }: TopbarProps) => {
                         </>
                     )}
 
-                    {layout === LayoutTypes.LAYOUT_VERTICAL && (
+                    {/* {layout === LayoutTypes.LAYOUT_VERTICAL && (
                         <li>
                             <h4 className="page-title-main">{pageTitle.title}</h4>
                         </li>
-                    )}
+                    )} */}
                 </ul>
 
                 <div className="clearfix"></div>

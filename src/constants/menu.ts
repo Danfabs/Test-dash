@@ -20,11 +20,33 @@ const MENU_ITEMS: MenuItemTypes[] = [
         label: 'Dashboard',
         isTitle: false,
         icon: 'mdi mdi-view-dashboard-outline',
-        badge: { variant: 'success', text: '9+' },
         url: '/dashboard',
     },
 
-    { key: 'apps', label: 'Apps', isTitle: true },
+    {
+        key: 'troubletickets',
+        label: 'Trouble Tickets',
+        isTitle: false,
+        icon: 'mdi mdi-forum-outline',
+        url: '/apps/TroubleTickets',
+    },
+
+    {
+        key: 'apps-services',
+        label: 'Provider Services',
+        isTitle: false,
+        icon: 'mdi mdi-briefcase-variant-outline',
+        url: '/apps/providerServices',
+    },
+    {
+        key: 'userManagement',
+        label: 'Users Info',
+        isTitle: false,
+        icon: 'mdi mdi-account-multiple',
+        url: '/apps/UserManagement',
+    },
+
+    // { key: 'apps', label: 'Apps', isTitle: true },
     {
         key: 'apps-calendar',
         label: 'Calendar',
@@ -73,13 +95,7 @@ const MENU_ITEMS: MenuItemTypes[] = [
             },
         ],
     },
-    {
-        key: 'apps-projects',
-        label: 'Projects',
-        isTitle: false,
-        icon: 'mdi mdi-briefcase-variant-outline',
-        url: '/apps/projects',
-    },
+
     {
         key: 'apps-contacts',
         label: 'Contacts',
@@ -707,7 +723,7 @@ const HORIZONTAL_MENU_ITEMS: MenuItemTypes[] = [
                 key: 'apps-projects',
                 label: 'Projects',
                 isTitle: false,
-                url: '/apps/projects',
+                url: '/apps/providerServices',
                 parentKey: 'apps',
             },
             {

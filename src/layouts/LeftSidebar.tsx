@@ -51,7 +51,7 @@ const UserBox = () => {
 
     return (
         <div className="user-box text-center">
-            <img src={profileImg} alt="" title="Mat Helme" className="rounded-circle img-thumbnail avatar-md" />
+            {/* <img src={profileImg} alt="" title="Mat Helme" className="rounded-circle img-thumbnail avatar-md" /> */}
             <Dropdown show={dropdownOpen} onToggle={toggleDropdown}>
                 <Dropdown.Toggle
                     id="dropdown-notification"
@@ -60,7 +60,7 @@ const UserBox = () => {
                     onClick={toggleDropdown}
                     className="user-name h5 mt-2 mb-1 d-block"
                 >
-                    Nowak Helme
+                    User Name
                 </Dropdown.Toggle>
                 <Dropdown.Menu className="user-pro-dropdown">
                     <div onClick={toggleDropdown}>
@@ -79,9 +79,9 @@ const UserBox = () => {
                     </div>
                 </Dropdown.Menu>
             </Dropdown>
-            <p className="text-muted left-user-info">Admin Head</p>
+            <p className="text-muted left-user-info">User Type</p>
 
-            <ul className="list-inline">
+            {/* <ul className="list-inline">
                 <li className="list-inline-item">
                     <Link to="#" className="text-muted left-user-info">
                         <i className="mdi mdi-cog"></i>
@@ -93,7 +93,7 @@ const UserBox = () => {
                         <i className="mdi mdi-power"></i>
                     </Link>
                 </li>
-            </ul>
+            </ul> */}
         </div>
     );
 };
