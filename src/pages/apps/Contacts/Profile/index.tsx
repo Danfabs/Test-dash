@@ -33,15 +33,15 @@ const Profile = () => {
 
     return (
         <Row>
-            <Col sm={8}>
+            <Col sm={12}>
                 <UserBox />
-                <NewPost />
-                <CommentBox posts={posts} />
+                {/* <NewPost />
+                <CommentBox posts={posts} /> */}
             </Col>
-            <Col sm={4}>
+            {/* <Col sm={4}>
                 <TeamMembers members={members} />
                 <Reminders reminder={reminder} />
-            </Col>
+            </Col> */}
         </Row>
     );
 };
