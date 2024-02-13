@@ -33,6 +33,7 @@ const DashBoard1 = React.lazy(() => import('../pages/dashboards/DashBoard1/'));
 const TroubleTickets = React.lazy(() => import('../pages/dashboards/DashBoard1/TroubleTickets'));
 const UserManagement = React.lazy(() => import('../pages/dashboards/DashBoard1/UserManagement'));
 const ViewBranch = React.lazy(() => import('../pages/dashboards/DashBoard1/ViewBranch'));
+const ViewSlots = React.lazy(() => import('../pages/dashboards/DashBoard1/ViewSlots'));
 const CalendarApp = React.lazy(() => import('../pages/apps/Calendar'));
 const ChatApp = React.lazy(() => import('../pages/apps/Chat'));
 const Inbox = React.lazy(() => import('../pages/apps/Email/Inbox'));
@@ -212,6 +213,10 @@ const AllRoutes = () => {
             {
               path: 'viewBranch',
               element: <LoadComponent component={ViewBranch} />,
+            },
+            {
+              path: 'viewSlots',
+              element: <LoadComponent component={ViewSlots} />,
             },
             {
               path: 'calendar',

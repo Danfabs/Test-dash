@@ -1,14 +1,12 @@
 import { Badge, Card, Dropdown, Row, Table, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { usePageTitle } from '../../../hooks';
-import classNames from 'classnames';
-// type
-// import { BranchList } from '../../BranchInfo/types';
+import { useNavigate } from 'react-router-dom';
+
 //image
 import cardImg from '../../../assets/images/gallery/1.jpg';
 //Buttons
 import Button from 'react-bootstrap/Button';
-
 import { BranchDetails } from '../../BranchInfo/branchesdata';
 import { BranchList } from '../../BranchInfo/branchTypes';
 
@@ -17,6 +15,14 @@ type BranchDetailsProps = {
 };
 
 const ViewBranch = ({ branchDetails }: BranchDetailsProps) => {
+
+    const navigate = useNavigate();
+
+    const handleViewSlotsClick = () => {
+        // Navigate to another page, e.g., '/slots'
+        navigate('../viewSlots');
+      };
+
     return (
         <div>
             <h4 className="mt-0">Branches</h4>
@@ -88,7 +94,7 @@ const ViewBranch = ({ branchDetails }: BranchDetailsProps) => {
 
                                     <ul className="list-inline">
                                     <li className="list-inline-item">
-                                    <Button variant="success">View Slots</Button>
+                                    <Button variant="success" onClick={handleViewSlotsClick}>View Slots</Button>
                                     </li>
                                     </ul>
 
