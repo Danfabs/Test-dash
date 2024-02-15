@@ -31,15 +31,15 @@ const DashBoard1 = React.lazy(() => import('../pages/dashboards/DashBoard1/'));
 
 // apps
 const TroubleTickets = React.lazy(() => import('../pages/dashboards/DashBoard1/TroubleTickets'));
-const UserManagement = React.lazy(() => import('../pages/dashboards/DashBoard1/UserManagement'));
-const ViewBranch = React.lazy(() => import('../pages/dashboards/DashBoard1/ViewBranch'));
+const ProviderServices = React.lazy(() => import('../pages/dashboards/DashBoard1/ProviderServices'));
+const ViewServices = React.lazy(() => import('../pages/dashboards/DashBoard1/ViewServices'));
 const ViewSlots = React.lazy(() => import('../pages/dashboards/DashBoard1/ViewSlots'));
 const CalendarApp = React.lazy(() => import('../pages/apps/Calendar'));
 const ChatApp = React.lazy(() => import('../pages/apps/Chat'));
 const Inbox = React.lazy(() => import('../pages/apps/Email/Inbox'));
 const Kanban = React.lazy(() => import('../pages/apps/Tasks/Board'));
 const TaskDetail = React.lazy(() => import('../pages/apps/Tasks/Detail'));
-const ProviderServices = React.lazy(() => import('../pages/apps/ProviderServices'));
+const EndUsers = React.lazy(() => import('../pages/apps/EndUsers'));
 const List = React.lazy(() => import('../pages/apps/Contacts/List'));
 const Profile = React.lazy(() => import('../pages/apps/Contacts/Profile'));
 
@@ -207,12 +207,12 @@ const AllRoutes = () => {
               element: <LoadComponent component={TroubleTickets} />,
             },
             {
-              path: 'userManagement',
-              element: <LoadComponent component={UserManagement} />,
+              path: 'providerService',
+              element: <LoadComponent component={ProviderServices} />,
             },
             {
-              path: 'viewBranch',
-              element: <LoadComponent component={ViewBranch} />,
+              path: 'viewServices',
+              element: <LoadComponent component={ViewServices} />,
             },
             {
               path: 'viewSlots',
@@ -240,8 +240,8 @@ const AllRoutes = () => {
             },
             
             {
-              path: 'providerservices',
-              element: <LoadComponent component={ProviderServices} />,
+              path: 'endUsers',
+              element: <LoadComponent component={EndUsers} />,
             },
             {
               path: 'contacts/list',

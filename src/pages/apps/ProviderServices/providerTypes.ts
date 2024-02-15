@@ -6,7 +6,7 @@ export type Message = {
     time: string;
 };
 
-export type UsersList = {
+export type ProviderList = {
     id: number;
     name: string;
     startDate: string;

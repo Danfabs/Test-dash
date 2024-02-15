@@ -1,5 +1,5 @@
 // types
-import { ServicesList } from './types';
+import { EndUsersList } from './endUsersTypes';
 
 // images
 import user1 from '../../../assets/images/users/user-1.jpg';
@@ -13,7 +13,7 @@ import user8 from '../../../assets/images/users/user-8.jpg';
 import user9 from '../../../assets/images/users/user-9.jpg';
 import user10 from '../../../assets/images/users/user-10.jpg';
 
-export const providerServices: ServicesList[] = [
+export const EndUsers: EndUsersList[] = [
     {
         id: 1,
         title: 'New Admin Design',

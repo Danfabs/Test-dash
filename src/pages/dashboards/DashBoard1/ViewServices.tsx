@@ -7,14 +7,14 @@ import { useNavigate } from 'react-router-dom';
 import cardImg from '../../../assets/images/gallery/1.jpg';
 //Buttons
 import Button from 'react-bootstrap/Button';
-import { BranchDetails } from '../../BranchInfo/branchesdata';
-import { BranchList } from '../../BranchInfo/branchTypes';
+import { ServicesDetails } from '../../ServicesInfo/servicesdata';
+import { ServicesList } from '../../ServicesInfo/servicesTypes';
 
-type BranchDetailsProps = {
-  branchDetails: BranchList[];
+type ServicesDetailsProps = {
+    servicesDetails: ServicesList[];
 };
 
-const ViewBranch = ({ branchDetails }: BranchDetailsProps) => {
+const ViewServices = ({ servicesDetails }: ServicesDetailsProps) => {
 
     const navigate = useNavigate();
 
@@ -25,9 +25,9 @@ const ViewBranch = ({ branchDetails }: BranchDetailsProps) => {
 
     return (
         <div>
-            <h4 className="mt-0">Branches</h4>
+            <h4 className="mt-0">Services</h4>
             <Row>
-                {(branchDetails || []).map((branch, index) => {
+                {(servicesDetails || []).map((Service, index) => {
                     return (
                         <Col xl={4} key={index.toString()}>
                             <Card>
@@ -35,23 +35,21 @@ const ViewBranch = ({ branchDetails }: BranchDetailsProps) => {
                                 <Card.Body className="project-box">
                                     <h4 className="mt-0">
                                         <Link to="#" className="text-dark">
-                                            Branch Name
+                                        Service Name
                                         </Link>
                                     </h4>
 
                                     <ul className="list-inline">
                                     <p className="mb-0">
-                                        Branch Location
+                                    Services Location
                                     </p>
                                     </ul>
                                    
 
                                     <ul className="list-inline">
-
                                     <p className="mb-0">
-                                        Branch Description
+                                    Services Description
                                         </p>
-
                                     </ul>
 
                                     
@@ -116,7 +114,7 @@ const ViewBranch = ({ branchDetails }: BranchDetailsProps) => {
     );
 };
 
-const Branches = () => {
+const Services = () => {
     // set pagetitle
     usePageTitle({
         title: 'Projects',
@@ -136,9 +134,9 @@ const Branches = () => {
     return (
         <>
            
-            <ViewBranch branchDetails={BranchDetails} />
+            <ViewServices servicesDetails={ServicesDetails} />
         </>
     );
 };
 
-export default Branches;
+export default Services;

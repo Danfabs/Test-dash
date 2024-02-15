@@ -1,9 +1,9 @@
 import { Badge, Card, Dropdown, Table } from 'react-bootstrap';
-import { ServicesDetail } from './types';
+import { EndUsersDetail } from './types';
 
 
 type ProjectsProps = {
-    projectDetails: ServicesDetail[];
+    projectDetails: EndUsersDetail[];
 };
 
 

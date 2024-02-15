@@ -9,13 +9,10 @@ import UsersChart from './UsersChart';
 import StatisticsChart from './StatisticsChart';
 import RevenueChart from './RevenueChart';
 import Users from './Users';
-import Inbox from './Inbox';
-import ProviderServices from './ProviderServices';
-import UserManagement from './UserManagement';
 
 // dummy data
-import { messages ,ProviderServicesDetails } from './data';
-import { userMessages , usersManagmentDetails } from '../../apps/UserManagement/usersdata';
+import { messages ,EndUsersDetails } from './data';
+import { ProviderMessages , ProviderServicesDetails } from '../../apps/ProviderServices/providerdata';
 import ReservationInfoWidget4 from '../../../components/ReservationInfoWidget4';
 const DashBoard1 = () => {
     // set pagetitle

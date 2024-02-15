@@ -12,23 +12,23 @@ import { usePageTitle } from '../../../hooks';
 import { FormInput } from '../../../components/form';
 
 // types
-import { ServicesList } from './types';
+import { EndUsersList } from './endUsersTypes';
 
 // dummy data
-import { providerServices } from './data';
-import cardImg from '../../../assets/images/gallery/1.jpg';
+import { EndUsers } from './endUsersData';
+import cardImg from '../../../assets/images/gallery/user.jpg';
 
-type SingleProjectProps = {
-    services: ServicesList[];
+type EndUsersProps = {
+    users: EndUsersList[];
 };
 
-const SingleProject = ({ services }: SingleProjectProps) => {
+const SingleUser = ({ users }: EndUsersProps) => {
     return (
         <div>
-             <h4 className="mt-0">Provider Services</h4>
+             <h4 className="mt-0">End Users</h4>
         <>
         <Row>
-                {(services || []).map((service, index) => {
+                {(users || []).map((user, index) => {
                     return (
                         <Col xl={4} key={index.toString()}>
                             <Card>
@@ -39,37 +39,37 @@ const SingleProject = ({ services }: SingleProjectProps) => {
                                     </Badge> */}
                                     <h4 className="mt-0">
                                         <Link to="#" className="text-dark">
-                                            Space Name
+                                            User Name
                                         </Link>
                                     </h4>
-                                    <p className={classNames('text-' + service.variant, 'text-uppercase', 'font-13')}>
-                                        Space Status (Approve or No)
-                                    </p>
-                                        <p className="text-muted font-13">
-                                        Space Description
-                                        </p>
+
+                                    <li className="list-inline-item me-4">
+                                    <h5 className="mb-2 fw-semibold">Space Slot Type (Space , experince ...)</h5>
+                                    </li>
 
                                     <ul className="list-inline">
 
                                         <li className="list-inline-item me-4">
-                                        <h5 className="mb-2 fw-semibold">Minimum 
-                                        Reservation Notice</h5>
-                                            <p className="mb-0">{service.question}</p>
+                                        <h5 className="mb-2 fw-semibold">Mobile Number</h5>
+                                            <p className="mb-0">99999999</p>
                                         </li>
 
-                                        <li className="list-inline-item">
-                                            <h5 className="mb-2 fw-semibold">Space Amenities</h5>
-                                            <i className="mdi mdi-wifi"></i>
-                                            <i className="mdi mdi-parking"></i>
-                                            <i className="mdi mdi-human-male-female"></i>
+                                        <li className="list-inline-item me-4">
+                                            <h5 className="mb-2 fw-semibold">Email</h5>
+                                            <p className="mb-0">aaa@gmail.com</p>
+                                        </li>
+
+                                        <li className="list-inline-item me-4">
+                                            <h5 className="mb-2 fw-semibold">Gender</h5>
+                                            <p className="mb-0">Male</p>
                                         </li>
 
                                     </ul>
 
                                     <ul className="list-inline">
                                         <li className="list-inline-item me-4">
-                                        <h5 className="mb-2 fw-semibold">Country</h5>
-                                            <p className="mb-0">Oman</p>
+                                        <h5 className="mb-2 fw-semibold">Plan</h5>
+                                            <p className="mb-0">Month / 6 Months / Years</p>
                                             
                                            
                                         </li>
@@ -85,12 +85,9 @@ const SingleProject = ({ services }: SingleProjectProps) => {
                                         </li>
                                     </ul>
 
-                                    <h5 className="mb-2 fw-semibold">
-                                        Progress
-                                        </h5>
-                                        <Button  variant="success">Accept</Button>
-                                        <Button  variant="danger">Reject</Button>
-                                        <Button  variant="secondary">Suspend </Button>
+                                        {/* <Button  variant="success">Accept</Button>
+                                        <Button  variant="danger">Reject</Button> */}
+                                        <Button  variant="secondary">Suspend User</Button>
                                         {/* <span className={classNames('float-end', 'text-' + project.variant)}>
                                             {project.progress}%
                                         </span> */}
@@ -113,7 +110,7 @@ const SingleProject = ({ services }: SingleProjectProps) => {
     );
 };
 
-const Projects = () => {
+const Users = () => {
     // set pagetitle
     usePageTitle({
         title: 'Projects',
@@ -181,9 +178,9 @@ const Projects = () => {
                     </div>
                 </Col>
             </Row> */}
-            <SingleProject services={providerServices} />
+            <SingleUser users={EndUsers} />
         </>
     );
 };
 
-export default Projects;
+export default Users;

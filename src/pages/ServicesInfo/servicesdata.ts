@@ -1,5 +1,5 @@
 // types
-import { Message, BranchList } from './branchTypes';
+import { Message, ServicesList } from './servicesTypes';
 
 // images
 // import avatar1 from '../../../assets/images/users/user-1.jpg';
@@ -8,7 +8,7 @@ import { Message, BranchList } from './branchTypes';
 // import avatar4 from '../../../assets/images/users/user-4.jpg';
 // import avatar5 from '../../../assets/images/users/user-5.jpg';
 
-const BranchMessages: Message[] = [
+const ServicesMessages: Message[] = [
     {
         id: 1,
         avatar: "avatar1",
@@ -46,7 +46,7 @@ const BranchMessages: Message[] = [
     },
 ];
 
-const BranchDetails: BranchList[] = [
+const ServicesDetails: ServicesList[] = [
     {
         id: 1,
         name: 'Adminto Admin v1',
@@ -103,4 +103,4 @@ const BranchDetails: BranchList[] = [
     },
 ];
 
-export { BranchMessages, BranchDetails };
+export { ServicesMessages, ServicesDetails };

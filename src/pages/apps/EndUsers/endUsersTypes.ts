@@ -1,4 +1,4 @@
-export type ServicesList = {
+export type EndUsersList = {
     id: number;
     title: string;
     category: string;

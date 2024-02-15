@@ -1,5 +1,5 @@
 // types
-import { Message, ServicesDetail } from './types';
+import { Message, EndUsersDetail } from './types';
 
 // images
 import avatar1 from '../../../assets/images/users/user-1.jpg';
@@ -46,7 +46,7 @@ const messages: Message[] = [
     },
 ];
 
-const ProviderServicesDetails: ServicesDetail[] = [
+const EndUsersDetails: EndUsersDetail[] = [
     {
         id: 1,
         name: 'Adminto Admin v1',
@@ -103,4 +103,4 @@ const ProviderServicesDetails: ServicesDetail[] = [
     },
 ];
 
-export { messages, ProviderServicesDetails };
+export { messages, EndUsersDetails };

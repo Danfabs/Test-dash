@@ -1,61 +1,132 @@
-import { Badge, Card, Dropdown, Table } from 'react-bootstrap';
-
+import { Badge, Card, Dropdown, Row, Table, Col } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import { usePageTitle } from '../../../hooks';
+import classNames from 'classnames';
 // type
-import { ServicesDetail } from './types';
+import { ProviderList } from '../../apps/ProviderServices/providerTypes';
+//image
+import cardImg from '../../../assets/images/gallery/1.jpg';
+//Buttons
+import Button from 'react-bootstrap/Button';
 
-type ProviderServicesDetailsProps = {
-    ProviderServicesDetails: ServicesDetail[];
+import { ProviderServicesDetails } from '../../apps/ProviderServices/providerdata';
+
+type UsersDetailsProps = {
+    usersDetails: ProviderList[];
 };
 
-const ProviderServices = ({ ProviderServicesDetails }: ProviderServicesDetailsProps) => {
+const ProviderServices = ({ usersDetails }: UsersDetailsProps) => {
     return (
-        <Card>
-            <Card.Body>
-                <Dropdown className="float-end" align="end">
-                    <Dropdown.Toggle as="a" className="cursor-pointer card-drop">
-                        <i className="mdi mdi-dots-vertical"></i>
-                    </Dropdown.Toggle>
-                    <Dropdown.Menu>
-                        <Dropdown.Item>Action</Dropdown.Item>
-                        <Dropdown.Item>Anothther Action</Dropdown.Item>
-                        <Dropdown.Item>Something Else</Dropdown.Item>
-                        <Dropdown.Item>Separated link</Dropdown.Item>
-                    </Dropdown.Menu>
-                </Dropdown>
+        <div>
+            <h4 className="mt-0">Provider Services</h4>
+            <Row>
+                {(usersDetails || []).map((user, index) => {
+                    return (
+                        <Col xl={4} key={index.toString()}>
+                            <Card>
+                                <Card.Img src={cardImg} />
+                                <Card.Body className="project-box">
+                                    <h4 className="mt-0">
+                                        <Link to="#" className="text-dark">
+                                        provider services Name
+                                        </Link>
+                                    </h4>
 
-                New Admin Design              <h4 className="header-title mt-0 mb-3">Latest Projects</h4>
+                                    <Link to="../ViewServices">
+                                        Space Name
+                                    </Link>
+                                    
+                                    <ul className="list-inline">
 
-                <Table responsive hover className="mb-0">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Project Name</th>
-                            <th>Start Date</th>
-                            <th>Due Date</th>
-                            <th>Status</th>
-                            <th>Assign</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {(ProviderServicesDetails || []).map((ServicesDetail, index) => {
-                            return (
-                                <tr key={index.toString()}>
-                                    <td>{ServicesDetail.id}</td>
-                                    <td>{ServicesDetail.name}</td>
-                                    <td>{ServicesDetail.startDate}</td>
-                                    <td>{ServicesDetail.dueDate}</td>
-                                    <td>
-                                        <Badge bg={ServicesDetail.variant}>{ServicesDetail.status}</Badge>
-                                    </td>
-                                    <td>{ServicesDetail.clients}</td>
-                                </tr>
-                            );
-                        })}
-                    </tbody>
-                </Table>
-            </Card.Body>
-        </Card>
+                                    <li className="list-inline-item me-4">
+                                            <h5 className="mb-2 fw-semibold">Gender</h5>
+                                            <p className="mb-0">Male</p>
+                                        </li>
+
+                                        <li className="list-inline-item me-4">
+                                            <h5 className="mb-2 fw-semibold">Phone Number</h5>
+                                            <p className="mb-0">+9689999999</p>
+                                        </li>
+
+                                        <li className="list-inline-item me-4">
+                                            <h5 className="mb-2 fw-semibold">Owner Email</h5>
+                                            <p className="mb-0">aaa@gmail.com</p>
+                                        </li>
+
+                                    </ul>
+
+                                    <ul className="list-inline">
+                                        <li className="list-inline-item me-4">
+
+                                            <h5 className="mb-2 fw-semibold">Bank Details:</h5>
+                                        </li>
+
+                                        <ul className="list-inline">
+                                        <li className="list-inline-item me-4">
+                                        <h5 className="mb-2 fw-semibold">Bank Name</h5>
+                                            <p className="mb-0">Muscat</p>
+                                        </li>
+                                        
+                                        <li className="list-inline-item me-4">
+                                        <h5 className="mb-2 fw-semibold">Bank Branch</h5>
+                                            <p className="mb-0">Muscat</p>
+                                        </li>
+
+                                        <li className="list-inline-item me-4">
+                                        <h5 className="mb-2 fw-semibold">Account Number</h5>
+                                            <p className="mb-0">143 152 153 158</p>
+                                        </li>
+                                           
+                                        </ul>
+
+                                        
+                                    </ul>
+
+                                    <ul>
+
+                                    </ul>
+                                   
+                                    <ul className="list-inline">
+                                        <li className="list-inline-item me-4">
+                                    <Button variant="success">Accept</Button>
+                                    <Button variant="danger">Reject</Button>
+                                    {/* <Button variant="secondary">Suspend </Button> */}
+                                    </li>
+                                    </ul>
+                                </Card.Body>
+                            </Card>
+                        </Col>
+                        );
+                    })}
+            </Row>
+        </div>
+
     );
 };
 
-export default ProviderServices;
+const Users = () => {
+    // set pagetitle
+    usePageTitle({
+        title: 'Projects',
+        breadCrumbItems: [
+            {
+                path: 'apps/projects',
+                label: 'Apps',
+            },
+            {
+                path: 'apps/projects',
+                label: 'Projects',
+                active: true,
+            },
+        ],
+    });
+
+    return (
+        <>
+           
+            <ProviderServices usersDetails={ProviderServicesDetails} />
+        </>
+    );
+};
+
+export default Users;

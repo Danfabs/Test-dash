@@ -1,13 +1,12 @@
 import { Badge, Card, Dropdown, Row, Table, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { usePageTitle } from '../../../hooks';
-import { useNavigate } from 'react-router-dom';
 
 //image
 import cardImg from '../../../assets/images/gallery/1.jpg';
-//Buttons
-import Button from 'react-bootstrap/Button';
+//data
 import { SlotsDetails } from '../../apps/Slots/slotsdata'; 
+//types
 import { SlotsList } from '../../apps/Slots/slotsTypes';
 
 type SlotsDetailsProps = {
@@ -15,14 +14,6 @@ type SlotsDetailsProps = {
 };
 
 const ViewSlots = ({ slotsDetails }: SlotsDetailsProps) => {
-
-    const navigate = useNavigate();
-
-    const handleViewSlotsClick = () => {
-        // Navigate to another page, e.g., '/slots'
-        navigate('../viewSlots');
-      };
-
     return (
         <div>
             <h4 className="mt-0">Slots</h4>
@@ -63,14 +54,13 @@ const ViewSlots = ({ slotsDetails }: SlotsDetailsProps) => {
 
                                     
                                     <ul className="list-inline">
-
                                         <li className="list-inline-item me-4">
                                             <h5 className="mb-2 fw-semibold">Payment info (Your business hasn't received the payment for this reservation)</h5>
                                         </li>
 
-                                        <li className="list-inline-item">
+                                        {/* <li className="list-inline-item">
                                             <h5 className="mb-2 fw-semibold">ARRIVED</h5>
-                                        </li>
+                                        </li> */}
 
                                     </ul>
 
@@ -104,7 +94,6 @@ const Slots = () => {
 
     return (
         <>
-           
             <ViewSlots slotsDetails={SlotsDetails} />
         </>
     );
