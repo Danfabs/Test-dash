@@ -41,7 +41,7 @@ const Inbox = React.lazy(() => import('../pages/apps/Email/Inbox'));
 const Kanban = React.lazy(() => import('../pages/apps/Tasks/Board'));
 const TaskDetail = React.lazy(() => import('../pages/apps/Tasks/Detail'));
 const EndUsers = React.lazy(() => import('../pages/apps/EndUsers'));
-const List = React.lazy(() => import('../pages/apps/Contacts/List'));
+const DelegateUsers = React.lazy(() => import('../pages/apps/DelegateUser/delegateUserdIndex'));
 const Profile = React.lazy(() => import('../pages/apps/Contacts/Profile'));
 
 // extra pages
@@ -249,8 +249,8 @@ const AllRoutes = () => {
               element: <LoadComponent component={EndUsers} />,
             },
             {
-              path: 'contacts/list',
-              element: <LoadComponent component={List} />,
+              path: 'delegateUsers',
+              element: <LoadComponent component={DelegateUsers} />,
             },
             {
               path: 'contacts/profile',

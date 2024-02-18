@@ -8,7 +8,7 @@ import BranchesWidget1 from '../../../components/BranchesWidget1';
 import StatisticsWidget2 from '../../../components/AmountWidget3';
 import StatisticsWidget3 from '../../../components/StatisticsWidget3';
 import TeamMembers from '../../../components/TeamMembers';
-import ContactDetails from '../../../components/ContactDetails';
+import DelegateUsers from '../../dashboards/DashBoard1/DelegateUsers';
 import Reminders from '../../../components/Reminders';
 
 import StatisticsWidget from './StatisticsWidget';
@@ -21,7 +21,7 @@ import avatar3 from '../../../assets/images/users/user-1.jpg';
 import avatar4 from '../../../assets/images/users/user-10.jpg';
 
 // dummy data
-import { contact, statisticsWidgets } from './data';
+import { usersDelegate, statisticsWidgets } from './data';
 import { members, reminder } from '../../apps/Contacts/Profile/data';
 
 const Widgets = () => {
@@ -175,7 +175,7 @@ const Widgets = () => {
                     <TeamMembers members={members} />
                 </Col>
                 <Col xl={3} md={6}>
-                    <ContactDetails contact={contact} />
+                    <DelegateUsers/>
                 </Col>
                 <Col xl={3} md={6}>
                     <Progressbar />

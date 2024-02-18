@@ -4,15 +4,15 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 // hooks
-import { usePageTitle } from '../../../../hooks';
+import { usePageTitle } from '../../../hooks';
 
 // component
-import { VerticalForm, FormInput } from '../../../../components/form';
+import { VerticalForm, FormInput } from '../../../components/form';
 
-import ContactDetails from '../../../../components/ContactDetails';
+import DelegateUsers from '../../dashboards/DashBoard1/DelegateUsers';
 
 // data
-import { contacts } from './data';
+import { UserDelegate } from './delegateUserdData';
 
 // dummy data
 
@@ -63,15 +63,15 @@ const List = () => {
                     <Card>
                         <Card.Body>
                             <Row className="justify-content-center">
-                                <Col md={4}>
+                                <Col md={12}>
                                     <div className="mt-3 mt-md-0">
                                         <Button variant="success" className="waves-effect waves-light" onClick={toggle}>
                                             <i className="mdi mdi-plus-circle me-1"></i>
-                                            Add contact
+                                            Delegate Users
                                         </Button>
                                     </div>
                                 </Col>
-                                <Col md={8}>
+                                {/* <Col md={8}>
                                     <form className="d-flex flex-wrap align-items-center justify-content-sm-end">
                                         <label className="me-2">Sort By</label>
                                         <FormInput type="select" name="sort">
@@ -88,50 +88,27 @@ const List = () => {
                                             className="ms-sm-2"
                                         />
                                     </form>
-                                </Col>
+                                </Col> */}
                             </Row>
                         </Card.Body>
                     </Card>
                 </Col>
             </Row>
             <Row>
-                {(contacts || []).map((contact, index) => {
+                {(UserDelegate || []).map((user, index) => {
                     return (
                         <Col xl={4} md={6} key={index.toString()}>
-                            <ContactDetails contact={contact} />
+                            <DelegateUsers />
                         </Col>
                     );
                 })}
             </Row>
             <Modal show={modal} onHide={toggle} centered>
                 <Modal.Header closeButton>
-                    <Modal.Title as="h4">Add Contact</Modal.Title>
+                    <Modal.Title as="h4">Delegate User</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <VerticalForm<MemberData> onSubmit={() => {}} resolver={schemaResolver} defaultValues={{}}>
-                        <FormInput
-                            label={'Name'}
-                            type="text"
-                            name="name"
-                            placeholder="Enter name"
-                            containerClass={'mb-3'}
-                        />
-
-                        <FormInput
-                            label={'Position'}
-                            type="text"
-                            name="position"
-                            placeholder="Enter position"
-                            containerClass={'mb-3'}
-                        />
-
-                        <FormInput
-                            label={'Company'}
-                            type="text"
-                            name="company"
-                            placeholder="Enter company"
-                            containerClass={'mb-3'}
-                        />
+                    <VerticalForm<MemberData> onSubmit={() => { }} resolver={schemaResolver} defaultValues={{}}>
 
                         <FormInput
                             label={'Email address'}
@@ -140,6 +117,33 @@ const List = () => {
                             placeholder="Enter email"
                             containerClass={'mb-3'}
                         />
+
+                        <FormInput
+                            label={'User Role'}
+                            type="text"
+                            name="role"
+                            placeholder="Enter user role"
+                            containerClass={'mb-3'}
+                        />
+
+                        {/* <FormInput
+                            label={'Name'}
+                            type="text"
+                            name="name"
+                            placeholder="Enter name"
+                            containerClass={'mb-3'}
+                        />
+
+
+
+                        <FormInput
+                            label={'Company'}
+                            type="text"
+                            name="company"
+                            placeholder="Enter company"
+                            containerClass={'mb-3'}
+                        /> */}
+
 
                         <Button variant="light" className="waves-effect waves-light me-1" type="submit">
                             Save

@@ -1,4 +1,4 @@
-export type Contact = {
+export type UsersDelegate = {
     id: number;
     avatar: string;
     shortDesc: string;

@@ -1,15 +1,15 @@
 // types
-import { Contact } from './types';
+import { UsersDelegate } from './delegateUserTypes';
 
 // images
-import avatar1 from '../../../../assets/images/users/user-10.jpg';
-import avatar2 from '../../../../assets/images/users/user-9.jpg';
-import avatar3 from '../../../../assets/images/users/user-8.jpg';
-import avatar4 from '../../../../assets/images/users/user-7.jpg';
-import avatar5 from '../../../../assets/images/users/user-6.jpg';
-import avatar6 from '../../../../assets/images/users/user-5.jpg';
+import avatar1 from '../../../assets/images/users/user-10.jpg';
+import avatar2 from '../../../assets/images/users/user-9.jpg';
+import avatar3 from '../../../assets/images/users/user-8.jpg';
+import avatar4 from '../../../assets/images/users/user-7.jpg';
+import avatar5 from '../../../assets/images/users/user-6.jpg';
+import avatar6 from '../../../assets/images/users/user-5.jpg';
 
-const contacts: Contact[] = [
+const UserDelegate: UsersDelegate[] = [
     {
         id: 1,
         avatar: avatar1,
@@ -72,4 +72,4 @@ const contacts: Contact[] = [
     },
 ];
 
-export { contacts };
+export { UserDelegate };

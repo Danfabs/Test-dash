@@ -1,5 +1,5 @@
 // types
-import { Contact } from '../../apps/Contacts/List/types';
+import { UsersDelegate } from '../../apps/DelegateUser/delegateUserTypes';
 import { Statistic } from './types';
 
 // images
@@ -28,7 +28,7 @@ const statisticsWidgets: Statistic[] = [
     },
 ];
 
-const contact: Contact = {
+const usersDelegate: UsersDelegate = { 
     id: 2,
     avatar: avatar2,
     shortDesc:
@@ -39,4 +39,4 @@ const contact: Contact = {
     location: 'USA',
 };
 
-export { statisticsWidgets, contact };
+export { statisticsWidgets, usersDelegate };
