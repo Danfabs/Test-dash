@@ -16,7 +16,7 @@ import { EndUsersList } from './endUsersTypes';
 
 // dummy data
 import { EndUsers } from './endUsersData';
-import cardImg from '../../../assets/images/gallery/user.jpg';
+import cardImg from '../../../assets/images/gallery/user4.jpg';
 
 type EndUsersProps = {
     users: EndUsersList[];

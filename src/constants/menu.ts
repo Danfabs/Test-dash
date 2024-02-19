@@ -43,7 +43,7 @@ const MENU_ITEMS: MenuItemTypes[] = [
         key: 'apps-endUsers',
         label: 'End Users',
         isTitle: false,
-        icon: 'mdi mdi-briefcase-variant-outline',
+        icon: 'mdi mdi-account-supervisor-outline',
         url: '/apps/endUsers',
     },
 
@@ -51,7 +51,7 @@ const MENU_ITEMS: MenuItemTypes[] = [
         key: 'apps-delegateUsers',
         label: 'Delegate User',
         isTitle: false,
-        icon: 'mdi mdi-book-open-page-variant-outline',
+        icon: 'mdi mdi-account-star-outline',
         url: '/apps/delegateUsers',
         // parentKey: 'apps-contacts',
     },
