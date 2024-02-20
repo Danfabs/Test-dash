@@ -1,7 +1,14 @@
-.usersChart-card-div {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 90vh;
-    margin: 0;
+.payment-cardBody{
+    text-align: center;
+}
+.payment-card{
+    max-width: 900px;
+     margin: auto ;
+}
+.payment-saveButton{
+    width: 150px;
+}
+
+.payment-add-fee{
+    
 }

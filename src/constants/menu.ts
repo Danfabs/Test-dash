@@ -53,7 +53,23 @@ const MENU_ITEMS: MenuItemTypes[] = [
         isTitle: false,
         icon: 'mdi mdi-account-star-outline',
         url: '/apps/delegateUsers',
-        // parentKey: 'apps-contacts',
+    },
+
+    {
+        key: 'apps-payment',
+        label: 'Payment',
+        isTitle: false,
+        icon: 'mdi mdi-credit-card-outline',
+        url: '/apps/payment',
+    },
+
+    {
+        key: 'page-pricing',
+        label: 'Loyalty',
+        isTitle: false,
+        icon: 'mdi mdi-package',
+        url: '/pages/pricing',
+        parentKey: 'extra-pages',
     },
 
     {
@@ -420,12 +436,12 @@ const MENU_ITEMS: MenuItemTypes[] = [
                 url: '/forms/validation',
                 parentKey: 'forms',
             },
-            {
-                key: 'form-wizard',
-                label: 'Wizard',
-                url: '/forms/wizard',
-                parentKey: 'forms',
-            },
+            // {
+            //     key: 'form-wizard',
+            //     label: 'Wizard',
+            //     url: '/forms/wizard',
+            //     parentKey: 'forms',
+            // },
             {
                 key: 'form-upload',
                 label: 'File Uploads',

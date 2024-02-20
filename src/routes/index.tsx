@@ -97,7 +97,7 @@ const ThemifyIcons = React.lazy(() => import('../pages/icons/ThemifyIcons'));
 const GeneralElements = React.lazy(() => import('../pages/forms/Basic'));
 const FormAdvanced = React.lazy(() => import('../pages/forms/Advanced'));
 const Validation = React.lazy(() => import('../pages/forms/Validation'));
-const FormWizard = React.lazy(() => import('../pages/forms/Wizard'));
+const Payment = React.lazy(() => import('../pages/dashboards/DashBoard1/Payment'));
 const FileUpload = React.lazy(() => import('../pages/forms/FileUpload'));
 const Editors = React.lazy(() => import('../pages/forms/Editors'));
 
@@ -251,6 +251,10 @@ const AllRoutes = () => {
             {
               path: 'delegateUsers',
               element: <LoadComponent component={DelegateUsers} />,
+            },
+            {
+              path: 'payment',
+              element: <LoadComponent component={Payment} />,
             },
             {
               path: 'contacts/profile',
@@ -433,10 +437,7 @@ const AllRoutes = () => {
               path: 'validation',
               element: <LoadComponent component={Validation} />,
             },
-            {
-              path: 'wizard',
-              element: <LoadComponent component={FormWizard} />,
-            },
+            
             {
               path: 'upload',
               element: <LoadComponent component={FileUpload} />,
