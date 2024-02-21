@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Row, Col, Card, Form, Button, ProgressBar, Tab, Nav } from 'react-bootstrap';
+import { Row, Col, Card, Form, Button, ProgressBar, Tab, Nav, Dropdown } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { Wizard, Steps, Step } from 'react-albus';
 import '../../../assets/css/generalStyle.css'
@@ -12,9 +12,59 @@ const Payment = () => {
     const [key, setKey] = useState<string | null>('fee');
     const [orderFeeForms, setOrderFeeForms] = useState([{ id: 1 }]);
 
+    const [basePrice, setBasePrice] = useState<number | ''>('');
+    const [subscriptionDuration, setSubscriptionDuration] = useState<number | null>(6);
+    const [discountPercentage, setDiscountPercentage] = useState<number | ''>('');
+    const [calculatedFinalPrice, setCalculatedPrice] = useState<number | null>(null);
+
     const addOrderFeeForm = () => {
         setOrderFeeForms([...orderFeeForms, { id: orderFeeForms.length + 1 }]);
     };
+
+    const handleSelect = (eventKey: string | null) => {
+        setSubscriptionDuration((prevDuration) => (
+            eventKey !== null ? parseInt(eventKey) : null
+        ));
+    };
+
+    const calculatePrice = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        if (subscriptionDuration !== null) {
+            const parsedBasePrice = parseFloat(String(basePrice));
+            const parsedDiscountPercentage = parseFloat(String(discountPercentage));
+
+            if (isNaN(parsedBasePrice) || isNaN(parsedDiscountPercentage)) {
+                alert('Please enter valid numbers for base price and discount percentage.');
+                return;
+            }
+
+            const totalBeforeDiscount = parsedBasePrice * subscriptionDuration;
+            const discountAmount = (totalBeforeDiscount * parsedDiscountPercentage) / 100;
+            const finalPrice = totalBeforeDiscount - discountAmount;
+
+            console.log("base price: ", parsedBasePrice);
+            console.log("discount : ", parsedDiscountPercentage);
+            console.log("totalBeforeDiscount : ", totalBeforeDiscount);
+            console.log("totalAfterDiscount : ", discountAmount);
+            console.log("finalPrice : ", finalPrice);
+
+            setCalculatedPrice(finalPrice);
+        } else {
+            // Handle the case when subscriptionDuration is null
+            alert('Please select a subscription duration.');
+        }
+        // const resultMessage = `
+        //   Base Price: $${parsedBasePrice.toFixed(2)} 
+        //   Subscription Duration: ${subscriptionDuration} Months 
+        //   Total Price (Before Discount): $${totalBeforeDiscount.toFixed(2)} 
+        //   Discount Percentage: ${parsedDiscountPercentage}% 
+        //   Discount Amount: $${discountAmount.toFixed(2)} 
+        //   Final Price: $${finalPrice.toFixed(2)}
+        // `;
+
+        // alert(resultMessage);
+    };
+
 
     return (
         <Card className='payment-card'>
@@ -41,9 +91,9 @@ const Payment = () => {
                                     </Nav.Link>
                                 </Nav.Item>
                                 <Nav.Item as="li">
-                                    <Nav.Link as={Link} to="#" eventKey="discount" className="rounded-0 pt-2 pb-2">
+                                    <Nav.Link as={Link} to="#" eventKey="subscription" className="rounded-0 pt-2 pb-2">
+                                        <span className="d-none d-sm-inline">Space privider subscription</span>
                                         <i className="mdi mdi-brightness-percent me-1"></i>
-                                        <span className="d-none d-sm-inline">Discount</span>
                                     </Nav.Link>
                                 </Nav.Item>
 
@@ -53,12 +103,32 @@ const Payment = () => {
                                     <Step
                                         id="fee"
                                         render={({ }) => (
-                                            <>
+                                            <> 
+                                                
                                                 {orderFeeForms.map((form, index) => (
                                                     <Form>
                                                         <Form.Group as={Row} className="mb-3">
-                                                            <Form.Label htmlFor="uname2" column md={2}>
-                                                                Min Order
+                                                        <Form.Label
+                                                        htmlFor="minOrder"
+                                                        column md={2}>
+                                                        Min Order:
+                                                    </Form.Label>
+                                                            <Form.Label
+                                                                htmlFor="minOrder"
+                                                                column md={1}>
+                                                                From
+                                                            </Form.Label>
+                                                            <Col md={2}>
+                                                                <Form.Control
+                                                                    type="number"
+                                                                    name="fee"
+                                                                    id="fee"
+                                                                    defaultValue="%"
+                                                                />
+                                                            </Col>
+
+                                                            <Form.Label column md={1}>
+                                                                To
                                                             </Form.Label>
 
                                                             <Col md={2}>
@@ -70,20 +140,7 @@ const Payment = () => {
                                                                 />
                                                             </Col>
 
-                                                            <Form.Label htmlFor="uname2" column sm={2}>
-                                                                -
-                                                            </Form.Label>
-
-                                                            <Col md={2}>
-                                                                <Form.Control
-                                                                    type="number"
-                                                                    name="fee"
-                                                                    id="fee"
-                                                                    defaultValue="%"
-                                                                />
-                                                            </Col>
-
-                                                            <Form.Label htmlFor="uname2" column sm={2}>
+                                                            <Form.Label htmlFor="fee" column sm={1}>
                                                                 Fee (%)
                                                             </Form.Label>
 
@@ -100,14 +157,14 @@ const Payment = () => {
 
                                                     </Form>
                                                 ))}
-                                                <Col sm={2}>
-                                                <Button
-                                                    variant="outline-success"
-                                                    className='payment-add-fee'
-                                                    onClick={addOrderFeeForm}
-                                                >
-                                                   <i className="mdi mdi-plus"></i>
-                                                </Button>
+                                                <Col md={1}>
+                                                    <Button
+                                                        variant="outline-success"
+                                                        className='payment-add-fee'
+                                                        onClick={addOrderFeeForm}
+                                                    >
+                                                        <i className="mdi mdi-plus"></i>
+                                                    </Button>
                                                 </Col>
 
                                                 <div className="text-end mt-3">
@@ -120,38 +177,89 @@ const Payment = () => {
 
                                     />
                                 </Tab.Pane>
-                                <Tab.Pane eventKey="discount">
+                                <Tab.Pane eventKey="subscription">
                                     <Step
-                                        id="discount"
+                                        id="subscription"
                                         render={({ }) => (
                                             <Form>
                                                 <Form.Group as={Row} className="mb-3">
-                                                    <Form.Label htmlFor="fname2" column md={3}>
-                                                        Enter number to get discount
+                                                    <Form.Label
+                                                        htmlFor="basePrice"
+                                                        column md={4}>
+                                                        Enter Base Price
                                                     </Form.Label>
-                                                    <Col md={9}>
+                                                    <Col md={2}>
                                                         <Form.Control
-                                                            type="text"
-                                                            name="phoneNo"
-                                                            id="phoneNo"
-                                                            placeholder="phone number"
+                                                            type="number"
+                                                            name="basePrice"
+                                                            id="basePrice"
+                                                            placeholder="base price"
+                                                            value={basePrice}
+                                                            onChange={(e) => setBasePrice(parseFloat(e.target.value))}
                                                         />
                                                     </Col>
                                                 </Form.Group>
 
                                                 <Form.Group as={Row} className="mb-3">
-                                                    <Form.Label htmlFor="lname2" column md={3}>
-                                                        How many discount (%)
+                                                    <Form.Label
+                                                        htmlFor="subscriptionDuration"
+                                                        column md={4}>
+                                                        Choose Subscription Duration
                                                     </Form.Label>
-                                                    <Col md={9}>
-                                                        <Form.Control
-                                                            type="number"
-                                                            name="discount"
-                                                            id="discount"
-                                                            placeholder="discount (%)"
-                                                        />
+                                                    <Col md={2}>
+                                                        <Dropdown
+                                                            style={{ border: '2px solid #d3d3d3', borderRadius: '5px' }}
+                                                            onSelect={handleSelect}
+                                                        >
+                                                            <Dropdown.Toggle
+                                                                variant="none"
+                                                                id="subscriptionDuration"
+                                                            > {subscriptionDuration !== null ? `${subscriptionDuration} Months` : 'Duration'}  <i className="mdi mdi-chevron-down"></i>
+                                                                <Dropdown.Menu>
+                                                                    <Dropdown.Item eventKey="6">6 Months</Dropdown.Item>
+                                                                    <Dropdown.Item eventKey="12">12 Months</Dropdown.Item>
+                                                                </Dropdown.Menu>
+
+                                                            </Dropdown.Toggle>
+                                                        </Dropdown>
                                                     </Col>
                                                 </Form.Group>
+
+                                                <Form.Group as={Row} className="mb-3">
+                                                    <Form.Label
+                                                        htmlFor="discountPercentage"
+                                                        column md={4}>
+                                                        Enter Discount Percentage
+                                                    </Form.Label>
+                                                    <Col md={2}>
+                                                        <Form.Control
+                                                            type="number"
+                                                            name="discountPercentage"
+                                                            id="discountPercentage"
+                                                            placeholder="Percentage"
+                                                            value={discountPercentage}
+                                                            onChange={(e) => setDiscountPercentage(parseInt(e.target.value))}
+                                                        />
+                                                    </Col>
+                                                    <Button
+                                                        variant="outline-success"
+                                                        className='payment-saveButton'
+                                                        onClick={(e) => calculatePrice(e)}
+                                                    >
+                                                        Calculate Price</Button>
+                                                </Form.Group>
+
+                                                <Form.Group as={Row} className="mb-3">
+                                                    <Form.Label htmlFor="lname2" column md={4}>
+                                                        Final Price
+                                                    </Form.Label>
+                                                    <Col md={2}>
+                                                        <Form.Label htmlFor="lname2" >
+                                                            {calculatedFinalPrice} OMR
+                                                        </Form.Label>
+                                                    </Col>
+                                                </Form.Group>
+
                                                 <Button
                                                     variant="outline-success"
                                                     className='payment-saveButton' >
@@ -168,7 +276,7 @@ const Payment = () => {
                     </Steps>
                 </Wizard>
             </Card.Body>
-        </Card>
+        </Card >
     );
 };
 
