@@ -87,13 +87,11 @@ const Payment = () => {
                                         eventKey="fee"
                                         className="rounded-0 pt-2 pb-2">
                                         <span className="d-none d-sm-inline">Order Fee</span>
-                                        <i className="mdi mdi-percent-outline me-1"></i>
                                     </Nav.Link>
                                 </Nav.Item>
                                 <Nav.Item as="li">
                                     <Nav.Link as={Link} to="#" eventKey="subscription" className="rounded-0 pt-2 pb-2">
                                         <span className="d-none d-sm-inline">Space privider subscription</span>
-                                        <i className="mdi mdi-brightness-percent me-1"></i>
                                     </Nav.Link>
                                 </Nav.Item>
 
