@@ -64,7 +64,7 @@ const Discount = () => {
                 <Form>
                     <Form.Group as={Row} className="mb-3">
                         <Form.Label htmlFor="fname2" column md={3}>
-                            Enter number to get discount
+                            Enter phone number to get discount
                         </Form.Label>
                         <Col md={9}>
                             <Form.Control
@@ -122,11 +122,11 @@ const FormDiscount = () => {
 
     return (
         <>
-            {/* <Row>
-                <Col xl={8}> */}
+            <Row>
+                <Col xl={8}>
             <Discount />
-            {/* </Col>
-            </Row> */}
+            </Col>
+            </Row>
         </>
     );
 };
