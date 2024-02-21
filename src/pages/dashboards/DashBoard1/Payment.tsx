@@ -300,11 +300,11 @@ const FormPayment = () => {
 
     return (
         <>
-            {/* <Row>
-                <Col xl={8}> */}
+            <Row>
+                <Col xl={8}>
             <Payment />
-            {/* </Col>
-            </Row> */}
+            </Col>
+            </Row>
         </>
     );
 };
