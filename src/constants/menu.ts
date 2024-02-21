@@ -64,12 +64,11 @@ const MENU_ITEMS: MenuItemTypes[] = [
     },
 
     {
-        key: 'page-pricing',
-        label: 'Loyalty',
+        key: 'apps-discount',
+        label: 'Discount',
         isTitle: false,
-        icon: 'mdi mdi-package',
-        url: '/pages/pricing',
-        parentKey: 'extra-pages',
+        icon: 'mdi mdi-percent-outline',
+        url: '/apps/discount',
     },
 
     {
@@ -156,7 +155,7 @@ const MENU_ITEMS: MenuItemTypes[] = [
             },
             {
                 key: 'page-pricing',
-                label: 'Pricing',
+                label: 'Loyalty',
                 url: '/pages/pricing',
                 parentKey: 'extra-pages',
             },
