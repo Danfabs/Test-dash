@@ -66,7 +66,7 @@ const Discount = () => {
                         <Form.Label htmlFor="fname2" column md={3}>
                             Enter phone number to get discount
                         </Form.Label>
-                        <Col md={9}>
+                        <Col md={4}>
                             <Form.Control
                                 type="text"
                                 name="phoneNo"
@@ -79,7 +79,7 @@ const Discount = () => {
                         <Form.Label htmlFor="lname2" column md={3}>
                             How many discount (%)
                         </Form.Label>
-                        <Col md={9}>
+                        <Col md={4}>
                             <Form.Control
                                 type="number"
                                 name="discount"
