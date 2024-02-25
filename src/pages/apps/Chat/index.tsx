@@ -40,10 +40,10 @@ const ChatApp = () => {
 
     return (
         <Row>
-            <Col xl={3} lg={4}>
+            {/* <Col xl={3} lg={4}>
                 <ChatUsers onUserSelect={onUserChange} />
-            </Col>
-            <Col xl={9} lg={8}>
+            </Col> */}
+            <Col xl={12} lg={8}>
                 <ChatArea selectedUser={selectedUser} />
             </Col>
         </Row>
