@@ -18,6 +18,8 @@ import { useRedux } from '../hooks';
 
 // lazy load all the views
 // auth
+const Test = React.lazy(() => import('../pages/test'));
+
 const Login = React.lazy(() => import('../pages/auth/Login'));
 const Register = React.lazy(() => import('../pages/auth/Register'));
 const Confirm = React.lazy(() => import('../pages/auth/Confirm'));
@@ -204,6 +206,11 @@ const AllRoutes = () => {
         {
           path: 'apps',
           children: [
+
+            {
+              path: 'tset',
+              element: <LoadComponent component={Test} />,
+            },
             {
               path: 'troubletickets',
               element: <LoadComponent component={TroubleTickets} />,
