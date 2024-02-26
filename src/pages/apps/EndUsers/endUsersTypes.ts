@@ -1,15 +1,9 @@
 export type EndUsersList = {
     id: number;
-    title: string;
-    category: string;
-    state: string;
-    shortDesc: string;
-    question: number;
-    comment: number;
-    teamMembers: {
-        image: string;
-        name: string;
-    }[];
-    progress: number;
-    variant: string;
+    email_address: string;
+    gender: string;
+    is_partner: boolean;
+    name: string;
+    mobile_number:string;
+    birthdate:string;
 };
