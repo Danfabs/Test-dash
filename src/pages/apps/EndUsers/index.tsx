@@ -1,12 +1,8 @@
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-
-
 // bootstrap
 import Button from 'react-bootstrap/Button';
 import { Badge, Card, Col, Row } from 'react-bootstrap';
-import cardImg from '../../../assets/images/gallery/user4.jpg';
-
 // types
 import { EndUsersList } from './endUsersTypes';
 // hooks
@@ -26,7 +22,7 @@ const SingleUser = ({ users }: { users: EndUsersList[] }) => {
                         return (
                             <Col xl={4} key={index.toString()}>
                                 <Card>
-                                    <Card.Img src={cardImg} />
+                                {user.photo_url && <Card.Img src={user.photo_url} alt={`User ${user.name}`} />}
                                     <Card.Body className="project-box">
 
                                         <h4 className="mt-0">

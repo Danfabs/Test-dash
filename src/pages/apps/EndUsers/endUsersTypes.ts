@@ -6,4 +6,5 @@ export type EndUsersList = {
     name: string;
     mobile_number:string;
     birthdate:string;
+    photo_url:string| null;
 };

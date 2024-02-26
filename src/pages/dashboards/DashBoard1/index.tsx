@@ -9,11 +9,9 @@ import UsersChart from './UsersChart';
 import StatisticsChart from './StatisticsChart';
 import RevenueChart from './RevenueChart';
 import Users from './Users';
-
-// dummy data
-import { messages ,EndUsersDetails } from './data';
-import { ProviderMessages , ProviderServicesDetails } from '../../apps/ProviderServices/providerdata';
 import ReservationInfoWidget4 from '../../../components/ReservationInfoWidget4';
+
+
 const DashBoard1 = () => {
     // set pagetitle
     usePageTitle({

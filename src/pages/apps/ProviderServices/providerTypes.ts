@@ -8,10 +8,11 @@ export type Message = {
 
 export type ProviderList = {
     id: number;
+    email_address: string;
+    gender: string;
+    is_partner: boolean;
     name: string;
-    startDate: string;
-    dueDate: string;
-    status: string;
-    variant: string;
-    clients: string;
+    mobile_number:string;
+    birthdate:string;
+    photo_url:string | null
 };
