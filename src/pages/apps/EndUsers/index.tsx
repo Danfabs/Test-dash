@@ -22,7 +22,7 @@ const SingleUser = ({ users }: { users: EndUsersList[] }) => {
                         return (
                             <Col xl={4} key={index.toString()}>
                                 <Card>
-                                {user.photo_url && <Card.Img src={user.photo_url} alt={`User ${user.name}`} />}
+                                    {user.photo_url && <Card.Img src={user.photo_url} alt={`User ${user.name}`} />}
                                     <Card.Body className="project-box">
 
                                         <h4 className="mt-0">
@@ -116,26 +116,36 @@ const SingleUser = ({ users }: { users: EndUsersList[] }) => {
 
 const Users = () => {
     const [users, setUsers] = useState<EndUsersList[]>([]);
+    let headers = new Headers();
+
+    headers.append("Content-Type", "application/json");
+    headers.append("Accept", "application/json");
+
+    headers.append("Access-Control-Allow-Origin", "http://localhost:3000");
+    headers.append("Access-Control-Allow-Credentials", "true");
 
     useEffect(() => {
-        const fetchUsers = async () => {
-            try {
-                const usersCollection = projectFirestore.collection('slot3_users'); // Replace 'users' with your collection name
-                const snapshot = await usersCollection.get();
+        async function fetchData() {
+            await fetch(
+                `https://us-central1-slot-145a8.cloudfunctions.net/getUsers`
+            )
+                .then((res) => res.json())
+                .then(
+                    (result) => {
+                        setUsers(result.data);
+                        console.log("result: ", result.data)
+                    },
 
-                const usersData = snapshot.docs.map((doc) => ({
-                    id: doc.id,
-                    ...doc.data(),
-                })) as unknown as EndUsersList[];
+                    (error) => {
+                        console.log("error: ", error);
+                    }
+                );
+        }
+        fetchData();
 
-                setUsers(usersData);
-            } catch (error) {
-                console.error('Error fetching users:', error);
-            }
-        };
-
-        fetchUsers();
     }, []);
+
+
     // set pagetitle
     usePageTitle({
         title: 'Projects',
