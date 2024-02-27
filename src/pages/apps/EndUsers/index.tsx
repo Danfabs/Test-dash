@@ -53,7 +53,7 @@ const SingleUser = ({ users }: { users: EndUsersList[] }) => {
 
                                         <ul className="list-inline">
 
-                                            <li className="list-inline-item me-4">
+                                            <li className="list-inline-item me-3">
                                                 <h5 className="mb-2 fw-semibold">Mobile Number</h5>
                                                 <p className="mb-0">{user.mobile_number}</p>
                                             </li>
@@ -63,7 +63,7 @@ const SingleUser = ({ users }: { users: EndUsersList[] }) => {
                                                 <p className="mb-0">{user.email_address}</p>
                                             </li>
 
-                                            <li className="list-inline-item me-4">
+                                            <li className="list-inline-item ">
                                                 <h5 className="mb-2 fw-semibold">Gender</h5>
                                                 <p className="mb-0">{user.gender}</p>
                                             </li>
