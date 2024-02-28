@@ -220,7 +220,7 @@ const AllRoutes = () => {
               element: <LoadComponent component={ProviderServices} />,
             },
             {
-              path: 'viewServices',
+              path: 'viewServices/:partnerId',
               element: <LoadComponent component={ViewServices} />,
             },
             {

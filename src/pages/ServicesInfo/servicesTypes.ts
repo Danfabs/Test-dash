@@ -8,10 +8,18 @@ export type Message = {
 
 export type ServicesList = {
     id: number;
-    name: string;
-    startDate: string;
-    dueDate: string;
-    status: string;
-    variant: string;
-    clients: string;
+    spaceName: string;
+    spaceDescription: string;
+    spaceLogo: string;
+    spacePhoto: string;
+    totalBookings: number;
+    slotsMinPrice : number;
+    minimumReservationFee : number;
+    location: {
+        country: string;
+        address: string;
+        city: string;
+      };
+      spaceAmenities: string[];
+
 };

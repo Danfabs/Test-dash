@@ -2,12 +2,14 @@ import { Badge, Card, Dropdown, Row, Table, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { usePageTitle } from '../../../hooks';
 import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 //image
 import cardImg from '../../../assets/images/gallery/1.jpg';
 //Buttons
 import Button from 'react-bootstrap/Button';
-import { ServicesDetails } from '../../ServicesInfo/servicesdata';
+// import { ServicesDetails } from '../../ServicesInfo/servicesdata';
 import { ServicesList } from '../../ServicesInfo/servicesTypes';
 
 type ServicesDetailsProps = {
@@ -19,95 +21,91 @@ const ViewServices = ({ servicesDetails }: ServicesDetailsProps) => {
     const navigate = useNavigate();
 
     const handleViewSlotsClick = () => {
-        // Navigate to another page, e.g., '/slots'
         navigate('../viewSlots');
-      };
+    };
 
     return (
         <div>
             <h4 className="mt-0">Services</h4>
             <Row>
-                {(servicesDetails || []).map((Service, index) => {
+                {(servicesDetails || []).map((service, index) => {
+                    const { location } = service;
+                    const { spaceAmenities } = service;
                     return (
                         <Col xl={4} key={index.toString()}>
                             <Card>
-                                <Card.Img src={cardImg} />
+                                {service.spacePhoto && <Card.Img src={service.spacePhoto} alt={`Space ${service.spacePhoto}`} />}
                                 <Card.Body className="project-box">
                                     <h4 className="mt-0">
                                         <Link to="#" className="text-dark">
-                                        Service Name
+                                            {service.spaceName}
                                         </Link>
                                     </h4>
 
-                                    <ul className="list-inline">
-                                    <p className="mb-0">
-                                    Services Location
-                                    </p>
-                                    </ul>
-                                   
 
                                     <ul className="list-inline">
-                                    <p className="mb-0">
-                                    Services Description
+                                        <p className="mb-0">
+                                            {service.spaceDescription}
                                         </p>
                                     </ul>
 
-                                    
+
                                     <ul className="list-inline">
 
                                         <li className="list-inline-item me-4">
-                                            <h5 className="mb-2 fw-semibold">Minimum
-                                                Reservation Notice</h5>
-                                            <p className="mb-0">88</p>
+                                            <h5 className="mb-2 fw-semibold">Slots Minimum Price</h5>
+                                            <p className="mb-0">{service.slotsMinPrice}</p>
                                         </li>
 
-                                        <li className="list-inline-item">
-                                            <h5 className="mb-2 fw-semibold">Space Amenities</h5>
-                                            <i className="mdi mdi-wifi"></i>
-                                            <i className="mdi mdi-parking"></i>
-                                            <i className="mdi mdi-human-male-female"></i>
+                                        <li className="list-inline-item me-4">
+                                            <h5 className="mb-2 fw-semibold">Minimum Reservation Fee</h5>
+                                            <p className="mb-0">{service.minimumReservationFee}</p>
                                         </li>
 
+                                        {spaceAmenities && spaceAmenities.length > 0 && (
+                                            <li className="list-inline-item me-4">
+                                                <h5 className="mb-2 fw-semibold">Space Amenities</h5>
+                                                {spaceAmenities.map((amenity, amenityIndex) => (
+                                                    <i key={amenityIndex} className={`mdi mdi-${amenity.toLowerCase()}`}></i>
+                                                ))}
+                                                {/* <i className="mdi mdi-wifi"></i>
+                                                <i className="mdi mdi-parking"></i>
+                                                <i className="mdi mdi-human-male-female"></i> */}
+                                            </li>
+                                        )}
                                     </ul>
 
                                     <ul className="list-inline">
                                         <li className="list-inline-item me-4">
                                             <h5 className="mb-2 fw-semibold">Country</h5>
-                                            <p className="mb-0">Oman</p>
+                                            <p className="mb-0">{location.country}</p>
 
 
                                         </li>
                                         <li className="list-inline-item me-4">
 
                                             <h5 className="mb-2 fw-semibold">City</h5>
-                                            <p className="mb-0">Muscat</p>
+                                            <p className="mb-0">{location.city}</p>
                                         </li>
                                         <li className="list-inline-item">
 
                                             <h5 className="mb-2 fw-semibold">Address</h5>
-                                            <p className="mb-0">Al-Khoud</p>
+                                            <p className="mb-0">{location.address}</p>
                                         </li>
-                                       
+
                                     </ul>
 
                                     <ul className="list-inline">
-                                    <li className="list-inline-item">
-                                    <Button variant="success" onClick={handleViewSlotsClick}>View Slots</Button>
-                                    </li>
+                                        <li className="list-inline-item">
+                                            <Button variant="success" onClick={handleViewSlotsClick}>View Slots</Button>
+                                        </li>
                                     </ul>
-
-                                    {/* <h5 className="mb-2 fw-semibold">
-                                        Progress
-                                    </h5>
-                                   
-                                    <Button variant="danger">Reject</Button>
-                                    <Button variant="secondary">Suspend </Button> */}
 
                                 </Card.Body>
                             </Card>
                         </Col>
-                        );
-                    })}
+                    );
+                })}
             </Row>
         </div>
 
@@ -115,6 +113,32 @@ const ViewServices = ({ servicesDetails }: ServicesDetailsProps) => {
 };
 
 const Services = () => {
+    const { partnerId } = useParams();
+    const [spaces, setSpaces] = useState<ServicesList[]>([]);
+    console.log("partnerId", partnerId)
+
+    useEffect(() => {
+        async function fetchData() {
+            await fetch(
+                `https://us-central1-slot-145a8.cloudfunctions.net/getPartnerSpaces?partnerId=${partnerId}`
+            )
+                .then((res) => res.json())
+                .then(
+                    (result) => {
+                        setSpaces(result.data);
+                        console.log("spaces: ", result.data)
+                    },
+
+                    (error) => {
+                        console.log("error: ", error);
+                    }
+                );
+        }
+        fetchData();
+
+    }, [partnerId]);
+
+
     // set pagetitle
     usePageTitle({
         title: 'Projects',
@@ -133,8 +157,8 @@ const Services = () => {
 
     return (
         <>
-           
-            <ViewServices servicesDetails={ServicesDetails} />
+
+            <ViewServices servicesDetails={spaces} />
         </>
     );
 };

@@ -18,7 +18,7 @@ const ProviderServices = (props: UsersDetailsProps) => {
         const fetchUsers = async () => {
             try {
                 const usersCollection = projectFirestore.collection('slot3_users');
-                const snapshot = await usersCollection.where('is_partner', '==', true).get();
+                const snapshot = await usersCollection.where('isPartner', '==', true).get();
 
                 const usersData = snapshot.docs.map((doc) => ({
                     id: doc.id,
@@ -64,7 +64,8 @@ const ProviderServices = (props: UsersDetailsProps) => {
                                             </li>
                                         </ul>
 
-                                    <Link to="../ViewServices">
+                                    <Link to={`../ViewServices/${user.id}`}>
+                                    {/* <Link to="../ViewServices"> */}
                                         Space Name
                                     </Link>
 

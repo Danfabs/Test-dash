@@ -116,13 +116,7 @@ const SingleUser = ({ users }: { users: EndUsersList[] }) => {
 
 const Users = () => {
     const [users, setUsers] = useState<EndUsersList[]>([]);
-    let headers = new Headers();
 
-    headers.append("Content-Type", "application/json");
-    headers.append("Accept", "application/json");
-
-    headers.append("Access-Control-Allow-Origin", "http://localhost:3000");
-    headers.append("Access-Control-Allow-Credentials", "true");
 
     useEffect(() => {
         async function fetchData() {
