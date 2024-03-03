@@ -1,7 +1,7 @@
 import { Col, Row } from 'react-bootstrap';
 
 // component
-import BranchesWidget1 from '../../../components/BranchesWidget1';
+import PlacesWidget1 from '../../../components/PlacesWidget1';
 import ReservationWidget2 from '../../../components/ReservationWidget2';
 import ReservationInfoWidget4 from '../../../components/ReservationInfoWidget4';
 import AmountWidget3 from '../../../components/AmountWidget3';
@@ -11,12 +11,12 @@ const Statistics = () => {
         <div >
         <Row className="no-gutters">
             <Col className="mx-auto">
-                <BranchesWidget1
-                    title="Branches"
+                <PlacesWidget1
+                    title="Places"
                     // data={58}
                     stats={256}
                     color={'#f05050'}
-                    subTitle="Branches"
+                    subTitle="Places"
                 />
             </Col>
            

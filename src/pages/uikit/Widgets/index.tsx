@@ -4,7 +4,7 @@ import { Col, Row } from 'react-bootstrap';
 import { usePageTitle } from '../../../hooks';
 
 // component
-import BranchesWidget1 from '../../../components/BranchesWidget1';
+import BranchesWidget1 from '../../../components/PlacesWidget1';
 import StatisticsWidget2 from '../../../components/AmountWidget3';
 import StatisticsWidget3 from '../../../components/StatisticsWidget3';
 import TeamMembers from '../../../components/TeamMembers';
