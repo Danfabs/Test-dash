@@ -46,6 +46,14 @@ const MENU_ITEMS: MenuItemTypes[] = [
         icon: 'mdi mdi-account-multiple',
         url: '/apps/providerService',
     },
+
+    {
+        key: 'apps-viewSpaces',
+        label: 'ViewSpaces',
+        isTitle: false,
+        icon: 'mdi mdi-account-multiple',
+        url: '/apps/viewSpaces',
+    },
     // { key: 'Sales Report', label: 'Sales Report', isTitle: true },
     {
         key: 'apps-endUsers',

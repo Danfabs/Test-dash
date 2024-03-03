@@ -3,7 +3,7 @@ import Chart from 'react-apexcharts';
 import { ApexOptions } from 'apexcharts';
 import { projectFirestore } from '../firebase';
 import { useEffect, useState } from 'react';
-
+import { useNavigate } from 'react-router-dom';
 
 type PlacesWidget1Props = {
     title: string;
@@ -15,7 +15,7 @@ type PlacesWidget1Props = {
 
 const PlacesWidget1 = ({ title, color, stats, subTitle }: PlacesWidget1Props) => {
     const [totalPlaces, setTotalPlaces] = useState<number>(0);
-
+    const navigate = useNavigate();
     useEffect(() => {
         // Reference to the Firestore collection
         const spacesCollection = projectFirestore.collection('slot3_spaces');
@@ -83,7 +83,9 @@ const PlacesWidget1 = ({ title, color, stats, subTitle }: PlacesWidget1Props) =>
         colors: [color],
     };
 
-    // const apexData = [data];
+    const handleShowAllPlacesClick = () => {
+        navigate('/apps/viewSpaces');
+    };
 
     return (
         <Card>
@@ -93,7 +95,7 @@ const PlacesWidget1 = ({ title, color, stats, subTitle }: PlacesWidget1Props) =>
                         <i className="mdi mdi-dots-vertical"></i>
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
-                        <Dropdown.Item>Show All Places</Dropdown.Item>
+                        <Dropdown.Item onClick={handleShowAllPlacesClick}>Show All Places</Dropdown.Item>
                     </Dropdown.Menu>
                 </Dropdown>
 

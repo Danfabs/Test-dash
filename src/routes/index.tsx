@@ -35,6 +35,7 @@ const DashBoard1 = React.lazy(() => import('../pages/dashboards/DashBoard1/'));
 const TroubleTickets = React.lazy(() => import('../pages/dashboards/DashBoard1/TroubleTickets'));
 const ProviderServices = React.lazy(() => import('../pages/dashboards/DashBoard1/ProviderServices'));
 const ViewServices = React.lazy(() => import('../pages/dashboards/DashBoard1/ViewServices'));
+const ViewSpaces = React.lazy(() => import('../pages/dashboards/DashBoard1/ViewSpaces'));
 const ViewSlots = React.lazy(() => import('../pages/dashboards/DashBoard1/ViewSlots'));
 const ViewReservation = React.lazy(() => import('../pages/dashboards/DashBoard1/ViewReservation'));
 const Discount = React.lazy(() => import('../pages/dashboards/DashBoard1/Discount'));
@@ -222,6 +223,10 @@ const AllRoutes = () => {
             {
               path: 'viewServices/:partnerId',
               element: <LoadComponent component={ViewServices} />,
+            },
+            {
+              path: 'viewSpaces',
+              element: <LoadComponent component={ViewSpaces} />,
             },
             {
               path: 'viewSlots',
