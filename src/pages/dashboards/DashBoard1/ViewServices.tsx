@@ -140,7 +140,6 @@ const Services = () => {
     }, [partnerId]);
 
 
-    // set pagetitle
     usePageTitle({
         title: 'Projects',
         breadCrumbItems: [
