@@ -4,6 +4,7 @@ import { usePageTitle } from '../../../hooks';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { projectFirestore } from '../../../firebase';
 
 //image
 import cardImg from '../../../assets/images/gallery/1.jpg';
@@ -16,14 +17,16 @@ type ServicesDetailsProps = {
     servicesDetails: ServicesList[];
 };
 
+type ServicesListWithId = ServicesList & { id: string };
+
+
 const ViewServices = ({ servicesDetails }: ServicesDetailsProps) => {
 
     const navigate = useNavigate();
 
-    const handleViewSlotsClick = (service: ServicesList) => {
-        navigate(`../viewSlots/${service.id}`);
+    const handleViewSlotsClick = (documentId: string) => {
+        navigate(`../viewSlots/${documentId}`);
     };
-
     return (
         <div>
             <h4 className="mt-0">Services</h4>
@@ -69,8 +72,8 @@ const ViewServices = ({ servicesDetails }: ServicesDetailsProps) => {
                                                     <i key={amenityIndex} className={`mdi mdi-${amenity.toLowerCase()}`}></i>
                                                 ))}
                                                 {/* <i className="mdi mdi-wifi"></i>
-                                                <i className="mdi mdi-parking"></i>
-                                                <i className="mdi mdi-human-male-female"></i> */}
+                                                    <i className="mdi mdi-parking"></i>
+                                                    <i className="mdi mdi-human-male-female"></i> */}
                                             </li>
                                         )}
                                     </ul>
@@ -97,7 +100,7 @@ const ViewServices = ({ servicesDetails }: ServicesDetailsProps) => {
 
                                     <ul className="list-inline">
                                         <li className="list-inline-item">
-                                            <Button variant="success" onClick={() => { handleViewSlotsClick(service) }}>View Slots</Button>
+                                            <Button variant="success" onClick={() => { handleViewSlotsClick(service.id) }}>View Slots</Button>
                                         </li>
                                     </ul>
 
@@ -114,47 +117,26 @@ const ViewServices = ({ servicesDetails }: ServicesDetailsProps) => {
 
 const Services = () => {
     const { partnerId } = useParams();
-    const [spaces, setSpaces] = useState<ServicesList[]>([]);
-    console.log("partnerId", partnerId)
+    const [spaces, setSpaces] = useState<ServicesListWithId[]>([]);
+    console.log("partnerId", partnerId);
 
     useEffect(() => {
-        async function fetchData() {
-            await fetch(
-                `https://us-central1-slot-145a8.cloudfunctions.net/getPartnerSpaces?partnerId=${partnerId}`
-            )
-                .then((res) => res.json())
-                .then(
-                    (result) => {
-                        setSpaces(result.data);
-                        console.log("spalces: ", result.data)
-                    },
+                projectFirestore.collection('slot3_spaces')
+                    .where('createdBy', '==', partnerId)
+                    .get()
+                    .then((querySnapshot) => {
+                        const spacesWithId: ServicesListWithId[] = [];
+                        querySnapshot.forEach((doc) => {
+                            spacesWithId.push({ ...doc.data(), id: doc.id } as ServicesListWithId);
+                        });
 
-                    (error) => {
-                        console.log("error: ", error);
-                    }
-                );
-        }
-        fetchData();
-
-
-        async function fetchSpaceData() {
-            await fetch(
-                `https://us-central1-slot-145a8.cloudfunctions.net/getSpaces`
-            )
-                .then((res) => res.json())
-                .then(
-                    (result) => {
-                        setSpaces(result.data);
-                        console.log("getSpaceById: ", result.data)
-                    },
-
-                    (error) => {
-                        console.log("error: ", error);
-                    }
-                );
-        }
-        fetchSpaceData();
-
+                        setSpaces(spacesWithId);
+                        console.log("spaces: ", spacesWithId);
+                    })
+                    .catch((error) => {
+                        console.error("Error fetching data from Firestore:", error);
+                    });
+        
     }, [partnerId]);
 
 

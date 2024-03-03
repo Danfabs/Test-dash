@@ -229,7 +229,7 @@ const AllRoutes = () => {
               element: <LoadComponent component={ViewSpaces} />,
             },
             {
-              path: 'viewSlots',
+              path: 'viewSlots/:spaceId',
               element: <LoadComponent component={ViewSlots} />,
             },
             {
