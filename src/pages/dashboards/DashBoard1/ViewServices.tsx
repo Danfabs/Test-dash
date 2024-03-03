@@ -21,12 +21,13 @@ type ServicesListWithId = ServicesList & { id: string };
 
 
 const ViewServices = ({ servicesDetails }: ServicesDetailsProps) => {
-
     const navigate = useNavigate();
 
     const handleViewSlotsClick = (documentId: string) => {
         navigate(`../viewSlots/${documentId}`);
     };
+
+    
     return (
         <div>
             <h4 className="mt-0">Services</h4>
