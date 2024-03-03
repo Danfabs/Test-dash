@@ -7,7 +7,7 @@ export type Message = {
 };
 
 export type ServicesList = {
-    id: number;
+    id: string;
     spaceName: string;
     spaceDescription: string;
     spaceLogo: string;

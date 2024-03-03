@@ -20,8 +20,8 @@ const ViewServices = ({ servicesDetails }: ServicesDetailsProps) => {
 
     const navigate = useNavigate();
 
-    const handleViewSlotsClick = () => {
-        navigate('../viewSlots');
+    const handleViewSlotsClick = (service: ServicesList) => {
+        navigate(`../viewSlots/${service.id}`);
     };
 
     return (
@@ -97,7 +97,7 @@ const ViewServices = ({ servicesDetails }: ServicesDetailsProps) => {
 
                                     <ul className="list-inline">
                                         <li className="list-inline-item">
-                                            <Button variant="success" onClick={handleViewSlotsClick}>View Slots</Button>
+                                            <Button variant="success" onClick={() => { handleViewSlotsClick(service) }}>View Slots</Button>
                                         </li>
                                     </ul>
 
@@ -126,7 +126,7 @@ const Services = () => {
                 .then(
                     (result) => {
                         setSpaces(result.data);
-                        console.log("spaces: ", result.data)
+                        console.log("spalces: ", result.data)
                     },
 
                     (error) => {
@@ -135,6 +135,25 @@ const Services = () => {
                 );
         }
         fetchData();
+
+
+        async function fetchSpaceData() {
+            await fetch(
+                `https://us-central1-slot-145a8.cloudfunctions.net/getSpaces`
+            )
+                .then((res) => res.json())
+                .then(
+                    (result) => {
+                        setSpaces(result.data);
+                        console.log("getSpaceById: ", result.data)
+                    },
+
+                    (error) => {
+                        console.log("error: ", error);
+                    }
+                );
+        }
+        fetchSpaceData();
 
     }, [partnerId]);
 
