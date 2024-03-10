@@ -7,11 +7,15 @@ export type Message = {
 };
 
 export type SlotsList = {
-    id: number;
-    name: string;
-    startDate: string;
-    dueDate: string;
-    status: string;
-    variant: string;
-    clients: string;
+    documentId: string;
+    slotName: string;
+    slotPhoto: string;
+    slotDescription: string;
+    seatsAvailable: number;
+    scheme: string;
+    makeupBuffer: string;
+    basePricing: {
+        minimumDuration: number;
+        price: number;
+      };
 };

@@ -7,8 +7,6 @@ import { Badge, Card, Col, Row } from 'react-bootstrap';
 import { SpacesList } from '../../apps/Spaces/spacesTypes';
 // hooks
 import { usePageTitle } from '../../../hooks';
-//firebase
-import { projectFirestore } from '../../../firebase';
 
 
 
@@ -58,9 +56,6 @@ const ViewSpaces = ({ spaces }: { spaces: SpacesList[] }) => {
                                                     {spaceAmenities.map((amenity, amenityIndex) => (
                                                         <i key={amenityIndex} className={`mdi mdi-${amenity.toLowerCase()}`}></i>
                                                     ))}
-                                                    {/* <i className="mdi mdi-wifi"></i>
-                                                    <i className="mdi mdi-parking"></i>
-                                                    <i className="mdi mdi-human-male-female"></i> */}
                                                 </li>
                                             )}
                                         </ul>

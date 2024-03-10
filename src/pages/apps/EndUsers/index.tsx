@@ -47,9 +47,9 @@ const SingleUser = ({ users }: { users: EndUsersList[] }) => {
                                         </ul>
 
 
-                                        <li className="list-inline-item me-4">
+                                        {/* <li className="list-inline-item me-4">
                                             <h5 className="mb-2 fw-semibold">Space Slot Type (Space , experince ...)</h5>
-                                        </li>
+                                        </li> */}
 
                                         <ul className="list-inline">
 
@@ -77,16 +77,16 @@ const SingleUser = ({ users }: { users: EndUsersList[] }) => {
 
 
                                             </li>
-                                            <li className="list-inline-item me-4">
+                                            {/* <li className="list-inline-item me-4">
 
                                                 <h5 className="mb-2 fw-semibold">City</h5>
                                                 <p className="mb-0">Muscat</p>
-                                            </li>
-                                            <li className="list-inline-item">
+                                            </li> */}
+                                            {/* <li className="list-inline-item">
 
                                                 <h5 className="mb-2 fw-semibold">Address</h5>
                                                 <p className="mb-0">Al-Khoud</p>
-                                            </li>
+                                            </li> */}
                                         </ul>
 
                                         {/* <Button  variant="success">Accept</Button>
@@ -121,7 +121,7 @@ const Users = () => {
     useEffect(() => {
         async function fetchData() {
             await fetch(
-                `https://us-central1-slot-145a8.cloudfunctions.net/getUsers`
+                `https://us-central1-slot-145a8.cloudfunctions.net/getAllUsers`
             )
                 .then((res) => res.json())
                 .then(

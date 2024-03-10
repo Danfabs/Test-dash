@@ -233,7 +233,7 @@ const AllRoutes = () => {
               element: <LoadComponent component={ViewSlots} />,
             },
             {
-              path: 'viewReservations',
+              path: 'viewReservations/:slotId',
               element: <LoadComponent component={ViewReservation} />,
             },
             {

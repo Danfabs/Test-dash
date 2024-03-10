@@ -1,101 +1,170 @@
 import { Badge, Card, Dropdown, Row, Table, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { usePageTitle } from '../../../hooks';
+import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 //image
 import cardImg from '../../../assets/images/gallery/1.jpg';
-//data
-import { ReservationsDetails } from '../../apps/Reservations/reservationdata'; 
 //types
 import { ReservationsList } from '../../apps/Reservations/reservationTypes';
 
 type ReservationsDetailsProps = {
-  reservationsDetails: ReservationsList[];
+    reservations: ReservationsList[];
 };
 
-const ViewReservation = ({ reservationsDetails }: ReservationsDetailsProps) => {
+const ViewReservation = ({ reservations }: ReservationsDetailsProps) => {
     return (
         <div>
             <h4 className="mt-0">Reservations</h4>
-            <Row>
-                {(reservationsDetails || []).map((reservation, index) => {
-                    return (
-                        <Col xl={4} key={index.toString()}>
-                            <Card>
-                                <Card.Img src={cardImg} />
-                                <Card.Body className="project-box">
-                                    <h4 className="mt-0">
-                                        <Link to="#" className="text-dark">
-                                            User Name
-                                        </Link>
-                                    </h4>
-
-                                    <ul className="list-inline">
-                                    <Badge  bg="success" >Status (Accepted or Rejected)</Badge>
-                                   </ul>
-                                   <ul className="list-inline">
-                                        <li className="list-inline-item me-4">
-
-                                            <h5 className="mb-2 fw-semibold">Booking Details:</h5>
-                                        </li>
+            {(!reservations || reservations.length === 0) ? (
+                <p>No Reservations available</p>
+            ) : (
+                <Row>
+                    {(reservations || []).map((reservation, index) => {
+                        const { paymentDetails } = reservation;
+                        const { location } = reservation;
+                        return (
+                            <Col xl={4} key={index.toString()}>
+                                <Card>
+                                    <Card.Img src={cardImg} />
+                                    <Card.Body className="project-box">
+                                        <h4 className="mt-0">
+                                            <Link to="#" className="text-dark">
+                                                {reservation.customerName}
+                                            </Link>
+                                        </h4>
 
                                         <ul className="list-inline">
-                                        <li className="list-inline-item me-4">
-                                        <h5 className="mb-2 fw-semibold">Date</h5>
-                                            <p className="mb-0">1/1/2024</p>
-                                        </li>
-                                        
-                                        <li className="list-inline-item me-4">
-                                        <h5 className="mb-2 fw-semibold">Time</h5>
-                                            <p className="mb-0">10:00 AM - 11:00 AM</p>
-                                        </li>
-
-                                        <li className="list-inline-item me-4">
-                                        <h5 className="mb-2 fw-semibold">Duration</h5>
-                                            <p className="mb-0">1 Hr</p>
-                                        </li>
-
-                                        <li className="list-inline-item me-4">
-                                        <h5 className="mb-2 fw-semibold">Price</h5>
-                                            <p className="mb-0">5 OMR</p>
-                                        </li>
-                                           
+                                            <Badge bg={
+                                                reservation.status === 'ACCEPTED' ? 'success' :
+                                                    reservation.status === 'REJECTED' ? 'danger' :
+                                                        reservation.status === 'PENDING' ? 'secondary' : 'light'
+                                            }>
+                                                {reservation.status}
+                                            </Badge>
                                         </ul>
+                                        <ul className="list-inline">
+                                            <li className="list-inline-item me-4">
+
+                                                <h5 className="mb-2 fw-semibold">Booking Details</h5>
+                                            </li>
+
+                                            <ul className="list-inline">
+                                                <li className="list-inline-item me-4">
+                                                    <h5 className="mb-2 fw-semibold">Date</h5>
+                                                    <p className="mb-0">{reservation.bookedDate}</p>
+                                                </li>
+
+                                                <li className="list-inline-item me-4">
+                                                    <h5 className="mb-2 fw-semibold">Time</h5>
+                                                    <p className="mb-0">{reservation.bookedTime}</p>
+                                                </li>
+
+
+                                                <li className="list-inline-item me-4">
+                                                    <h5 className="mb-2 fw-semibold">location</h5>
+                                                    <p className="mb-0">{location.address} {paymentDetails.currency}</p>
+                                                </li>
+
+                                            </ul>
 
                                         </ul>
 
                                         <ul className="list-inline">
-                                        <li className="list-inline-item me-4">
-                                    <Button variant="success">Accept</Button>
-                                    <Button variant="danger">Reject</Button>
-                                    {/* <Button variant="secondary">Suspend </Button> */}
-                                    </li>
-                                    </ul>
+                                            <li className="list-inline-item me-4">
 
-                                    {/* <ul className="list-inline">
-                                        <li className="list-inline-item me-4">
-                                            <h5 className="mb-2 fw-semibold">Payment info (Your business hasn't received the payment for this reservation)</h5>
-                                        </li>
+                                                <h5 className="mb-2 fw-semibold">Payment Details</h5>
+                                            </li>
 
-                                        <li className="list-inline-item">
-                                            <h5 className="mb-2 fw-semibold">ARRIVED</h5>
-                                        </li>
+                                            <ul className="list-inline">
+                                                <li className="list-inline-item me-4">
+                                                    <h5 className="mb-2 fw-semibold">Slot Fee</h5>
+                                                    <p className="mb-0">{paymentDetails.slotFee}</p>
+                                                </li>
 
-                                    </ul> */}
+                                                <li className="list-inline-item me-4">
+                                                    <h5 className="mb-2 fw-semibold">Tax</h5>
+                                                    <p className="mb-0">{paymentDetails.tax}</p>
+                                                </li>
 
-                                </Card.Body>
-                            </Card>
-                        </Col>
+                                                <li className="list-inline-item me-4">
+                                                    <h5 className="mb-2 fw-semibold">Voucher</h5>
+                                                    <p className="mb-0">{paymentDetails.voucher}</p>
+                                                </li>
+
+
+                                                <li className="list-inline-item me-4">
+                                                    <h5 className="mb-2 fw-semibold">Total Price</h5>
+                                                    <p className="mb-0">{paymentDetails.total} {paymentDetails.currency}</p>
+                                                </li>
+
+                                            </ul>
+
+                                        </ul>
+
+                                        <ul className="list-inline">
+                                            {reservation.status === 'ACCEPTED' && (
+                                                <li className="list-inline-item me-4">
+                                                    <Button variant="danger">Reject</Button>
+                                                </li>
+                                            )}
+                                            {reservation.status === 'REJECTED' && (
+                                                <li className="list-inline-item me-4">
+                                                    <Button variant="success" >Accept</Button>
+                                                </li>
+                                            )}
+
+                                            {reservation.status === 'PENDING' && (
+                                                <li className="list-inline-item me-4">
+                                                    <Button variant="danger">Reject</Button>
+                                                    <Button variant="success">Accept</Button>
+                                                </li>
+                                            )}
+                                        </ul>
+
+
+                                    </Card.Body>
+                                </Card>
+                            </Col>
                         );
                     })}
-            </Row>
+                </Row>
+            )}
         </div>
 
     );
 };
 
 const Reservations = () => {
-    // set pagetitle
+    const { slotId } = useParams();
+    const [reservations, setReservations] = useState<ReservationsList[]>([]);
+    console.log("SlotID", slotId);
+
+
+    useEffect(() => {
+        async function fetchData() {
+            await fetch(
+                `https://us-central1-slot-145a8.cloudfunctions.net/slotReservations?slotId=${slotId}`
+            )
+                .then((res) => res.json())
+                .then(
+                    (result) => {
+                        setReservations(result.reservations);
+                        console.log("Reservations: ", result.reservations)
+                    },
+
+                    (error) => {
+                        console.log("error: ", error);
+                    }
+                );
+        }
+        fetchData();
+
+
+    }, [slotId]);
+
+
     usePageTitle({
         title: 'Projects',
         breadCrumbItems: [
@@ -113,9 +182,9 @@ const Reservations = () => {
 
     return (
         <>
-            <ViewReservation reservationsDetails={ReservationsDetails} />
+            <ViewReservation reservations={reservations} />
         </>
     );
 };
 
-export default  Reservations ;
+export default Reservations;
