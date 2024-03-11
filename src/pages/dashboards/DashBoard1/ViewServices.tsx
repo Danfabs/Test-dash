@@ -6,8 +6,6 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { projectFirestore } from '../../../firebase';
 
-//image
-import cardImg from '../../../assets/images/gallery/1.jpg';
 //Buttons
 import Button from 'react-bootstrap/Button';
 // import { ServicesDetails } from '../../ServicesInfo/servicesdata';
