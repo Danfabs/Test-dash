@@ -15,26 +15,42 @@ type ReservationsDetailsProps = {
 
 };
 
-const ViewReservation = ({ reservations , setReservations}: ReservationsDetailsProps) => {
+const ViewReservation = ({ reservations, setReservations }: ReservationsDetailsProps) => {
     const { slotId } = useParams();
 
-    const handleAccept = async (reservationId: string ) => {
-        console.log("click");
+    const handleAccept = async (reservationId: string) => {
         try {
-          console.log('Accepting reservation with ID:', reservationId);
-          const response = await fetch(
-            `https://us-central1-slot-145a8.cloudfunctions.net/acceptReservation?slotId=${slotId}&reservationId=${reservationId}`,
-            {
-              method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        }
-          );
+            console.log('Accepting reservation with ID:', reservationId);
+            const response = await fetch(
+                `https://us-central1-slot-145a8.cloudfunctions.net/acceptReservation?slotId=${slotId}&reservationId=${reservationId}`,
+                {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                }
+            );
         } catch (error) {
-          console.error('Error accepting reservation:', error);
+            console.error('Error accepting reservation:', error);
         }
-      };
+    };
+
+    const handleReject = async (reservationId: string) => {
+        try {
+            console.log('Rejecting reservation with ID:', reservationId);
+            const response = await fetch(
+                `https://us-central1-slot-145a8.cloudfunctions.net/rejectReservation?slotId=${slotId}&reservationId=${reservationId}`,
+                {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                }
+            );
+        } catch (error) {
+            console.error('Error rejecting reservation:', error);
+        }
+    };
 
 
     return (
@@ -129,23 +145,30 @@ const ViewReservation = ({ reservations , setReservations}: ReservationsDetailsP
                                         <ul className="list-inline">
                                             {reservation.status === 'ACCEPTED' && (
                                                 <li className="list-inline-item me-4">
-                                                    <Button variant="danger">Reject</Button>
+                                                    <Button variant="danger"
+                                                        onClick={() => handleReject(reservation.id)}
+                                                    >Reject</Button>
                                                 </li>
                                             )}
                                             {reservation.status === 'REJECTED' && (
                                                 <li className="list-inline-item me-4">
                                                     <Button variant="success"
-                                                    onClick={() => handleAccept(reservation.id)}
-                                                    >Accept</Button>
+                                                        onClick={() => handleAccept(reservation.id)}>
+                                                        Accept
+                                                    </Button>
                                                 </li>
                                             )}
 
                                             {reservation.status === 'PENDING' && (
                                                 <li className="list-inline-item me-4">
-                                                    <Button variant="danger">Reject</Button>
+                                                    <Button variant="danger"
+                                                        onClick={() => handleReject(reservation.id)}>
+                                                        Reject
+                                                    </Button>
                                                     <Button variant="success"
-                                                    onClick={() => handleAccept(reservation.id)}
-                                                    >Accept</Button>
+                                                        onClick={() => handleAccept(reservation.id)}>
+                                                        Accept
+                                                    </Button>
                                                 </li>
                                             )}
                                         </ul>
@@ -209,7 +232,7 @@ const Reservations = () => {
 
     return (
         <>
-            <ViewReservation reservations={reservations}  setReservations={setReservations}/>
+            <ViewReservation reservations={reservations} setReservations={setReservations} />
         </>
     );
 };
