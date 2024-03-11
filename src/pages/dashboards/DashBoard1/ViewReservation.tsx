@@ -1,4 +1,4 @@
-import { Badge, Card, Dropdown, Row, Table, Col } from 'react-bootstrap';
+import { Badge, Card, Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { usePageTitle } from '../../../hooks';
 import { useParams } from 'react-router-dom';
@@ -12,12 +12,23 @@ import { ReservationsList } from '../../apps/Reservations/reservationTypes';
 type ReservationsDetailsProps = {
     reservations: ReservationsList[];
     setReservations: React.Dispatch<React.SetStateAction<ReservationsList[]>>;
-
 };
 
 const ViewReservation = ({ reservations, setReservations }: ReservationsDetailsProps) => {
     const { slotId } = useParams();
 
+
+    const updateReservationStatus = (reservationId: string, newStatus: string) => {
+        const updatedReservations = reservations.map(reservation => {
+            if (reservation.id === reservationId) {
+                return { ...reservation, status: newStatus };
+            }
+            return reservation;
+        });
+        setReservations(updatedReservations);
+    };
+
+    // update the status to accepted
     const handleAccept = async (reservationId: string) => {
         try {
             console.log('Accepting reservation with ID:', reservationId);
@@ -30,11 +41,22 @@ const ViewReservation = ({ reservations, setReservations }: ReservationsDetailsP
                     },
                 }
             );
+            // Assuming the server responds with the new status
+            const data = await response.json();
+            updateReservationStatus(reservationId, data.status);
+
+            // Fetch reservations again to ensure the UI reflects the updated status
+            const updatedResponse = await fetch(
+                `https://us-central1-slot-145a8.cloudfunctions.net/slotReservations?slotId=${slotId}`
+            );
+            const updatedData = await updatedResponse.json();
+            setReservations(updatedData.reservations);
+
         } catch (error) {
             console.error('Error accepting reservation:', error);
         }
     };
-
+    //  update the status to rejected
     const handleReject = async (reservationId: string) => {
         try {
             console.log('Rejecting reservation with ID:', reservationId);
@@ -47,6 +69,17 @@ const ViewReservation = ({ reservations, setReservations }: ReservationsDetailsP
                     },
                 }
             );
+            // Assuming the server responds with the new status
+            const data = await response.json();
+            updateReservationStatus(reservationId, data.status);
+
+            // Fetch reservations again to ensure the UI reflects the updated status
+            const updatedResponse = await fetch(
+                `https://us-central1-slot-145a8.cloudfunctions.net/slotReservations?slotId=${slotId}`
+            );
+            const updatedData = await updatedResponse.json();
+            setReservations(updatedData.reservations);
+
         } catch (error) {
             console.error('Error rejecting reservation:', error);
         }
@@ -193,6 +226,7 @@ const Reservations = () => {
 
 
     useEffect(() => {
+        // fetch reservations for each slot
         async function fetchData() {
             await fetch(
                 `https://us-central1-slot-145a8.cloudfunctions.net/slotReservations?slotId=${slotId}`
@@ -236,5 +270,4 @@ const Reservations = () => {
         </>
     );
 };
-
 export default Reservations;
