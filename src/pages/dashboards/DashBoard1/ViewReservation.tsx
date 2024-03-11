@@ -148,7 +148,7 @@ const ViewReservation = ({ reservations , setReservations}: ReservationsDetailsP
                                             {reservation.status === 'REJECTED' && (
                                                 <li className="list-inline-item me-4">
                                                     <Button variant="success"
-                                                    // onClick={() => handleAccept(reservation.id)}
+                                                    onClick={() => handleAccept(reservation.id)}
                                                     >Accept</Button>
                                                 </li>
                                             )}
