@@ -11,9 +11,45 @@ import { ReservationsList } from '../../apps/Reservations/reservationTypes';
 
 type ReservationsDetailsProps = {
     reservations: ReservationsList[];
+    setReservations: React.Dispatch<React.SetStateAction<ReservationsList[]>>;
+
 };
 
-const ViewReservation = ({ reservations }: ReservationsDetailsProps) => {
+const ViewReservation = ({ reservations , setReservations}: ReservationsDetailsProps) => {
+    const { slotId } = useParams();
+
+    const handleAccept = async (reservationId: string ) => {
+        console.log("click");
+        try {
+          console.log('Accepting reservation with ID:', reservationId);
+          const response = await fetch(
+            `https://us-central1-slot-145a8.cloudfunctions.net/acceptReservation?slotId=${slotId}&reservationId=${reservationId}`,
+            {
+              method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        }
+          );
+      
+          if (response.ok) {
+            const updatedReservations = await response.json();
+            console.log('Updated Reservations:', updatedReservations);
+      
+            if (Array.isArray(updatedReservations)) {
+              setReservations(updatedReservations);
+            } else {
+              console.error('Invalid response format:', updatedReservations);
+            }
+          } else {
+            console.error('Failed to accept reservation:', response.statusText);
+          }
+        } catch (error) {
+          console.error('Error accepting reservation:', error);
+        }
+      };
+
+
     return (
         <div>
             <h4 className="mt-0">Reservations</h4>
@@ -111,14 +147,18 @@ const ViewReservation = ({ reservations }: ReservationsDetailsProps) => {
                                             )}
                                             {reservation.status === 'REJECTED' && (
                                                 <li className="list-inline-item me-4">
-                                                    <Button variant="success" >Accept</Button>
+                                                    <Button variant="success"
+                                                    // onClick={() => handleAccept(reservation.id)}
+                                                    >Accept</Button>
                                                 </li>
                                             )}
 
                                             {reservation.status === 'PENDING' && (
                                                 <li className="list-inline-item me-4">
                                                     <Button variant="danger">Reject</Button>
-                                                    <Button variant="success">Accept</Button>
+                                                    <Button variant="success"
+                                                    onClick={() => handleAccept(reservation.id)}
+                                                    >Accept</Button>
                                                 </li>
                                             )}
                                         </ul>
@@ -182,7 +222,7 @@ const Reservations = () => {
 
     return (
         <>
-            <ViewReservation reservations={reservations} />
+            <ViewReservation reservations={reservations}  setReservations={setReservations}/>
         </>
     );
 };
