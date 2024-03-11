@@ -31,19 +31,6 @@ const ViewReservation = ({ reservations , setReservations}: ReservationsDetailsP
             },
         }
           );
-      
-          if (response.ok) {
-            const updatedReservations = await response.json();
-            console.log('Updated Reservations:', updatedReservations);
-      
-            if (Array.isArray(updatedReservations)) {
-              setReservations(updatedReservations);
-            } else {
-              console.error('Invalid response format:', updatedReservations);
-            }
-          } else {
-            console.error('Failed to accept reservation:', response.statusText);
-          }
         } catch (error) {
           console.error('Error accepting reservation:', error);
         }
