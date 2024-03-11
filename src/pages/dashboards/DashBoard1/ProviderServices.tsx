@@ -50,6 +50,14 @@ const ProviderServices = (props: UsersDetailsProps) => {
                                             {user.name}
                                         </Link>
                                     </h4>
+
+                                    <ul className="list-inline">
+                                            <li className="list-inline-item me-4">
+                                               {user.id}
+                                            </li>
+                                        </ul>
+
+                                        
                                     <ul className="list-inline">
                                             <li className="list-inline-item me-4">
                                                 {user.is_partner ? (
@@ -68,6 +76,8 @@ const ProviderServices = (props: UsersDetailsProps) => {
                                     {/* <Link to="../ViewServices"> */}
                                         Space Name
                                     </Link>
+                                                        
+                                  
 
                                     <ul className="list-inline">
 
@@ -91,7 +101,7 @@ const ProviderServices = (props: UsersDetailsProps) => {
                                     <ul className="list-inline">
                                         <li className="list-inline-item me-4">
 
-                                            <h5 className="mb-2 fw-semibold">Bank Details:</h5>
+                                            <h5 className="mb-2 fw-semibold">Bank Details</h5>
                                         </li>
 
                                         <ul className="list-inline">
