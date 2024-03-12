@@ -5,28 +5,67 @@ import { Wizard, Steps, Step } from 'react-albus';
 import '../../../assets/css/generalStyle.css'
 // hooks
 import { usePageTitle } from '../../../hooks';
+import axios from 'axios';
 
 
 const Payment = () => {
     //active tab key 
     const [key, setKey] = useState<string | null>('fee');
-    const [orderFeeForms, setOrderFeeForms] = useState([{ id: 1 }]);
-
+    const [orderFeeForms, setOrderFeeForms] = useState([{ id: 1 , from: '', to : '' , fee : ''}]);
     const [basePrice, setBasePrice] = useState<number | ''>('');
     const [subscriptionDuration, setSubscriptionDuration] = useState<number | null>(6);
     const [discountPercentage, setDiscountPercentage] = useState<number | ''>('');
     const [calculatedFinalPrice, setCalculatedPrice] = useState<number | null>(null);
 
+
+    console.log("orderFeeForms: ",orderFeeForms)
+
+    // Function to add a new order fee form
     const addOrderFeeForm = () => {
-        setOrderFeeForms([...orderFeeForms, { id: orderFeeForms.length + 1 }]);
+        setOrderFeeForms([...orderFeeForms, { id: orderFeeForms.length + 1 ,  from: '', to: '', fee: ''  }]);
     };
 
+    const handleInputChange = (index: number, field: string, value: string) => {
+        const updatedForms = [...orderFeeForms];
+        (updatedForms[index] as any)[field] = value;
+        setOrderFeeForms(updatedForms);
+      };
+
+      const addOrderFeeForms = async () => {
+
+        const parsedOrderFeeForms = orderFeeForms.map(form => ({
+            id: form.id,
+            from: parseFloat(form.from),
+            to: parseFloat(form.to),
+            fee: parseFloat(form.fee),
+        }));
+
+        try {
+            const result = await fetch('https://us-central1-slot-145a8.cloudfunctions.net/saveOrderFee', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    value: parsedOrderFeeForms,
+                }),
+            }).then(response => response.json());
+    
+            console.log('Value added to payment successfully:', result);
+        } catch (error) {
+            console.error('An error occurred while adding value to payment:', error);
+        }
+      };
+
+    
+    // Function to handle subscription duration selection
     const handleSelect = (eventKey: string | null) => {
         setSubscriptionDuration((prevDuration) => (
             eventKey !== null ? parseInt(eventKey) : null
         ));
     };
 
+    // Function to calculate the final price
     const calculatePrice = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         if (subscriptionDuration !== null) {
@@ -111,6 +150,8 @@ const Payment = () => {
                                                                     type="number"
                                                                     name="fee"
                                                                     id="fee"
+                                                                    value={form.from}
+                                                                    onChange={(e) => handleInputChange(index, 'from', e.target.value)}
                                                                     defaultValue="%"
                                                                 />
                                                             </Col>
@@ -124,6 +165,8 @@ const Payment = () => {
                                                                     type="number"
                                                                     name="fee"
                                                                     id="fee"
+                                                                    value={form.to}
+                                                                    onChange={(e) => handleInputChange(index, 'to', e.target.value)}
                                                                     defaultValue="%"
                                                                 />
                                                             </Col>
@@ -137,6 +180,8 @@ const Payment = () => {
                                                                     type="number"
                                                                     name="fee"
                                                                     id="fee"
+                                                                    value={form.fee}
+                                                                    onChange={(e) => handleInputChange(index, 'fee', e.target.value)}
                                                                     defaultValue="%"
                                                                 />
                                                             </Col>
@@ -156,7 +201,9 @@ const Payment = () => {
                                                 </Col>
 
                                                 <div className="text-end mt-3">
-                                                    <Button variant="outline-success" className='payment-saveButton'>
+                                                    <Button variant="outline-success" className='payment-saveButton'
+                                                    onClick={addOrderFeeForms}
+                                                    >
                                                         Save Order Fee
                                                     </Button>
                                                 </div>
@@ -230,14 +277,14 @@ const Payment = () => {
                                                         />
                                                     </Col>
                                                     <Col xs={12} md={3}>
-                                                    <Button
-                                                        variant="outline-success"
-                                                        className='payment-saveButton '
-                                                        onClick={(e) => calculatePrice(e)}
-                                                    >
-                                                        Calculate Price</Button>
+                                                        <Button
+                                                            variant="outline-success"
+                                                            className='payment-saveButton '
+                                                            onClick={(e) => calculatePrice(e)}
+                                                        >
+                                                            Calculate Price</Button>
                                                     </Col>
-                                                    
+
                                                 </Form.Group>
 
                                                 <Form.Group as={Row} className="mb-3">
