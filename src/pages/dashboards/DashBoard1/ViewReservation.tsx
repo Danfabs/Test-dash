@@ -109,9 +109,10 @@ const ViewReservation = ({ reservations, setReservations }: ReservationsDetailsP
 
                                         <ul className="list-inline">
                                             <Badge bg={
-                                                reservation.status === 'ACCEPTED' ? 'success' :
-                                                    reservation.status === 'REJECTED' ? 'danger' :
-                                                        reservation.status === 'PENDING' ? 'secondary' : 'light'
+                                                reservation.status === 'Confirmed' ? 'success' :
+                                                    reservation.status === 'Rejected' ? 'danger' :
+                                                        reservation.status === 'Pending' ? 'secondary' : 
+                                                        'dark'
                                             }>
                                                 {reservation.status}
                                             </Badge>
@@ -176,14 +177,14 @@ const ViewReservation = ({ reservations, setReservations }: ReservationsDetailsP
                                         </ul>
 
                                         <ul className="list-inline">
-                                            {reservation.status === 'ACCEPTED' && (
+                                            {reservation.status === 'Confirmed' && (
                                                 <li className="list-inline-item me-4">
                                                     <Button variant="danger"
                                                         onClick={() => handleReject(reservation.id)}
                                                     >Reject</Button>
                                                 </li>
                                             )}
-                                            {reservation.status === 'REJECTED' && (
+                                            {reservation.status === 'Rejected' && (
                                                 <li className="list-inline-item me-4">
                                                     <Button variant="success"
                                                         onClick={() => handleAccept(reservation.id)}>
@@ -192,7 +193,7 @@ const ViewReservation = ({ reservations, setReservations }: ReservationsDetailsP
                                                 </li>
                                             )}
 
-                                            {reservation.status === 'PENDING' && (
+                                            {reservation.status === 'Pending' && (
                                                 <li className="list-inline-item me-4">
                                                     <Button variant="danger"
                                                         onClick={() => handleReject(reservation.id)}>
