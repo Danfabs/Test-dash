@@ -5,33 +5,33 @@ import { Wizard, Steps, Step } from 'react-albus';
 import '../../../assets/css/generalStyle.css'
 // hooks
 import { usePageTitle } from '../../../hooks';
-import axios from 'axios';
 
 
 const Payment = () => {
     //active tab key 
     const [key, setKey] = useState<string | null>('fee');
-    const [orderFeeForms, setOrderFeeForms] = useState([{ id: 1 , from: '', to : '' , fee : ''}]);
+    const [orderFeeForms, setOrderFeeForms] = useState([{ id: 1, from: '', to: '', fee: '' }]);
     const [basePrice, setBasePrice] = useState<number | ''>('');
     const [subscriptionDuration, setSubscriptionDuration] = useState<number | null>(6);
     const [discountPercentage, setDiscountPercentage] = useState<number | ''>('');
     const [calculatedFinalPrice, setCalculatedPrice] = useState<number | null>(null);
+    const [subscriptionData, setSubscriptionData] = useState<Array<{ id: number; basePrice: number;  discountPercentage: number ;duration: number; finalPrice: number }>>([]);
 
 
-    console.log("orderFeeForms: ",orderFeeForms)
+    console.log("orderFeeForms: ", orderFeeForms)
 
     // Function to add a new order fee form
     const addOrderFeeForm = () => {
-        setOrderFeeForms([...orderFeeForms, { id: orderFeeForms.length + 1 ,  from: '', to: '', fee: ''  }]);
+        setOrderFeeForms([...orderFeeForms, { id: orderFeeForms.length + 1, from: '', to: '', fee: '' }]);
     };
 
     const handleInputChange = (index: number, field: string, value: string) => {
         const updatedForms = [...orderFeeForms];
         (updatedForms[index] as any)[field] = value;
         setOrderFeeForms(updatedForms);
-      };
+    };
 
-      const addOrderFeeForms = async () => {
+    const addOrderFeeForms = async () => {
 
         const parsedOrderFeeForms = orderFeeForms.map(form => ({
             id: form.id,
@@ -50,14 +50,14 @@ const Payment = () => {
                     value: parsedOrderFeeForms,
                 }),
             }).then(response => response.json());
-    
+
             console.log('Value added to payment successfully:', result);
         } catch (error) {
             console.error('An error occurred while adding value to payment:', error);
         }
-      };
+    };
 
-    
+
     // Function to handle subscription duration selection
     const handleSelect = (eventKey: string | null) => {
         setSubscriptionDuration((prevDuration) => (
@@ -88,6 +88,24 @@ const Payment = () => {
             console.log("finalPrice : ", finalPrice);
 
             setCalculatedPrice(finalPrice);
+            console.log("finalPrice: ", finalPrice)
+
+            setSubscriptionData([
+                ...subscriptionData,
+                {
+                    id: subscriptionData.length + 1,
+                    basePrice: parsedBasePrice,
+                    duration: subscriptionDuration,
+                    discountPercentage :parsedDiscountPercentage, 
+                    finalPrice: finalPrice,
+                },
+            ]);
+            console.log("subscriptionData: ",subscriptionData)
+
+            setBasePrice('');
+            setSubscriptionDuration(6); // You can set the default duration here
+            setDiscountPercentage('');
+
         } else {
             // Handle the case when subscriptionDuration is null
             alert('Please select a subscription duration.');
@@ -202,7 +220,7 @@ const Payment = () => {
 
                                                 <div className="text-end mt-3">
                                                     <Button variant="outline-success" className='payment-saveButton'
-                                                    onClick={addOrderFeeForms}
+                                                        onClick={addOrderFeeForms}
                                                     >
                                                         Save Order Fee
                                                     </Button>
@@ -315,22 +333,20 @@ const Payment = () => {
                                                                 <th>id</th>
                                                                 <th>Base Price</th>
                                                                 <th>Subscription Duration</th>
+                                                                <th> Discount Percentage</th>
                                                                 <th>Final Price</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <tr >
-                                                                <th scope="row">1</th>
-                                                                <td>20.22</td>
-                                                                <td>6</td>
-                                                                <td>135</td>
-                                                            </tr>
-                                                            <tr >
-                                                                <th scope="row">1</th>
-                                                                <td>30.22</td>
-                                                                <td>12</td>
-                                                                <td>135</td>
-                                                            </tr>
+                                                            {subscriptionData.map((data) => (
+                                                                <tr key={data.id}>
+                                                                    <th scope="row">{data.id}</th>
+                                                                    <td>{data.basePrice}</td>
+                                                                    <td>{data.duration}</td>
+                                                                    <td>{data.discountPercentage}</td>
+                                                                    <td>{data.finalPrice}</td>
+                                                                </tr>
+                                                            ))}
                                                         </tbody>
                                                     </Table>
                                                 </div>
