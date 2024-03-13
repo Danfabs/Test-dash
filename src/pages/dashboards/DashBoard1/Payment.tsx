@@ -16,12 +16,6 @@ const Payment = () => {
     const [subscriptionDuration, setSubscriptionDuration] = useState<number | null>(6);
     const [discountPercentage, setDiscountPercentage] = useState<number | ''>('');
     const [calculatedFinalPrice, setCalculatedPrice] = useState<number | null>(null);
-<<<<<<< Updated upstream
-
-
-    console.log("orderFeeForms: ",orderFeeForms)
-
-=======
     const [subscriptionData, setSubscriptionData] = useState<Array<
     { id: number; 
         basePrice: number;  
@@ -31,7 +25,6 @@ const Payment = () => {
         >([]);
 
 
->>>>>>> Stashed changes
     // Function to add a new order fee form
     const addOrderFeeForm = () => {
         setOrderFeeForms([...orderFeeForms, { id: orderFeeForms.length + 1 ,  from: '', to: '', fee: ''  }]);
@@ -41,17 +34,10 @@ const Payment = () => {
         const updatedForms = [...orderFeeForms];
         (updatedForms[index] as any)[field] = value;
         setOrderFeeForms(updatedForms);
-<<<<<<< Updated upstream
-      };
-
-      const addOrderFeeForms = async () => {
-
-=======
     };
     
 
     const addOrderFeeForms = async () => {
->>>>>>> Stashed changes
         const parsedOrderFeeForms = orderFeeForms.map(form => ({
             id: form.id,
             from: parseFloat(form.from),
@@ -90,23 +76,29 @@ const Payment = () => {
         if (subscriptionDuration !== null) {
             const parsedBasePrice = parseFloat(String(basePrice));
             const parsedDiscountPercentage = parseFloat(String(discountPercentage));
-
+    
             if (isNaN(parsedBasePrice) || isNaN(parsedDiscountPercentage)) {
                 alert('Please enter valid numbers for base price and discount percentage.');
                 return;
             }
-
+    
             const totalBeforeDiscount = parsedBasePrice * subscriptionDuration;
             const discountAmount = (totalBeforeDiscount * parsedDiscountPercentage) / 100;
             const finalPrice = totalBeforeDiscount - discountAmount;
-
-            console.log("base price: ", parsedBasePrice);
-            console.log("discount : ", parsedDiscountPercentage);
-            console.log("totalBeforeDiscount : ", totalBeforeDiscount);
-            console.log("totalAfterDiscount : ", discountAmount);
-            console.log("finalPrice : ", finalPrice);
-
+    
             setCalculatedPrice(finalPrice);
+    
+            // Add the calculated subscription data to the state
+            setSubscriptionData([
+                ...subscriptionData,
+                {
+                    id: subscriptionData.length + 1,
+                    discountPercentage :parsedDiscountPercentage,
+                    basePrice: parsedBasePrice,
+                    duration: subscriptionDuration,
+                    finalPrice: finalPrice,
+                },
+            ]);
         } else {
             // Handle the case when subscriptionDuration is null
             alert('Please select a subscription duration.');
