@@ -16,10 +16,22 @@ const Payment = () => {
     const [subscriptionDuration, setSubscriptionDuration] = useState<number | null>(6);
     const [discountPercentage, setDiscountPercentage] = useState<number | ''>('');
     const [calculatedFinalPrice, setCalculatedPrice] = useState<number | null>(null);
+<<<<<<< Updated upstream
 
 
     console.log("orderFeeForms: ",orderFeeForms)
 
+=======
+    const [subscriptionData, setSubscriptionData] = useState<Array<
+    { id: number; 
+        basePrice: number;  
+        discountPercentage: number;
+        duration: number; 
+        finalPrice: number }>
+        >([]);
+
+
+>>>>>>> Stashed changes
     // Function to add a new order fee form
     const addOrderFeeForm = () => {
         setOrderFeeForms([...orderFeeForms, { id: orderFeeForms.length + 1 ,  from: '', to: '', fee: ''  }]);
@@ -29,10 +41,17 @@ const Payment = () => {
         const updatedForms = [...orderFeeForms];
         (updatedForms[index] as any)[field] = value;
         setOrderFeeForms(updatedForms);
+<<<<<<< Updated upstream
       };
 
       const addOrderFeeForms = async () => {
 
+=======
+    };
+    
+
+    const addOrderFeeForms = async () => {
+>>>>>>> Stashed changes
         const parsedOrderFeeForms = orderFeeForms.map(form => ({
             id: form.id,
             from: parseFloat(form.from),
@@ -95,7 +114,34 @@ const Payment = () => {
     };
 
 
-    return (
+
+    const saveSubscriptionData = async (subscriptionData: any) => {
+        try {
+          // Call the Cloud Function endpoint with the subscription data
+          const response = await fetch('https://us-central1-slot-145a8.cloudfunctions.net/addSubscription', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ subscription: subscriptionData }),
+          });
+      
+          if (response.ok) {
+            console.log('Subscription data saved successfully to Firebase.');
+          } else {
+            console.error('Error saving subscription data to Firebase:', response);
+          }
+        } catch (error) {
+          console.error('Error saving subscription data to Firebase:', error);
+        }
+      };
+        
+
+      const handleClickSaveSubscription = () => {
+        saveSubscriptionData(subscriptionData);
+      };
+        
+        return (
         <Card className='payment-card'>
             <Card.Body className='payment-cardBody'>
                 <h4 className="header-title mb-3">Payment</h4>
@@ -300,7 +346,9 @@ const Payment = () => {
                                                 <div className="text-end mt-3">
                                                     <Button
                                                         variant="outline-success"
-                                                        className='payment-saveButton' >
+                                                        className='payment-saveButton' 
+                                                        onClick={handleClickSaveSubscription}
+                                                        >
                                                         Save</Button>
                                                 </div>
 
