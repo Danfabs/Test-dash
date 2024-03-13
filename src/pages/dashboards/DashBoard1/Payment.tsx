@@ -100,18 +100,17 @@ const Payment = () => {
                     finalPrice: finalPrice,
                 },
             ]);
-            console.log("subscriptionData: ",subscriptionData)
+           
 
             setBasePrice('');
-            setSubscriptionDuration(6); // You can set the default duration here
+            setSubscriptionDuration(6);
             setDiscountPercentage('');
-
         } else {
             // Handle the case when subscriptionDuration is null
             alert('Please select a subscription duration.');
         }
     };
-
+    console.log("subscriptionData: ",subscriptionData)
 
     return (
         <Card className='payment-card'>
