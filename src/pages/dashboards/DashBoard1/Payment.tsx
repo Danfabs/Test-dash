@@ -1,11 +1,20 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Row, Col, Card, Form, Button, ProgressBar, Tab, Nav, Dropdown, Table } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { Wizard, Steps, Step } from 'react-albus';
 import '../../../assets/css/generalStyle.css'
 // hooks
 import { usePageTitle } from '../../../hooks';
+import { projectFirestore } from '../../../firebase';
 
+
+interface SubscriptionData {
+    id: number;
+    discountPercentage: number;
+    basePrice: number;
+    duration: number;
+    finalPrice: number;
+}
 
 const Payment = () => {
     //active tab key 
@@ -15,10 +24,59 @@ const Payment = () => {
     const [subscriptionDuration, setSubscriptionDuration] = useState<number | null>(6);
     const [discountPercentage, setDiscountPercentage] = useState<number | ''>('');
     const [calculatedFinalPrice, setCalculatedPrice] = useState<number | null>(null);
-    const [subscriptionData, setSubscriptionData] = useState<Array<{ id: number; basePrice: number;  discountPercentage: number ;duration: number; finalPrice: number }>>([]);
+    const [subscriptionData, setSubscriptionData] = useState<Array<
+        {
+            id: number;
+            basePrice: number;
+            discountPercentage: number;
+            duration: number;
+            finalPrice: number
+        }>
+    >([]);
+
+    const [subscriptionGetData, setSubscriptionGetData] = useState<SubscriptionData[]>([]);
 
 
-    console.log("orderFeeForms: ", orderFeeForms)
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const snapshot = await projectFirestore.collection('slot3_users').get();
+                if (!snapshot.empty) {
+                    const allSubscriptions: SubscriptionData[] = [];
+
+                    snapshot.forEach(doc => {
+                        const userData = doc.data();
+                        const subscriptions: SubscriptionData[] = userData.subscription || [];
+
+                        subscriptions.forEach(subscription => {
+                            const existingIndex = allSubscriptions.findIndex(existingSub => (
+                                existingSub.id === subscription.id &&
+                                existingSub.basePrice === subscription.basePrice &&
+                                existingSub.discountPercentage === subscription.discountPercentage &&
+                                existingSub.duration === subscription.duration &&
+                                existingSub.finalPrice === subscription.finalPrice
+                            ));
+
+                            if (existingIndex === -1) {
+                                allSubscriptions.push(subscription);
+                            }
+                        });
+                    });
+
+                    setSubscriptionGetData(allSubscriptions);
+                } else {
+                    console.log('No documents found.');
+                }
+            } catch (error) {
+                console.error('Error fetching subscription data:', error);
+            }
+        };
+        
+        fetchData();
+
+        return () => { };
+    }, []);
+
 
     // Function to add a new order fee form
     const addOrderFeeForm = () => {
@@ -31,8 +89,8 @@ const Payment = () => {
         setOrderFeeForms(updatedForms);
     };
 
-    const addOrderFeeForms = async () => {
 
+    const addOrderFeeForms = async () => {
         const parsedOrderFeeForms = orderFeeForms.map(form => ({
             id: form.id,
             from: parseFloat(form.from),
@@ -81,36 +139,52 @@ const Payment = () => {
             const discountAmount = (totalBeforeDiscount * parsedDiscountPercentage) / 100;
             const finalPrice = totalBeforeDiscount - discountAmount;
 
-            console.log("base price: ", parsedBasePrice);
-            console.log("discount : ", parsedDiscountPercentage);
-            console.log("totalBeforeDiscount : ", totalBeforeDiscount);
-            console.log("totalAfterDiscount : ", discountAmount);
-            console.log("finalPrice : ", finalPrice);
-
             setCalculatedPrice(finalPrice);
-            console.log("finalPrice: ", finalPrice)
 
+            // Add the calculated subscription data to the state
             setSubscriptionData([
                 ...subscriptionData,
                 {
                     id: subscriptionData.length + 1,
+                    discountPercentage: parsedDiscountPercentage,
                     basePrice: parsedBasePrice,
                     duration: subscriptionDuration,
-                    discountPercentage :parsedDiscountPercentage, 
                     finalPrice: finalPrice,
                 },
             ]);
-           
-
-            setBasePrice('');
-            setSubscriptionDuration(6);
-            setDiscountPercentage('');
         } else {
             // Handle the case when subscriptionDuration is null
             alert('Please select a subscription duration.');
         }
     };
     console.log("subscriptionData: ",subscriptionData)
+
+
+    const saveSubscriptionData = async (subscriptionData: any) => {
+        try {
+            // Call the Cloud Function endpoint with the subscription data
+            const response = await fetch('https://us-central1-slot-145a8.cloudfunctions.net/addSubscription', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ subscription: subscriptionData }),
+            });
+
+            if (response.ok) {
+                console.log('Subscription data saved successfully to Firebase.');
+            } else {
+                console.error('Error saving subscription data to Firebase:', response);
+            }
+        } catch (error) {
+            console.error('Error saving subscription data to Firebase:', error);
+        }
+    };
+
+
+    const handleClickSaveSubscription = () => {
+        saveSubscriptionData(subscriptionData);
+    };
 
     return (
         <Card className='payment-card'>
@@ -317,7 +391,9 @@ const Payment = () => {
                                                 <div className="text-end mt-3">
                                                     <Button
                                                         variant="outline-success"
-                                                        className='payment-saveButton' >
+                                                        className='payment-saveButton'
+                                                        onClick={handleClickSaveSubscription}
+                                                    >
                                                         Save</Button>
                                                 </div>
 
@@ -329,21 +405,19 @@ const Payment = () => {
                                                     <Table className="mb-0" striped>
                                                         <thead>
                                                             <tr>
-                                                                <th>id</th>
                                                                 <th>Base Price</th>
-                                                                <th>Subscription Duration</th>
-                                                                <th> Discount Percentage</th>
+                                                                <th>Duration</th>
+                                                                <th>Discount Percentage</th>
                                                                 <th>Final Price</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            {subscriptionData.map((data) => (
-                                                                <tr key={data.id}>
-                                                                    <th scope="row">{data.id}</th>
-                                                                    <td>{data.basePrice}</td>
-                                                                    <td>{data.duration}</td>
-                                                                    <td>{data.discountPercentage}</td>
-                                                                    <td>{data.finalPrice}</td>
+                                                            {subscriptionGetData.map((subscription, index) => (
+                                                                <tr key={index}>
+                                                                    <td>{subscription.basePrice}</td>
+                                                                    <td>{subscription.duration}</td>
+                                                                    <td>{subscription.discountPercentage}</td>
+                                                                    <td>{subscription.finalPrice}</td>
                                                                 </tr>
                                                             ))}
                                                         </tbody>
