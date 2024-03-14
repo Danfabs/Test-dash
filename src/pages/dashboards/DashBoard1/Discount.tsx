@@ -9,50 +9,31 @@ import '../../../assets/css/generalStyle.css'
 
 
 const Discount = () => {
-    //active tab key 
-    const [key, setKey] = useState<string | null>('fee');
-    const [orderFeeForms, setOrderFeeForms] = useState([{ id: 1 }]);
+    const [phoneNumber, setPhoneNumber] = useState('');
+    const [discountPercentage, setDiscountPercentage] = useState('');
 
-    const [basePrice, setBasePrice] = useState<number | ''>('');
-    const [subscriptionDuration, setSubscriptionDuration] = useState<number | null>(6);
-    const [discountPercentage, setDiscountPercentage] = useState<number | ''>('');
-    const [calculatedFinalPrice, setCalculatedPrice] = useState<number | null>(null);
 
-    const addOrderFeeForm = () => {
-        setOrderFeeForms([...orderFeeForms, { id: orderFeeForms.length + 1 }]);
-    };
+    const handleDiscount = async () => {
+        try {
+            const response = await fetch('https://us-central1-slot-145a8.cloudfunctions.net/createCustomDiscount', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    phoneNumber: phoneNumber,
+                    discountValue: parseFloat(discountPercentage) 
+                })
+            });
 
-    const handleSelect = (eventKey: string | null) => {
-        setSubscriptionDuration((prevDuration) => (
-            eventKey !== null ? parseInt(eventKey) : null
-        ));
-    };
-
-    const calculatePrice = (e: React.MouseEvent<HTMLButtonElement>) => {
-        e.preventDefault();
-        if (subscriptionDuration !== null) {
-            const parsedBasePrice = parseFloat(String(basePrice));
-            const parsedDiscountPercentage = parseFloat(String(discountPercentage));
-
-            if (isNaN(parsedBasePrice) || isNaN(parsedDiscountPercentage)) {
-                alert('Please enter valid numbers for base price and discount percentage.');
-                return;
+            if (!response.ok) {
+                throw new Error('Failed to add discount');
             }
 
-            const totalBeforeDiscount = parsedBasePrice * subscriptionDuration;
-            const discountAmount = (totalBeforeDiscount * parsedDiscountPercentage) / 100;
-            const finalPrice = totalBeforeDiscount - discountAmount;
-
-            console.log("base price: ", parsedBasePrice);
-            console.log("discount : ", parsedDiscountPercentage);
-            console.log("totalBeforeDiscount : ", totalBeforeDiscount);
-            console.log("totalAfterDiscount : ", discountAmount);
-            console.log("finalPrice : ", finalPrice);
-
-            setCalculatedPrice(finalPrice);
-        } else {
-            // Handle the case when subscriptionDuration is null
-            alert('Please select a subscription duration.');
+            const data = await response.json();
+            console.log(data);
+        } catch (error) {
+            console.error('Error:', error);
         }
     };
 
@@ -72,6 +53,8 @@ const Discount = () => {
                                 name="phoneNo"
                                 id="phoneNo"
                                 placeholder="phone number"
+                                value={phoneNumber}
+                                onChange={(e) => setPhoneNumber(e.target.value)}
                             />
                         </Col>
                     </Form.Group>
@@ -85,14 +68,18 @@ const Discount = () => {
                                 name="discount"
                                 id="discount"
                                 placeholder="discount (%)"
+                                value={discountPercentage}
+                                onChange={(e) => setDiscountPercentage(e.target.value)}
                             />
                         </Col>
                     </Form.Group>
                     <Button
                         variant="outline-success"
-                        className='payment-saveButton' >
-                        Give Discount</Button>
-                    {/* <div className="clearfix"></div> */}
+                        className='payment-saveButton'
+                        onClick={handleDiscount}
+                        >
+                        Give Discount
+                        </Button>
                 </Form>
 
             </Card.Body>
