@@ -1,6 +1,9 @@
 import { Card, Dropdown } from 'react-bootstrap';
 import Chart from 'react-apexcharts';
 import { ApexOptions } from 'apexcharts';
+import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { projectFirestore } from '../firebase';
 
 type ReservationWidget2Props = {
     title: string;
@@ -11,6 +14,26 @@ type ReservationWidget2Props = {
 };
 
 const ReservationWidget2 = ({ title, color, stats, subTitle }: ReservationWidget2Props) => {
+    const [totalReservations, setTotalReservations] = useState<number>(0);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const snapshot = await projectFirestore.collection('slot3_slots').get();
+                const promises = snapshot.docs.map(async (slotDoc) => {
+                    const reservationsSnapshot = await slotDoc.ref.collection('reservations').get();
+                    return reservationsSnapshot.docs.length;
+                });
+                const reservationCounts = await Promise.all(promises);
+                const totalOfReservations = reservationCounts.reduce((acc, count) => acc + count, 0);
+                setTotalReservations(totalOfReservations);
+            } catch (error) {
+                console.error('Error fetching reservations:', error);
+            }
+        };
+        fetchData();
+    }, []);
+
     const apexOpts: ApexOptions = {
         chart: {
             type: 'radialBar',
@@ -59,7 +82,7 @@ const ReservationWidget2 = ({ title, color, stats, subTitle }: ReservationWidget
         colors: [color],
     };
 
-    // const apexData = [data];
+    const subtitle = totalReservations === 1 ? 'reservation' : 'reservations';
 
     return (
         <Card>
@@ -70,32 +93,15 @@ const ReservationWidget2 = ({ title, color, stats, subTitle }: ReservationWidget
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
                         <Dropdown.Item>Show All Reservations</Dropdown.Item>
-                        {/* <Dropdown.Item>Anothther Action</Dropdown.Item>
-                        <Dropdown.Item>Something Else</Dropdown.Item>
-                        <Dropdown.Item>Separated link</Dropdown.Item> */}
                     </Dropdown.Menu>
                 </Dropdown>
 
-                
-               
-                {/* <div className="widget-chart-1"> */}
-                    {/* <div className="widget-chart-box-1 float-start">
-                        <Chart
-                            options={apexOpts}
-                            // series={apexData}
-                            type="radialBar"
-                            width={77}
-                            height={77}
-                            className="apex-charts mt-0"
-                        />
-                    </div> */}
-                     <h4 className="header-title mt-0 mb-3">{title}</h4>
-                    <div className="widget-detail-1 text-center">
-                        <h2 className="fw-normal  mb-1" >{stats}</h2>
-                        <p className="text-muted mb-1" >{subTitle}</p>
-                        
-                    </div>
-                {/* </div> */}
+                <h4 className="header-title mt-0 mb-3">{title}</h4>
+                <div className="widget-detail-1 text-center">
+                    <h2 className="fw-normal mb-1">{totalReservations}</h2>
+                    <p className="text-muted mb-1">{subtitle}</p>
+                </div>
+
             </Card.Body>
         </Card>
     );
