@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
+//States
 import { useEffect, useState } from 'react';
-// bootstrap
-import Button from 'react-bootstrap/Button';
-import { Badge, Card, Col, Row } from 'react-bootstrap';
+// bootstrap\
+import { Card, Col, Row } from 'react-bootstrap';
 // types
 import { SpacesList } from '../../apps/Spaces/spacesTypes';
 // hooks
@@ -90,29 +90,28 @@ const ViewSpaces = ({ spaces }: { spaces: SpacesList[] }) => {
 };
 
 const Spaces = () => {
-    const [spaces, setSpaces] = useState<SpacesList[]>([]);
-
+    const [spaces, setSpaces] = useState([]);
 
     useEffect(() => {
         async function fetchData() {
-            await fetch(
-                `https://us-central1-slot-145a8.cloudfunctions.net/getSpaces`
-            )
-                .then((res) => res.json())
-                .then(
-                    (result) => {
-                        setSpaces(result.data);
-                        console.log("result: ", result.data)
-                    },
-
-                    (error) => {
-                        console.log("error: ", error);
-                    }
+            try {
+                const response = await fetch(
+                    'https://us-central1-slot-145a8.cloudfunctions.net/getAllSpaces'
                 );
-        }
-        fetchData();
 
-        
+                if (!response.ok) {
+                    throw new Error('Failed to fetch spaces');
+                }
+
+                const data = await response.json();
+                setSpaces(data.spaces);
+                console.log("spaces",spaces)
+            } catch (error) {
+                console.error('Error fetching spaces:', error);
+            }
+        }
+
+        fetchData();
     }, []);
 
 

@@ -15,14 +15,6 @@ export type MenuItemTypes = {
 
 const MENU_ITEMS: MenuItemTypes[] = [
     // { key: 'navigation', label: 'Navigation', isTitle: true },
-
-    {
-        key: 'tset',
-        label: 'tset',
-        isTitle: false,
-        icon: 'mdi mdi-view-dashboard-outline',
-        url: '/apps/tset',
-    },
     {
         key: 'dashboard',
         label: 'Dashboard',
