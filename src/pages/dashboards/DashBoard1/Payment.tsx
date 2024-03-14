@@ -16,6 +16,12 @@ interface SubscriptionData {
     finalPrice: number;
 }
 
+interface FeeValue {
+    from: number;
+    to: number;
+    fee: number;
+}
+
 const Payment = () => {
     //active tab key 
     const [key, setKey] = useState<string | null>('fee');
@@ -33,49 +39,64 @@ const Payment = () => {
             finalPrice: number
         }>
     >([]);
-
+    const [feeValues, setFeeValues] = useState<FeeValue[]>([]);
     const [subscriptionGetData, setSubscriptionGetData] = useState<SubscriptionData[]>([]);
 
-
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const snapshot = await projectFirestore.collection('slot3_users').get();
-                if (!snapshot.empty) {
-                    const allSubscriptions: SubscriptionData[] = [];
-
-                    snapshot.forEach(doc => {
-                        const userData = doc.data();
-                        const subscriptions: SubscriptionData[] = userData.subscription || [];
-
-                        subscriptions.forEach(subscription => {
-                            const existingIndex = allSubscriptions.findIndex(existingSub => (
-                                existingSub.id === subscription.id &&
-                                existingSub.basePrice === subscription.basePrice &&
-                                existingSub.discountPercentage === subscription.discountPercentage &&
-                                existingSub.duration === subscription.duration &&
-                                existingSub.finalPrice === subscription.finalPrice
-                            ));
-
-                            if (existingIndex === -1) {
-                                allSubscriptions.push(subscription);
-                            }
-                        });
-                    });
-
-                    setSubscriptionGetData(allSubscriptions);
-                } else {
-                    console.log('No documents found.');
-                }
-            } catch (error) {
-                console.error('Error fetching subscription data:', error);
-            }
-        };
-        
         fetchData();
+        fetchFeeValues();
 
-        return () => { };
     }, []);
+
+    const fetchData = async () => {
+        try {
+            const snapshot = await projectFirestore.collection('slot3_users').get();
+            if (!snapshot.empty) {
+                const allSubscriptions: SubscriptionData[] = [];
+
+                snapshot.forEach(doc => {
+                    const userData = doc.data();
+                    const subscriptions: SubscriptionData[] = userData.subscription || [];
+
+                    subscriptions.forEach(subscription => {
+                        const existingIndex = allSubscriptions.findIndex(existingSub => (
+                            existingSub.id === subscription.id &&
+                            existingSub.basePrice === subscription.basePrice &&
+                            existingSub.discountPercentage === subscription.discountPercentage &&
+                            existingSub.duration === subscription.duration &&
+                            existingSub.finalPrice === subscription.finalPrice
+                        ));
+
+                        if (existingIndex === -1) {
+                            allSubscriptions.push(subscription);
+                        }
+                    });
+                });
+
+                setSubscriptionGetData(allSubscriptions);
+            } else {
+                console.log('No documents found.');
+            }
+        } catch (error) {
+            console.error('Error fetching subscription data:', error);
+        }
+    };
+
+    fetchData();
+
+    const fetchFeeValues = async () => {
+        try {
+            const response = await fetch('https://us-central1-slot-145a8.cloudfunctions.net/getOrderFee');
+            if (response.ok) {
+                const data = await response.json();
+                setFeeValues(data.feeValues);
+            } else {
+                console.error('Error fetching fee values:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Error fetching fee values:', error);
+        }
+    };
 
 
     // Function to add a new order fee form
@@ -110,6 +131,8 @@ const Payment = () => {
             }).then(response => response.json());
 
             console.log('Value added to payment successfully:', result);
+            // Fetch fee values after saving the order fee
+            await fetchFeeValues();
         } catch (error) {
             console.error('An error occurred while adding value to payment:', error);
         }
@@ -173,6 +196,7 @@ const Payment = () => {
 
             if (response.ok) {
                 console.log('Subscription data saved successfully to Firebase.');
+                await fetchFeeValues();
             } else {
                 console.error('Error saving subscription data to Firebase:', response);
             }
@@ -184,6 +208,7 @@ const Payment = () => {
 
     const handleClickSaveSubscription = () => {
         saveSubscriptionData(subscriptionData);
+      
     };
 
     return (
@@ -297,6 +322,30 @@ const Payment = () => {
                                                     >
                                                         Save Order Fee
                                                     </Button>
+                                                </div>
+
+                                                <hr className="hr" />
+
+                                                {/* subscription data */}
+                                                <div className="table-responsive">
+                                                    <Table className="mb-0" striped>
+                                                        <thead>
+                                                            <tr>
+                                                                <th>From</th>
+                                                                <th>To</th>
+                                                                <th>Fee</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            {feeValues.map((feeValue, index) => (
+                                                                <tr key={index}>
+                                                                    <td>{feeValue.from}</td>
+                                                                    <td>{feeValue.to}</td>
+                                                                    <td>{feeValue.fee}</td>
+                                                                </tr>
+                                                            ))}
+                                                        </tbody>
+                                                    </Table>
                                                 </div>
                                             </>
                                         )}
