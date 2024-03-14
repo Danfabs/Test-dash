@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
+//States
 import { useEffect, useState } from 'react';
-// bootstrap
-import Button from 'react-bootstrap/Button';
-import { Badge, Card, Col, Row } from 'react-bootstrap';
+// bootstrap\
+import { Card, Col, Row } from 'react-bootstrap';
 // types
 import { SpacesList } from '../../apps/Spaces/spacesTypes';
 // hooks
