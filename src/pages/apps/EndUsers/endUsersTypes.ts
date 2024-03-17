@@ -1,4 +1,5 @@
 export type EndUsersList = {
+    id : string;
     documentId: string;
     email_address: string;
     gender: string;
@@ -7,4 +8,5 @@ export type EndUsersList = {
     mobile_number:string;
     birthdate:string;
     photo_url:string| null;
+    status : string;
 };

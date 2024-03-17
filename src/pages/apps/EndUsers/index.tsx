@@ -13,6 +13,27 @@ import { projectFirestore } from '../../../firebase';
 
 
 const SingleUser = ({ users }: { users: EndUsersList[] }) => {
+
+
+    const suspendUser = async (documentId: string) => {
+        try {
+            console.log('documentId: ', documentId);
+            const response = await fetch(
+                `https://us-central1-slot-145a8.cloudfunctions.net/updateUserStatus?documentId=${documentId}`,
+                {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                }
+            );
+
+
+        } catch (error) {
+            console.error('Error accepting reservation:', error);
+        }
+    };
+
     return (
         <div>
             <h4 className="mt-0">End Users</h4>
@@ -44,6 +65,16 @@ const SingleUser = ({ users }: { users: EndUsersList[] }) => {
                                                     </>
                                                 )}
                                             </li>
+                                        </ul>
+
+                                        <ul className="list-inline">
+                                            <Badge bg={
+                                                user.status === 'Active' ? 'success' :
+                                                        user.status === 'Suspended' ? 'secondary' : 
+                                                        'dark'
+                                            }>
+                                                {user.status}
+                                            </Badge>
                                         </ul>
 
 
@@ -91,7 +122,7 @@ const SingleUser = ({ users }: { users: EndUsersList[] }) => {
 
                                         {/* <Button  variant="success">Accept</Button>
                                         <Button  variant="danger">Reject</Button> */}
-                                        <Button variant="secondary">Suspend User</Button>
+                                        <Button variant="secondary" onClick={() => suspendUser(user.id)}>Suspend User</Button>
                                         {/* <span className={classNames('float-end', 'text-' + project.variant)}>
                                             {project.progress}%
                                         </span> */}
