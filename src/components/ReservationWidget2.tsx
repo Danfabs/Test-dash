@@ -15,6 +15,7 @@ type ReservationWidget2Props = {
 
 const ReservationWidget2 = ({ title, color, stats, subTitle }: ReservationWidget2Props) => {
     const [totalReservations, setTotalReservations] = useState<number>(0);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -33,6 +34,10 @@ const ReservationWidget2 = ({ title, color, stats, subTitle }: ReservationWidget
         };
         fetchData();
     }, []);
+
+    const handleShowAllReservationClick = () => {
+        navigate('/apps/viewAllReservations');
+    };
 
     const apexOpts: ApexOptions = {
         chart: {
@@ -92,7 +97,7 @@ const ReservationWidget2 = ({ title, color, stats, subTitle }: ReservationWidget
                         <i className="mdi mdi-dots-vertical"></i>
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
-                        <Dropdown.Item>Show All Reservations</Dropdown.Item>
+                        <Dropdown.Item onClick={handleShowAllReservationClick}>Show All Reservations</Dropdown.Item>
                     </Dropdown.Menu>
                 </Dropdown>
 
