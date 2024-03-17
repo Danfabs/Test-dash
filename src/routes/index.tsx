@@ -37,6 +37,7 @@ const ViewServices = React.lazy(() => import('../pages/dashboards/DashBoard1/Vie
 const ViewSpaces = React.lazy(() => import('../pages/dashboards/DashBoard1/ViewSpaces'));
 const ViewSlots = React.lazy(() => import('../pages/dashboards/DashBoard1/ViewSlots'));
 const ViewReservation = React.lazy(() => import('../pages/dashboards/DashBoard1/ViewReservation'));
+const ViewAllReservations = React.lazy(() => import('../pages/dashboards/DashBoard1/ViewAllReservations'));
 const Discount = React.lazy(() => import('../pages/dashboards/DashBoard1/Discount'));
 const CalendarApp = React.lazy(() => import('../pages/apps/Calendar'));
 const ChatApp = React.lazy(() => import('../pages/apps/Chat'));
@@ -229,6 +230,10 @@ const AllRoutes = () => {
             {
               path: 'viewReservations/:slotId',
               element: <LoadComponent component={ViewReservation} />,
+            },
+            {
+              path: 'viewAllReservations',
+              element: <LoadComponent component={ViewAllReservations} />,
             },
             {
               path: 'discount',
