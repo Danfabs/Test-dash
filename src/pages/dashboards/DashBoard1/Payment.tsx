@@ -131,6 +131,7 @@ const Payment = () => {
             }).then(response => response.json());
 
             console.log('Value added to payment successfully:', result);
+            setOrderFeeForms([{ id: 1, from: '', to: '', fee: '' }]);
             // Fetch fee values after saving the order fee
             await fetchFeeValues();
         } catch (error) {
@@ -200,7 +201,8 @@ const Payment = () => {
             } else {
                 console.error('Error saving subscription data to Firebase:', response);
             }
-        } catch (error) {
+        } 
+        catch (error) {
             console.error('Error saving subscription data to Firebase:', error);
         }
     };
@@ -208,6 +210,10 @@ const Payment = () => {
 
     const handleClickSaveSubscription = () => {
         saveSubscriptionData(subscriptionData);
+        setBasePrice('');
+        setSubscriptionDuration(null);
+        setDiscountPercentage('');
+        setCalculatedPrice(null);
       
     };
 
