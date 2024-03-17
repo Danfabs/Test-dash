@@ -7,13 +7,8 @@ import { Badge, Card, Col, Row } from 'react-bootstrap';
 import { EndUsersList } from './endUsersTypes';
 // hooks
 import { usePageTitle } from '../../../hooks';
-//firebase
-import { projectFirestore } from '../../../firebase';
-
-
 
 const SingleUser = ({ users }: { users: EndUsersList[] }) => {
-
 
     const suspendUser = async (documentId: string) => {
         try {
@@ -27,8 +22,6 @@ const SingleUser = ({ users }: { users: EndUsersList[] }) => {
                     },
                 }
             );
-
-
         } catch (error) {
             console.error('Error accepting reservation:', error);
         }
@@ -70,17 +63,12 @@ const SingleUser = ({ users }: { users: EndUsersList[] }) => {
                                         <ul className="list-inline">
                                             <Badge bg={
                                                 user.status === 'Active' ? 'success' :
-                                                        user.status === 'Suspended' ? 'secondary' : 
+                                                    user.status === 'Suspended' ? 'secondary' :
                                                         'dark'
                                             }>
                                                 {user.status}
                                             </Badge>
                                         </ul>
-
-
-                                        {/* <li className="list-inline-item me-4">
-                                            <h5 className="mb-2 fw-semibold">Space Slot Type (Space , experince ...)</h5>
-                                        </li> */}
 
                                         <ul className="list-inline">
 
@@ -105,36 +93,10 @@ const SingleUser = ({ users }: { users: EndUsersList[] }) => {
                                             <li className="list-inline-item me-4">
                                                 <h5 className="mb-2 fw-semibold">Birthday</h5>
                                                 <p className="mb-0">{user.birthdate}</p>
-
-
                                             </li>
-                                            {/* <li className="list-inline-item me-4">
-
-                                                <h5 className="mb-2 fw-semibold">City</h5>
-                                                <p className="mb-0">Muscat</p>
-                                            </li> */}
-                                            {/* <li className="list-inline-item">
-
-                                                <h5 className="mb-2 fw-semibold">Address</h5>
-                                                <p className="mb-0">Al-Khoud</p>
-                                            </li> */}
                                         </ul>
 
-                                        {/* <Button  variant="success">Accept</Button>
-                                        <Button  variant="danger">Reject</Button> */}
                                         <Button variant="secondary" onClick={() => suspendUser(user.id)}>Suspend User</Button>
-                                        {/* <span className={classNames('float-end', 'text-' + project.variant)}>
-                                            {project.progress}%
-                                        </span> */}
-
-                                        {/* <ProgressBar
-                                        className={classNames('progress-bar-alt-' + project.variant, 'progress-sm')}
-                                    >
-                                        <ProgressBar
-                                            variant={project.variant}
-                                            now={project.progress}
-                                            className="progress-animated" />
-                                    </ProgressBar> */}
                                     </Card.Body>
                                 </Card>
                             </Col>
@@ -148,7 +110,6 @@ const SingleUser = ({ users }: { users: EndUsersList[] }) => {
 const Users = () => {
     const [users, setUsers] = useState<EndUsersList[]>([]);
 
-
     useEffect(() => {
         async function fetchData() {
             await fetch(
@@ -160,16 +121,13 @@ const Users = () => {
                         setUsers(result.data);
                         console.log("users: ", result.data)
                     },
-
                     (error) => {
                         console.log("error: ", error);
                     }
                 );
         }
         fetchData();
-
     }, []);
-
 
     // set pagetitle
     usePageTitle({
@@ -186,12 +144,10 @@ const Users = () => {
             },
         ],
     });
-
     return (
         <>
             <SingleUser users={users} />
         </>
     );
 };
-
 export default Users;
