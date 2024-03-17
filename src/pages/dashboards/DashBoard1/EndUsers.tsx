@@ -11,7 +11,7 @@ const EndUsers = ({ endUsersDetails }: EndUsersDetailsProps) => {
     return (
         <Card>
             <Card.Body>
-                <Dropdown className="float-end" align="end">
+                {/* <Dropdown className="float-end" align="end">
                     <Dropdown.Toggle as="a" className="cursor-pointer card-drop">
                         <i className="mdi mdi-dots-vertical"></i>
                     </Dropdown.Toggle>
@@ -23,9 +23,9 @@ const EndUsers = ({ endUsersDetails }: EndUsersDetailsProps) => {
                     </Dropdown.Menu>
                 </Dropdown>
 
-                New Admin Design              <h4 className="header-title mt-0 mb-3">Latest Projects</h4>
+                New Admin Design              <h4 className="header-title mt-0 mb-3">Latest Projects</h4> */}
 
-                <Table responsive hover className="mb-0">
+                {/* <Table responsive hover className="mb-0">
                     <thead>
                         <tr>
                             <th>#</th>
@@ -52,7 +52,7 @@ const EndUsers = ({ endUsersDetails }: EndUsersDetailsProps) => {
                             );
                         })}
                     </tbody>
-                </Table>
+                </Table> */}
             </Card.Body>
         </Card>
     );

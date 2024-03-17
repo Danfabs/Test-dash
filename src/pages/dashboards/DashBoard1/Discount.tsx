@@ -32,6 +32,9 @@ const Discount = () => {
 
             const data = await response.json();
             console.log(data);
+            setPhoneNumber('');
+            setDiscountPercentage('');
+
         } catch (error) {
             console.error('Error:', error);
         }
