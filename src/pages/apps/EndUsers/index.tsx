@@ -127,7 +127,7 @@ const Users = () => {
                 .then(
                     (result) => {
                         setUsers(result.data);
-                        console.log("result: ", result.data)
+                        console.log("users: ", result.data)
                     },
 
                     (error) => {

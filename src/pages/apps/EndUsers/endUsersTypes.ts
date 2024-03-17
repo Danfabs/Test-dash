@@ -1,5 +1,5 @@
 export type EndUsersList = {
-    id: number;
+    documentId: string;
     email_address: string;
     gender: string;
     is_partner: boolean;
