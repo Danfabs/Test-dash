@@ -8,11 +8,10 @@ import { EndUsersList } from './endUsersTypes';
 // hooks
 import { usePageTitle } from '../../../hooks';
 
-const SingleUser = ({ users }: { users: EndUsersList[] }) => {
+const SingleUser = ({ users, setUsers }: { users: EndUsersList[]; setUsers: React.Dispatch<React.SetStateAction<EndUsersList[]>> }) => {
 
     const suspendUser = async (documentId: string) => {
         try {
-            console.log('documentId: ', documentId);
             const response = await fetch(
                 `https://us-central1-slot-145a8.cloudfunctions.net/updateUserStatus?documentId=${documentId}`,
                 {
@@ -22,8 +21,17 @@ const SingleUser = ({ users }: { users: EndUsersList[] }) => {
                     },
                 }
             );
+            if (response.ok) {
+                // Update the local state with the updated user
+                const updatedUsers = users.map(user =>
+                    user.id === documentId ? { ...user, status: 'Suspended' } : user
+                );
+                setUsers(updatedUsers);
+            } else {
+                console.error('Failed to suspend user:', response.statusText);
+            }
         } catch (error) {
-            console.error('Error accepting reservation:', error);
+            console.error('Error suspending user:', error);
         }
     };
 
@@ -146,7 +154,7 @@ const Users = () => {
     });
     return (
         <>
-            <SingleUser users={users} />
+            <SingleUser users={users} setUsers={setUsers} />
         </>
     );
 };
