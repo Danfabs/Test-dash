@@ -96,10 +96,6 @@ const ViewAllReservations = ({ reservations }: { reservations: ReservationsList[
                                                     </>
                                                 )}
                                             </ul>
-                                        <h4 className="mb-2 fw-semibold">
-                                            {reservation.id}
-                                        </h4>
-
                                     </ul>
                                 </Card.Body>
                             </Card>
