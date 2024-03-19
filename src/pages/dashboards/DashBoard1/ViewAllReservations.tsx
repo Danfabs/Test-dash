@@ -19,7 +19,7 @@ const ViewAllReservations = ({ reservations }: { reservations: ReservationsList[
                 <p>No Reservations available</p>
             ) : (
                 <Row>
-                    {(reservations || []).map((reservation, index) => {
+                    {reservations.map((reservation, index) => {
                         const { paymentDetails } = reservation;
                         const { location } = reservation;
                         return (
@@ -64,56 +64,52 @@ const ViewAllReservations = ({ reservations }: { reservations: ReservationsList[
 
                                                 <li className="list-inline-item me-4">
                                                     <h5 className="mb-2 fw-semibold">location</h5>
-                                                    <p className="mb-0">{location.address} {paymentDetails.currency}</p>
+                                                    <p className="mb-0">{location && location.address} </p>
                                                 </li>
 
                                             </ul>
 
                                         </ul>
-
                                         <ul className="list-inline">
                                             <li className="list-inline-item me-4">
-
                                                 <h5 className="mb-2 fw-semibold">Payment Details</h5>
                                             </li>
-
                                             <ul className="list-inline">
-                                                <li className="list-inline-item me-4">
-                                                    <h5 className="mb-2 fw-semibold">Slot Fee</h5>
-                                                    <p className="mb-0">{paymentDetails.slotFee}</p>
-                                                </li>
-
-                                                <li className="list-inline-item me-4">
-                                                    <h5 className="mb-2 fw-semibold">Tax</h5>
-                                                    <p className="mb-0">{paymentDetails.tax}</p>
-                                                </li>
-
-                                                <li className="list-inline-item me-4">
-                                                    <h5 className="mb-2 fw-semibold">Voucher</h5>
-                                                    <p className="mb-0">{paymentDetails.voucher}</p>
-                                                </li>
-
-
-                                                <li className="list-inline-item me-4">
-                                                    <h5 className="mb-2 fw-semibold">Total Price</h5>
-                                                    <p className="mb-0">{paymentDetails.total} {paymentDetails.currency}</p>
-                                                </li>
-
+                                                {paymentDetails && (
+                                                    <>
+                                                        <li className="list-inline-item me-4">
+                                                            <h5 className="mb-2 fw-semibold">Slot Fee</h5>
+                                                            <p className="mb-0">{paymentDetails.slotFee}</p>
+                                                        </li>
+                                                        <li className="list-inline-item me-4">
+                                                            <h5 className="mb-2 fw-semibold">Tax</h5>
+                                                            <p className="mb-0">{paymentDetails.tax}</p>
+                                                        </li>
+                                                        <li className="list-inline-item me-4">
+                                                            <h5 className="mb-2 fw-semibold">Voucher</h5>
+                                                            <p className="mb-0">{paymentDetails.voucher}</p>
+                                                        </li>
+                                                        <li className="list-inline-item me-4">
+                                                            <h5 className="mb-2 fw-semibold">Total Price</h5>
+                                                            <p className="mb-0">{paymentDetails.total} {paymentDetails.currency}</p>
+                                                        </li>
+                                                    </>
+                                                )}
                                             </ul>
+                                        <h4 className="mb-2 fw-semibold">
+                                            {reservation.id}
+                                        </h4>
 
-                                            <h4 className="mb-2 fw-semibold">
-                                                {reservation.id}
-                                            </h4>
-
-                                        </ul>
-                                    </Card.Body>
-                                </Card>
+                                    </ul>
+                                </Card.Body>
+                            </Card>
                             </Col>
-                        );
+            );
                     })}
-                </Row>
-            )}
-        </div>
+        </Row>
+    )
+}
+        </div >
     );
 };
 
