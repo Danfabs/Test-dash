@@ -1,15 +1,41 @@
-import { Button, Card, Dropdown } from 'react-bootstrap';
+import { Button, Card, Dropdown, Row, Col } from 'react-bootstrap';
 
 import Avatar1 from '../../../assets/images/users/user-3.jpg'
+import { useEffect, useState } from 'react';
+import { EndUsersList } from '../../apps/EndUsers/endUsersTypes';
 
 
 
+export default function DelegateUsers() {
+    const [users, setUsers] = useState<EndUsersList[]>([]);
 
-export default function DelegateUsers() {   
-     return (
-        <Card>
-            <Card.Body className="text-center">
-                {/* <Dropdown className="float-end" align="end">
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                const response = await fetch(
+                    `https://us-central1-slot-145a8.cloudfunctions.net/getUsersByEmailDomain`
+                );
+                const data = await response.json();
+                setUsers(data.data);
+                console.log("users: ", data.data);
+            } catch (error) {
+                console.error("Error fetching users:", error);
+            }
+        }
+        fetchData();
+    }, []);
+
+
+    console.log("Rendered with users: ", users);
+
+    return (
+        <>
+          <Row>
+            {users.map((user, index) => (
+                <Col xl={12}  key={user.id} >
+                        <Card  >
+                            <Card.Body className="text-center">
+                                {/* <Dropdown className="float-end" align="end">
                     <Dropdown.Toggle as="a" className="cursor-pointer card-drop">
                         <i className="mdi mdi-dots-vertical"></i>
                     </Dropdown.Toggle>
@@ -20,39 +46,44 @@ export default function DelegateUsers() {
                         <Dropdown.Item>Separated link</Dropdown.Item>
                     </Dropdown.Menu>
                 </Dropdown> */}
-                <div>
-                    <img
-                        src={Avatar1}
-                        alt="profileImage"
-                        className="rounded-circle avatar-xl img-thumbnail mb-2"
-                    />
-                    <div className="text-start">
-                        <p className="text-muted font-13">
-                            <strong>Full Name :
-                                </strong> <span className="ms-2">User Name</span>
-                        </p>
+                                <div>
+                                    {user.photo_url && <Card.Img src={user.photo_url} alt={`User ${user.name}`} />}
+                                    <Card.Body className="project-box">
+                                        <div className="text-start">
+                                            <p className="text-muted font-13">
+                                                <strong>Full Name :
+                                                </strong> <span className="ms-2">
+                                                    {user.name}
+                                                </span>
+                                            </p>
 
-                        <p className="text-muted font-13">
-                            <strong>Mobile :</strong>
-                            <span className="ms-2">
-                                +96899999999
-                            </span>
-                        </p>
+                                            <p className="text-muted font-13">
+                                                <strong>Mobile :</strong>
+                                                <span className="ms-2">
+                                                    {user.mobile_number}
+                                                </span>
+                                            </p>
 
-                        <p className="text-muted font-13">
-                            <strong>Email :</strong> <span className="ms-2">
-                                aaa@swiftbeam.co</span>
-                        </p>
+                                            <p className="text-muted font-13">
+                                                <strong>Email :</strong> <span className="ms-2">
+                                                    {user.email_address}
+                                                </span>
+                                            </p>
 
-                        <p className="text-muted font-13">
-                            <strong>User Role :</strong> <span className="ms-2">
-                                Sales Staff</span>
-                        </p>
-                    </div>
-                    {/* <Button className="rounded-pill waves-effect waves-light">Send Message</Button> */}
-                </div>
-            </Card.Body>
-        </Card>
+                                            <p className="text-muted font-13">
+                                                <strong>User Role :</strong> <span className="ms-2">
+                                                    {user.role}
+                                                </span>
+                                            </p>
+                                        </div>
+                                    </Card.Body>
+                                </div>
+                            </Card.Body>
+                        </Card>
+                    </Col>
+            ))}
+            </Row>
+        </>
     );
 };
 
