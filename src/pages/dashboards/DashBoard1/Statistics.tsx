@@ -1,4 +1,5 @@
 import { Col, Row } from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
 
 // component
 import PlacesWidget1 from '../../../components/PlacesWidget1';
@@ -7,6 +8,27 @@ import ReservationInfoWidget4 from '../../../components/ReservationInfoWidget4';
 import AmountWidget3 from '../../../components/AmountWidget3';
 
 const Statistics = () => {
+    const [totalPrice, setTotalPrice] = useState<number | null>(null);
+
+    useEffect(() => {
+        const fetchTotalPrice = async () => {
+            try {
+                const response = await fetch('https://us-central1-slot-145a8.cloudfunctions.net/calculateTotalPrice');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch total price');
+                }
+                const data = await response.json();
+                setTotalPrice(data.totalPrice);
+                console.log("total price: ",totalPrice)
+            } catch (error) {
+                console.error('Error fetching total price:', error);
+            }
+        };
+
+        fetchTotalPrice();
+    }, []);
+
+
     return (
         <div >
         <Row className="no-gutters">
@@ -35,7 +57,7 @@ const Statistics = () => {
                     title="Total Amount"
                     trendValue="12%"
                     trendIcon="mdi mdi-trending-up"
-                    stats={8451}
+                     stats={totalPrice !== null ? totalPrice : 0}
                     subTitle="OMR"
                     progress={77}
                 />
