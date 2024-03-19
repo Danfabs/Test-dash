@@ -1,5 +1,6 @@
 export type EndUsersList = {
     id : string;
+    role : string;
     documentId: string;
     email_address: string;
     gender: string;
