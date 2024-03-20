@@ -10,8 +10,8 @@ const ReservationInfoWidget4 = () => {
             height: 320,
             type: 'pie',
         },
-        labels: [ 'Accepted',  'Rejected','Pending'],
-        colors: [ '#189431', '#E62C1D', '#C1BABA'],
+        labels: [ 'Confirmed',  'Rejected','Pending' ,'Completed'],
+        colors: [ '#189431', '#E62C1D', '#7E7D7D', '#24A5F3'],
         legend: {
             show: true,
             position: 'bottom',
@@ -37,7 +37,7 @@ const ReservationInfoWidget4 = () => {
     };
 
     // chart data
-    const apexDonutData = [ 55, 41, 17];
+    const apexDonutData = [ 55, 41, 17, 10]
 
     return (
         <Card>
