@@ -14,5 +14,7 @@ export type ProviderList = {
     name: string;
     mobile_number:string;
     birthdate:string;
-    photo_url:string | null
+    photo_url:string | null;
+    status: string;
+
 };
