@@ -1,17 +1,45 @@
 import Chart from 'react-apexcharts';
 import { Card, Dropdown } from 'react-bootstrap';
 import { ApexOptions } from 'apexcharts';
+import { useState, useEffect } from 'react';
 
 // simple pie chart
 const ReservationInfoWidget4 = () => {
-    // default options
+    const [reservationCounts, setReservationCounts] = useState([0, 0, 0, 0]);
+
+    useEffect(() => {
+        const fetchReservationCounts = async () => {
+            try {
+                const response = await fetch('https://us-central1-slot-145a8.cloudfunctions.net/getReservationCounts');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch reservation counts');
+                }
+                const data = await response.json();
+                setReservationCounts([
+                    data.totalConfirmedReservations,
+                    data.totalRejectedReservations,
+                    data.totalPendingReservations,
+                    data.totalCompletedReservations
+                ]);
+            } catch (error) {
+                console.error('Error fetching reservation counts:', error);
+            }
+        };
+
+        fetchReservationCounts();
+    }, []);
+
+
+    
+
+
     const apexDonutOpts: ApexOptions = {
         chart: {
             height: 320,
-            type: 'pie',
+            type: 'pie', // Set the type to "pie" for a pie chart
         },
-        labels: [ 'Confirmed',  'Rejected','Pending' ,'Completed'],
-        colors: [ '#189431', '#E62C1D', '#7E7D7D', '#24A5F3'],
+        labels: [ 'Confirmed', 'Rejected', 'Pending', 'Completed' ],
+        colors: [ '#189431', '#E62C1D', '#7E7D7D', '#24A5F3' ],
         legend: {
             show: true,
             position: 'bottom',
@@ -37,7 +65,7 @@ const ReservationInfoWidget4 = () => {
     };
 
     // chart data
-    const apexDonutData = [ 55, 41, 17, 10]
+    // const apexDonutData = [ 55, 41, 17, 10]
 
     return (
         <Card>
@@ -54,7 +82,13 @@ const ReservationInfoWidget4 = () => {
                     </Dropdown.Menu>
                 </Dropdown>
                 <h4 className="header-title mb-3">Reservations Reports</h4>
-                <Chart options={apexDonutOpts} series={apexDonutData} type="pie" height={520} className="apex-charts" />
+                <Chart
+                    options={apexDonutOpts}
+                    series={reservationCounts}
+                    type="pie"
+                    height={520}
+                    className="apex-charts"
+                />
             </Card.Body>
         </Card>
     );
