@@ -38,12 +38,13 @@ const ViewAllReservations = ({ reservations }: { reservations: ReservationsList[
                                             <Badge bg={
                                                 reservation.status === 'Confirmed' ? 'success' :
                                                     reservation.status === 'Rejected' ? 'danger' :
-                                                        reservation.status === 'Pending' ? 'secondary' :
-                                                            'light'
+                                                        reservation.status === 'Pending' ? 'secondary' : 
+                                                        'dark'
                                             }>
                                                 {reservation.status}
                                             </Badge>
                                         </ul>
+                                        
                                         <ul className="list-inline">
                                             <li className="list-inline-item me-4">
 
