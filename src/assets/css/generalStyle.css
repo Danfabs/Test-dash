@@ -9,6 +9,14 @@
     width: 150px;
 }
 
-.payment-add-fee{
-    
+.btn-success {
+    background-color: #014D2F !important; /* Set button background color to #014D2F */
+    border-color: #014D2F !important; /* Set button border color to #014D2F */
+    color: #fff !important; /* Set button text color to white */
+}
+
+.btn-danger {
+    background-color: #014D2F !important; /* Set button background color to #014D2F */
+    border-color: #014D2F !important; /* Set button border color to #014D2F */
+    color: #fff !important; /* Set button text color to white */
 }

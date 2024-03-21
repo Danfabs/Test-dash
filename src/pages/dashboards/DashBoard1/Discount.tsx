@@ -6,7 +6,8 @@ import '../../../assets/css/generalStyle.css'
 // hooks
 import { usePageTitle } from '../../../hooks';
 import '../../../assets/css/generalStyle.css'
-
+import Swal from 'sweetalert2';
+import "../../../assets/css/generalStyle.css"
 
 const Discount = () => {
     const [phoneNumber, setPhoneNumber] = useState('');
@@ -22,7 +23,7 @@ const Discount = () => {
                 },
                 body: JSON.stringify({
                     phoneNumber: phoneNumber,
-                    discountValue: parseFloat(discountPercentage) 
+                    discountValue: parseFloat(discountPercentage)
                 })
             });
 
@@ -35,8 +36,26 @@ const Discount = () => {
             setPhoneNumber('');
             setDiscountPercentage('');
 
+            Swal.fire({
+                icon: 'success',
+                title: 'Discount Added Successfully!',
+                text: `Discount has been added successfully to ${phoneNumber} .`,
+                customClass: {
+                    confirmButton: 'btn-success'
+                }
+            });
+
         } catch (error) {
             console.error('Error:', error);
+
+            Swal.fire({
+                icon: 'error',
+                title: 'Failed to Add Discount',
+                text: 'An error occurred while adding the discount. Please try again later or check the phone number',
+                customClass: {
+                    confirmButton: 'btn-danger' // Add custom CSS class to the confirm button
+                }
+            });
         }
     };
 
@@ -80,9 +99,9 @@ const Discount = () => {
                         variant="outline-success"
                         className='payment-saveButton'
                         onClick={handleDiscount}
-                        >
+                    >
                         Give Discount
-                        </Button>
+                    </Button>
                 </Form>
 
             </Card.Body>
@@ -114,8 +133,8 @@ const FormDiscount = () => {
         <>
             <Row>
                 <Col xl={8}>
-            <Discount />
-            </Col>
+                    <Discount />
+                </Col>
             </Row>
         </>
     );
