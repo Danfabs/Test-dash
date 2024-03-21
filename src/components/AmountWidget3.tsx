@@ -24,24 +24,11 @@ const AmountWidget3 = ({
     return (
         <Card>
             <Card.Body>
-               
-
-                
                 <h4 className="header-title mt-0 mb-3">{title}</h4>
-                {/* <div className="widget-box-2"> */}
                     <div className="widget-detail-1 text-center">
-                        {/* <Badge bg={variant} pill className="float-start mt-3">
-                            {trendValue} <i className={trendIcon}></i>
-                        </Badge> */}
                         <h2 className="fw-normal  mb-1" >{stats}</h2>
                         <p className="text-muted mb-1" >{subTitle}</p>
                     </div>
-                    {/* <ProgressBar
-                        variant={variant}
-                        now={progress}
-                        className={classNames('progress-sm', 'progress-bar-alt-' + variant)}
-                    ></ProgressBar> */}
-                {/* </div> */}
             </Card.Body>
         </Card>
     );
