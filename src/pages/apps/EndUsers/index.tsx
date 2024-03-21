@@ -35,6 +35,32 @@ const SingleUser = ({ users, setUsers }: { users: EndUsersList[]; setUsers: Reac
         }
     };
 
+
+    const reActiveUser = async (documentId: string) => {
+        try {
+            const response = await fetch(
+                `https://us-central1-slot-145a8.cloudfunctions.net/reActiveUser?documentId=${documentId}`,
+                {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                }
+            );
+            if (response.ok) {
+                // Update the local state with the updated user
+                const updatedUsers = users.map(user =>
+                    user.id === documentId ? { ...user, status: 'Active' } : user
+                );
+                setUsers(updatedUsers);
+            } else {
+                console.error('Failed to suspend user:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Error suspending user:', error);
+        }
+    };
+
     return (
         <div>
             <h4 className="mt-0">End Users</h4>
@@ -104,8 +130,12 @@ const SingleUser = ({ users, setUsers }: { users: EndUsersList[]; setUsers: Reac
                                             </li>
                                         </ul>
 
-                                        {user.status !== 'Suspended' && (
+                                        {user.status === 'Active' && (
                                             <Button variant="secondary" onClick={() => suspendUser(user.id)}>Suspend User</Button>
+                                        )}
+
+                                        {user.status === 'Suspended' && (
+                                            <Button variant="success" onClick={() => reActiveUser(user.id)}>Reactivate User</Button>
                                         )}
                                     </Card.Body>
                                 </Card>
