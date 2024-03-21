@@ -104,7 +104,9 @@ const SingleUser = ({ users, setUsers }: { users: EndUsersList[]; setUsers: Reac
                                             </li>
                                         </ul>
 
-                                        <Button variant="secondary" onClick={() => suspendUser(user.id)}>Suspend User</Button>
+                                        {user.status !== 'Suspended' && (
+                                            <Button variant="secondary" onClick={() => suspendUser(user.id)}>Suspend User</Button>
+                                        )}
                                     </Card.Body>
                                 </Card>
                             </Col>
