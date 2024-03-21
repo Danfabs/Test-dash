@@ -1,90 +1,37 @@
 import { Card, Dropdown } from 'react-bootstrap';
-import Chart from 'react-apexcharts';
-import { ApexOptions } from 'apexcharts';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { projectFirestore } from '../firebase';
-
 type ReservationWidget2Props = {
     title: string;
-    // data: number;
     color: string;
     stats: number;
     subTitle: string;
 };
 
 const ReservationWidget2 = ({ title, color, stats, subTitle }: ReservationWidget2Props) => {
-    const [totalReservations, setTotalReservations] = useState<number>(0);
+    const [totalReservations, setTotalReservations] = useState<number | null>(null);
     const navigate = useNavigate();
 
     useEffect(() => {
-        const fetchData = async () => {
+        const fetchTotalPrice = async () => {
             try {
-                const snapshot = await projectFirestore.collection('slot3_slots').get();
-                const promises = snapshot.docs.map(async (slotDoc) => {
-                    const reservationsSnapshot = await slotDoc.ref.collection('reservations').get();
-                    return reservationsSnapshot.docs.length;
-                });
-                const reservationCounts = await Promise.all(promises);
-                const totalOfReservations = reservationCounts.reduce((acc, count) => acc + count, 0);
-                setTotalReservations(totalOfReservations);
+                const response = await fetch('https://us-central1-slot-145a8.cloudfunctions.net/getTotalReservations');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch total price');
+                }
+                const data = await response.json();
+                setTotalReservations(data.totalReservations);
+                console.log("Total Reservations: ", data.totalReservations)
             } catch (error) {
-                console.error('Error fetching reservations:', error);
+                console.error('Error fetching total reservations:', error);
             }
         };
-        fetchData();
+
+        fetchTotalPrice();
     }, []);
 
     const handleShowAllReservationClick = () => {
         navigate('/apps/viewAllReservations');
-    };
-
-    const apexOpts: ApexOptions = {
-        chart: {
-            type: 'radialBar',
-            sparkline: {
-                enabled: true,
-            },
-        },
-        dataLabels: {
-            enabled: false,
-        },
-        plotOptions: {
-            radialBar: {
-                hollow: {
-                    margin: 0,
-                    size: '75%',
-                },
-                track: {
-                    background: color,
-                    opacity: 0.3,
-                    margin: 0,
-                },
-                dataLabels: {
-                    name: {
-                        show: false,
-                    },
-                    value: {
-                        show: true,
-                        color: color,
-                        fontWeight: 700,
-                        fontSize: '14px',
-                        offsetY: 5,
-                        formatter: (val: number) => {
-                            return String(val);
-                        },
-                    },
-                },
-            },
-        },
-        states: {
-            hover: {
-                filter: {
-                    type: 'none',
-                },
-            },
-        },
-        colors: [color],
     };
 
     const subtitle = totalReservations === 1 ? 'reservation' : 'reservations';
