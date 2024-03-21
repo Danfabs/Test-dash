@@ -6,7 +6,8 @@ import '../../../assets/css/generalStyle.css'
 // hooks
 import { usePageTitle } from '../../../hooks';
 import { projectFirestore } from '../../../firebase';
-
+import Swal from 'sweetalert2';
+import "../../../assets/css/generalStyle.css"
 
 interface SubscriptionData {
     id: number;
@@ -112,6 +113,37 @@ const Payment = () => {
 
 
     const addOrderFeeForms = async () => {
+
+        if (orderFeeForms.some(form => form.from === '' || form.to === '' || form.fee === '')) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Can not Save',
+                text: 'Please fill in all fields before saving the order fee.',
+                customClass: {
+                    confirmButton: 'btn-danger'
+                }
+            });
+            return;
+        }
+
+        for (const form of orderFeeForms) {
+            for (const feeValue of feeValues) {
+                if (feeValue.from === parseFloat(form.from) && feeValue.to === parseFloat(form.to)) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Can not Save',
+                        text: `The "From" value and "To" value should be unique`,
+                        customClass: {
+                            confirmButton: 'btn-danger'
+                        }
+                    });
+                    return;
+                }
+                
+            }
+        }
+
+
         const parsedOrderFeeForms = orderFeeForms.map(form => ({
             id: form.id,
             from: parseFloat(form.from),
@@ -201,7 +233,7 @@ const Payment = () => {
             } else {
                 console.error('Error saving subscription data to Firebase:', response);
             }
-        } 
+        }
         catch (error) {
             console.error('Error saving subscription data to Firebase:', error);
         }
@@ -214,7 +246,7 @@ const Payment = () => {
         setSubscriptionDuration(null);
         setDiscountPercentage('');
         setCalculatedPrice(null);
-      
+
     };
 
     return (
