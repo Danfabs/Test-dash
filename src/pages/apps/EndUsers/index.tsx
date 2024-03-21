@@ -13,7 +13,7 @@ const SingleUser = ({ users, setUsers }: { users: EndUsersList[]; setUsers: Reac
     const suspendUser = async (documentId: string) => {
         try {
             const response = await fetch(
-                `https://us-central1-slot-145a8.cloudfunctions.net/updateUserStatus?documentId=${documentId}`,
+                `https://us-central1-slot-145a8.cloudfunctions.net/suspendedUser?documentId=${documentId}`,
                 {
                     method: 'GET',
                     headers: {
@@ -104,7 +104,9 @@ const SingleUser = ({ users, setUsers }: { users: EndUsersList[]; setUsers: Reac
                                             </li>
                                         </ul>
 
-                                        <Button variant="secondary" onClick={() => suspendUser(user.id)}>Suspend User</Button>
+                                        {user.status !== 'Suspended' && (
+                                            <Button variant="secondary" onClick={() => suspendUser(user.id)}>Suspend User</Button>
+                                        )}
                                     </Card.Body>
                                 </Card>
                             </Col>
