@@ -242,7 +242,7 @@ const Payment = () => {
                                 </Nav.Item>
                                 <Nav.Item as="li">
                                     <Nav.Link as={Link} to="#" eventKey="subscription" className="rounded-0 pt-2 pb-2">
-                                        <span className="d-none d-sm-inline">Space privider subscription</span>
+                                        <span className="d-none d-sm-inline">Space Provider subscription</span>
                                     </Nav.Link>
                                 </Nav.Item>
 

@@ -95,7 +95,7 @@ const PlacesWidget1 = ({ title, color, stats, subTitle }: PlacesWidget1Props) =>
                         <i className="mdi mdi-dots-vertical"></i>
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
-                        <Dropdown.Item onClick={handleShowAllPlacesClick}>Show All Places</Dropdown.Item>
+                        <Dropdown.Item onClick={handleShowAllPlacesClick}>Show All Spaces</Dropdown.Item>
                     </Dropdown.Menu>
                 </Dropdown>
 

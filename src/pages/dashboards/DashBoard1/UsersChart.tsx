@@ -54,11 +54,9 @@ const UsersChart = () => {
 
     return (
         <div >
-        <Card >
-            
-            <Card.Body>
-            
-                <Dropdown className="float-end" align="end">
+            <Card >
+                <Card.Body>
+                    {/* <Dropdown className="float-end" align="end">
                     <Dropdown.Toggle as="a" className="cursor-pointer card-drop">
                         <i className="mdi mdi-dots-vertical"></i>
                     </Dropdown.Toggle>
@@ -66,28 +64,23 @@ const UsersChart = () => {
                         <Dropdown.Item>All Customers</Dropdown.Item>
                         <Dropdown.Item>All Vendors</Dropdown.Item>
                         <Dropdown.Item>All Staff</Dropdown.Item>
-                        {/* <Dropdown.Item>Separated link</Dropdown.Item> */}
+                        <Dropdown.Item>Separated link</Dropdown.Item>
                     </Dropdown.Menu>
-                </Dropdown>
+                </Dropdown> */}
+                    <div dir="ltr" className='card-div'>
+                        <h4 className="header-title mb-3">Users Reports</h4>
+                        <Chart
+                            options={apexOpts}
+                            series={apexData}
+                            type="donut"
+                            height={502}
+                            className="apex-charts mt-2"
+                        />
+                    </div>
 
+                </Card.Body>
 
-               
-               
-
-                <div dir="ltr" className='card-div'>
-                <h4 className="header-title mb-3">Users Reports</h4>
-                    <Chart
-                        options={apexOpts}
-                        series={apexData}
-                        type="donut"
-                        height={502}
-                        className="apex-charts mt-2"
-                    />
-                </div>
-                
-            </Card.Body>
-           
-        </Card>
+            </Card>
         </div>
     );
 };

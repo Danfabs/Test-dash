@@ -34,7 +34,7 @@ const Statistics = () => {
         <Row className="no-gutters">
             <Col className="mx-auto">
                 <PlacesWidget1
-                    title="Places"
+                    title="Spaces"
                     // data={58}
                     stats={256}
                     color={'#f05050'}
