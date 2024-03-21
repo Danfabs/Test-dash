@@ -29,11 +29,13 @@ export default function DelegateUsers() {
     console.log("Rendered with users: ", users);
 
     return (
+        <div>
         <>
-          <Row>
-            {users.map((user, index) => (
-                <Col xl={12}  key={user.id} >
-                        <Card  >
+            <Row>
+            {(users || []).map((user, index) => {
+                      return (
+                    <Col xl={12} key={index.toString()} >
+                        <Card >
                             <Card.Body className="text-center">
                                 {/* <Dropdown className="float-end" align="end">
                     <Dropdown.Toggle as="a" className="cursor-pointer card-drop">
@@ -81,9 +83,11 @@ export default function DelegateUsers() {
                             </Card.Body>
                         </Card>
                     </Col>
-            ))}
+                    );
+                })}
             </Row>
         </>
+        </div>
     );
 };
 
