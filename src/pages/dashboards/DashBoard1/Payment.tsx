@@ -120,7 +120,7 @@ const Payment = () => {
                 title: 'Can not Save',
                 text: 'Please fill in all fields before saving the order fee.',
                 customClass: {
-                    confirmButton: 'btn-danger'
+                    confirmButton: 'custom-btn-danger'
                 }
             });
             return;
@@ -134,7 +134,7 @@ const Payment = () => {
                         title: 'Can not Save',
                         text: `The "From" value and "To" value should be unique`,
                         customClass: {
-                            confirmButton: 'btn-danger'
+                            confirmButton: 'custom-btn-danger'
                         }
                     });
                     return;
@@ -171,7 +171,7 @@ const Payment = () => {
                 title: 'Order Fee Added Successfully!',
                 // text: 'Please fill in all fields before saving the order fee.',
                 customClass: {
-                    confirmButton: 'btn-danger'
+                    confirmButton: 'custom-btn-success'
                 }
             });
         } catch (error) {
