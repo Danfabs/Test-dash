@@ -166,6 +166,14 @@ const Payment = () => {
             setOrderFeeForms([{ id: 1, from: '', to: '', fee: '' }]);
             // Fetch fee values after saving the order fee
             await fetchFeeValues();
+            Swal.fire({
+                icon: 'success',
+                title: 'Order Fee Added Successfully!',
+                // text: 'Please fill in all fields before saving the order fee.',
+                customClass: {
+                    confirmButton: 'btn-danger'
+                }
+            });
         } catch (error) {
             console.error('An error occurred while adding value to payment:', error);
         }
