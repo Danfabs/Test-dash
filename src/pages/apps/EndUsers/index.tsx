@@ -2,13 +2,14 @@ import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 // bootstrap
 import Button from 'react-bootstrap/Button';
-import { Badge, Card, Col, Row } from 'react-bootstrap';
+import { Badge, Card, Col, Row, Spinner } from 'react-bootstrap';
 // types
 import { EndUsersList } from './endUsersTypes';
 // hooks
 import { usePageTitle } from '../../../hooks';
 
 const SingleUser = ({ users, setUsers }: { users: EndUsersList[]; setUsers: React.Dispatch<React.SetStateAction<EndUsersList[]>> }) => {
+
 
     const suspendUser = async (documentId: string) => {
         try {
@@ -64,7 +65,7 @@ const SingleUser = ({ users, setUsers }: { users: EndUsersList[]; setUsers: Reac
     return (
         <div>
             <h4 className="mt-0">End Users</h4>
-            <>
+           
                 <Row>
                     {(users || []).map((user, index) => {
                         return (
@@ -140,15 +141,16 @@ const SingleUser = ({ users, setUsers }: { users: EndUsersList[]; setUsers: Reac
                                     </Card.Body>
                                 </Card>
                             </Col>
-                        );
+                        )
                     })}
-                </Row></>
+                </Row>
         </div>
     );
 };
 
 const Users = () => {
     const [users, setUsers] = useState<EndUsersList[]>([]);
+    const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
         async function fetchData() {
@@ -159,6 +161,7 @@ const Users = () => {
                 .then(
                     (result) => {
                         setUsers(result.data);
+                        setLoading(false);
                         console.log("users: ", result.data)
                     },
                     (error) => {
@@ -186,7 +189,13 @@ const Users = () => {
     });
     return (
         <>
-            <SingleUser users={users} setUsers={setUsers} />
+            {loading ? ( // Show loading spinner if loading is true
+                <Spinner animation="border" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                </Spinner>
+            ) : (
+                <SingleUser users={users} setUsers={setUsers} />
+            )}
         </>
     );
 };
