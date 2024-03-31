@@ -30,24 +30,6 @@ export function configureFakeBackend() {
 
     mock.onPost('/login/').reply(function (config) {
         return new Promise(async function (resolve, reject) {
-            // setTimeout(function () {
-            //     // get parameters from post request
-            //     let params = JSON.parse(config.data);
-
-            //     // find if any user matches login credentials
-            //     let filteredUsers = users.filter((user) => {
-            //         return user.email === params.email && user.password === params.password;
-            //     });
-
-            //     if (filteredUsers.length) {
-            //         // if login details are valid return user details and fake jwt token
-            //         let user = filteredUsers[0];
-            //         resolve([200, user]);
-            //     } else {
-            //         // else return error
-            //         resolve([401, { message: 'Username or password is incorrect' }]);
-            //     }
-            // }, 1000);
             try {
                 let params = JSON.parse(config.data);
                 console.log("params", params)
@@ -99,10 +81,6 @@ export function configureFakeBackend() {
                     };
                     console.log("user" ,user)
                     resolve([200, user]);
-
-                     // let user = {
-                    //     message: "We've sent you a link to reset password to your registered email.",
-                    // };
                 }
 
                 // If request succeeds, navigate to the dashboard
