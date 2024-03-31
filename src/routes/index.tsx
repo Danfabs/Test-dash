@@ -198,7 +198,7 @@ const AllRoutes = () => {
     {
       // auth protected routes
       path: '/',
-      element: <PrivateRoute roles={'Admin'} component={Layout} />,
+      element: <PrivateRoute roles={['Sales Admin', 'Sales Staff' , 'Technical Admin' , 'Technical Staff' , 'Super Admin']} component={Layout} />,
       children: [
         {
           path: 'dashboard',

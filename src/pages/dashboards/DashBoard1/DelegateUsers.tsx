@@ -1,4 +1,4 @@
-import { Button, Card, Dropdown, Row, Col } from 'react-bootstrap';
+import { Button, Card, Dropdown, Row, Col , Spinner } from 'react-bootstrap';
 
 import Avatar1 from '../../../assets/images/users/user-3.jpg'
 import { useEffect, useState } from 'react';
@@ -8,6 +8,7 @@ import { EndUsersList } from '../../apps/EndUsers/endUsersTypes';
 
 export default function DelegateUsers() {
     const [users, setUsers] = useState<EndUsersList[]>([]);
+    const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
         async function fetchData() {
@@ -17,6 +18,7 @@ export default function DelegateUsers() {
                 );
                 const data = await response.json();
                 setUsers(data.data);
+                setLoading(false);
                 console.log("users: ", data.data);
             } catch (error) {
                 console.error("Error fetching users:", error);
@@ -31,6 +33,11 @@ export default function DelegateUsers() {
     return (
         <div>
         <>
+        {loading ? ( // Display spinner if data is still loading
+                <Spinner animation="border" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                </Spinner>
+            ) : (
             <Row>
             {(users || []).map((user, index) => {
                       return (
@@ -86,6 +93,7 @@ export default function DelegateUsers() {
                     );
                 })}
             </Row>
+             )}
         </>
         </div>
     );
