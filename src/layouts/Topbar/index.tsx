@@ -26,6 +26,7 @@ import slotLogo from '../../assets/images/slot-logo.png';
 import avatar1 from '../../assets/images/users/user-1.jpg';
 import logoDark from '../../assets/images/logo-dark.png';
 import logoLight from '../../assets/images/logo-light.png';
+import { useUser } from '../../hooks';
 
 type TopbarProps = {
     openLeftMenuCallBack: () => void;
@@ -35,6 +36,7 @@ type TopbarProps = {
 const Topbar = ({ openLeftMenuCallBack, containerClass }: TopbarProps) => {
     const { dispatch, appSelector } = useRedux();
     const [isopen, setIsopen] = useState<boolean>(false);
+    const [user] = useUser();
 
     const { layout, pageTitle } = appSelector((state) => ({
         layout: state.Layout.layoutType,
@@ -72,7 +74,7 @@ const Topbar = ({ openLeftMenuCallBack, containerClass }: TopbarProps) => {
                     </li> */}
                     <li className="dropdown notification-list topbar-dropdown">
                         {/* User */}
-                        <ProfileDropdown userImage={avatar1} username={'Nowak'} menuItems={profileMenus} />
+                        <ProfileDropdown userImage={avatar1} username={user.firstName} menuItems={profileMenus} />
                     </li>
                     <li className="dropdown notification-list">
                         <ThemeSetting handleRightSideBar={handleRightSideBar} />
