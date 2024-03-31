@@ -8,7 +8,7 @@ import { useUser } from '../hooks';
 
 type PrivateRouteProps = {
     component: React.ComponentType;
-    roles?: string;
+    roles?: string[];
 };
 
 /**
@@ -30,7 +30,7 @@ const PrivateRoute = ({ component: RouteComponent, roles, ...rest }: PrivateRout
     }
 
     // check if route is restricted by role
-    if (roles && roles.indexOf(loggedInUser.role) === -1) {
+    if (roles && roles.length > 0 && !roles.includes(loggedInUser.role)) {
         // role not authorised so redirect to home page
         return <Navigate to={{ pathname: '/' }} />;
     }
