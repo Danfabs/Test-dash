@@ -9,7 +9,10 @@ import './assets/scss/Theme.scss';
 
 const App = () => {
     configureFakeBackend();
-    return <Routes />;
+    return (
+        <Routes />
+    );
+   
 };
 
 export default App;

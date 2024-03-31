@@ -10,6 +10,7 @@ import StatisticsChart from './StatisticsChart';
 import RevenueChart from './RevenueChart';
 import Users from './Users';
 import ReservationInfoWidget4 from '../../../components/ReservationInfoWidget4';
+import LeftSidebar from '../../../layouts/LeftSidebar';
 
 
 const DashBoard1 = () => {
@@ -27,6 +28,7 @@ const DashBoard1 = () => {
 
     return (
         <>
+        
             <Statistics />
 
             <Row>

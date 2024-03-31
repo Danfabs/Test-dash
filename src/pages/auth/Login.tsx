@@ -1,6 +1,7 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Button, Alert, Row, Col } from 'react-bootstrap';
-import { Navigate, Link, useLocation } from 'react-router-dom';
+import { Navigate, Link, useLocation , useNavigate} from 'react-router-dom';
+
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useTranslation } from 'react-i18next';
@@ -16,6 +17,7 @@ import { VerticalForm, FormInput } from '../../components/form/';
 import Loader from '../../components/Loader';
 
 import AuthLayout from './AuthLayout';
+import { projectAuth, projectFirestore } from '../../firebase';
 
 type LocationState = {
     from?: Location;
@@ -53,6 +55,8 @@ const BottomLink = () => {
 const Login = () => {
     const { t } = useTranslation();
     const { dispatch, appSelector } = useRedux();
+    const [loginError, setLoginError] = useState<string>('');
+    const navigate = useNavigate();
 
     const { user, userLoggedIn, loading, error } = appSelector((state) => ({
         user: state.Auth.user,
@@ -60,6 +64,8 @@ const Login = () => {
         error: state.Auth.error,
         userLoggedIn: state.Auth.userLoggedIn,
     }));
+
+
 
     useEffect(() => {
         dispatch(resetAuth());
@@ -78,9 +84,48 @@ const Login = () => {
     /*
     handle form submission
     */
+
+    const redirectToHome = () => { 
+        navigate('/'); 
+    };
+
+
+    
+
+
     const onSubmit = (formData: UserData) => {
         dispatch(loginUser(formData['email'], formData['password']));
     };
+
+    // const onSubmit = async (formData: UserData) => {
+    //     const { email, password } = formData;
+    
+    //     try {
+    //         // Make HTTP request to your Cloud Function endpoint
+    //         const response = await fetch('https://us-central1-slot-145a8.cloudfunctions.net/loginDashboard', {
+    //             method: 'POST',
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //             },
+    //             body: JSON.stringify({ email, password }),
+    //         });
+    
+    //         if (!response.ok) {
+    //             // Handle error response
+    //             const errorData = await response.json();
+    //             throw new Error(errorData.error);
+    //         }
+    
+    //         // If request succeeds, navigate to the dashboard
+    //         console.log("User logged in successfully");
+    //         loginUser(email, password);
+    //         redirectToHome();
+    //     } catch (error: any) {
+    //         console.error(error);
+    //         // Set login error message
+    //         setLoginError(error.message || 'Invalid email or password.');
+    //     }
+    // }
 
     const location = useLocation();
     let redirectUrl = '/';
@@ -92,7 +137,7 @@ const Login = () => {
 
     return (
         <>
-            {userLoggedIn && user && <Navigate to={redirectUrl} replace />}
+            {userLoggedIn && user && <Navigate to={'/'} replace />}
 
             <AuthLayout bottomLinks={<BottomLink />}>
                 <div className="text-center mb-4">
@@ -109,7 +154,9 @@ const Login = () => {
                 <VerticalForm<UserData>
                     onSubmit={onSubmit}
                     resolver={schemaResolver}
+                    // defaultValues={{ email: 'bbb@swiftbeam.co', password: '123456' }}
                     defaultValues={{ email: 'adminto@coderthemes.com', password: 'test' }}
+
                 >
                     <FormInput
                         type="email"
