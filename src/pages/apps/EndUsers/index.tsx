@@ -65,85 +65,93 @@ const SingleUser = ({ users, setUsers }: { users: EndUsersList[]; setUsers: Reac
     return (
         <div>
             <h4 className="mt-0">End Users</h4>
-           
-                <Row>
-                    {(users || []).map((user, index) => {
-                        return (
-                            <Col xl={4} key={index.toString()}>
-                                <Card>
-                                    {user.photo_url && <Card.Img src={user.photo_url} alt={`User ${user.name}`} />}
-                                    <Card.Body className="project-box">
 
-                                        <h4 className="mt-0">
-                                            <Link to="#" className="text-dark">
-                                                {user.name}
-                                            </Link>
-                                        </h4>
+            <Row>
+                {(users || []).map((user, index) => {
+                    return (
+                        <Col xl={4} key={index.toString()}>
+                            <Card>
+                                {user.photo_url && <Card.Img src={user.photo_url} alt={`User ${user.name}`} />}
+                                <Card.Body className="project-box">
+
+                                    <h4 className="mt-0">
+                                        <Link to="#" className="text-dark">
+                                            {user.name}
+                                        </Link>
+                                    </h4>
 
 
-                                        <ul className="list-inline">
-                                            <li className="list-inline-item me-4">
-                                                {user.is_partner ? (
-                                                    <>
-                                                        <Badge bg="success">Partner</Badge>
-                                                    </>
-                                                ) : (
-                                                    <>
-                                                        <Badge bg="danger">Not Partner</Badge>
-                                                    </>
-                                                )}
-                                            </li>
-                                        </ul>
+                                    <ul className="list-inline">
+                                        <li className="list-inline-item me-4">
+                                            {user.is_partner ? (
+                                                <>
+                                                    <Badge bg="success">Partner</Badge>
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <Badge bg="danger">Not Partner</Badge>
+                                                </>
+                                            )}
+                                        </li>
+                                    </ul>
 
-                                        <ul className="list-inline">
-                                            <Badge bg={
-                                                user.status === 'Active' ? 'success' :
-                                                    user.status === 'Suspended' ? 'secondary' :
-                                                        'dark'
-                                            }>
-                                                {user.status}
-                                            </Badge>
-                                        </ul>
+                                    {user.status && (
+                                    <ul className="list-inline">
+                                        <Badge bg={
+                                            user.status === 'Active' ? 'success' :
+                                                user.status === 'Suspended' ? 'secondary' :
+                                                    'dark'
+                                        }>
+                                            {user.status}
+                                        </Badge>
+                                    </ul>
+                                      )}
 
-                                        <ul className="list-inline">
-
+                                    <ul className="list-inline">
+                                        {user.mobile_number && (
                                             <li className="list-inline-item me-3">
                                                 <h5 className="mb-2 fw-semibold">Mobile Number</h5>
                                                 <p className="mb-0">{user.mobile_number}</p>
                                             </li>
+                                        )}
 
+                                        {user.email_address && (
                                             <li className="list-inline-item me-4">
                                                 <h5 className="mb-2 fw-semibold">Email</h5>
                                                 <p className="mb-0">{user.email_address}</p>
                                             </li>
+                                        )}
 
+                                        {user.gender && (
                                             <li className="list-inline-item ">
                                                 <h5 className="mb-2 fw-semibold">Gender</h5>
                                                 <p className="mb-0">{user.gender}</p>
                                             </li>
+                                        )}
+                                    </ul>
 
-                                        </ul>
-
-                                        <ul className="list-inline">
+                                    <ul className="list-inline">
+                                        {user.birthdate && (
                                             <li className="list-inline-item me-4">
                                                 <h5 className="mb-2 fw-semibold">Birthday</h5>
                                                 <p className="mb-0">{user.birthdate}</p>
                                             </li>
-                                        </ul>
+                                             )}
+                                    </ul>
 
-                                        {user.status === 'Active' && (
-                                            <Button variant="secondary" onClick={() => suspendUser(user.id)}>Suspend User</Button>
-                                        )}
+                                    {user.status === 'Active' && (
+                                        <Button variant="secondary" onClick={() => suspendUser(user.id)}>Suspend User</Button>
+                                    )}
 
-                                        {user.status === 'Suspended' && (
-                                            <Button variant="success" onClick={() => reActiveUser(user.id)}>Reactivate User</Button>
-                                        )}
-                                    </Card.Body>
-                                </Card>
-                            </Col>
-                        )
-                    })}
-                </Row>
+                                    {user.status === 'Suspended' && (
+                                        <Button variant="success" onClick={() => reActiveUser(user.id)}>Reactivate User</Button>
+                                    )}
+                                </Card.Body>
+                            </Card>
+                        </Col>
+                    )
+                })}
+            </Row>
         </div>
     );
 };
