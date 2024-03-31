@@ -1,6 +1,7 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Button, Alert, Row, Col } from 'react-bootstrap';
-import { Navigate, Link, useLocation } from 'react-router-dom';
+import { Navigate, Link, useLocation , useNavigate} from 'react-router-dom';
+
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useTranslation } from 'react-i18next';
@@ -14,7 +15,6 @@ import { resetAuth, loginUser } from '../../redux/actions';
 // components
 import { VerticalForm, FormInput } from '../../components/form/';
 import Loader from '../../components/Loader';
-
 import AuthLayout from './AuthLayout';
 
 type LocationState = {
@@ -53,6 +53,7 @@ const BottomLink = () => {
 const Login = () => {
     const { t } = useTranslation();
     const { dispatch, appSelector } = useRedux();
+    const navigate = useNavigate();
 
     const { user, userLoggedIn, loading, error } = appSelector((state) => ({
         user: state.Auth.user,
@@ -60,6 +61,8 @@ const Login = () => {
         error: state.Auth.error,
         userLoggedIn: state.Auth.userLoggedIn,
     }));
+
+
 
     useEffect(() => {
         dispatch(resetAuth());
@@ -78,9 +81,11 @@ const Login = () => {
     /*
     handle form submission
     */
+
     const onSubmit = (formData: UserData) => {
         dispatch(loginUser(formData['email'], formData['password']));
     };
+
 
     const location = useLocation();
     let redirectUrl = '/';
@@ -92,7 +97,7 @@ const Login = () => {
 
     return (
         <>
-            {userLoggedIn && user && <Navigate to={redirectUrl} replace />}
+            {userLoggedIn && user && <Navigate to={'/'} replace />}
 
             <AuthLayout bottomLinks={<BottomLink />}>
                 <div className="text-center mb-4">
@@ -109,13 +114,13 @@ const Login = () => {
                 <VerticalForm<UserData>
                     onSubmit={onSubmit}
                     resolver={schemaResolver}
-                    defaultValues={{ email: 'adminto@coderthemes.com', password: 'test' }}
+
                 >
                     <FormInput
                         type="email"
                         name="email"
                         label={t('Email address')}
-                        placeholder={t('hello@coderthemes.com')}
+                        placeholder={t('example@example.com')}
                         containerClass={'mb-3'}
                     />
                     <FormInput
@@ -144,5 +149,4 @@ const Login = () => {
         </>
     );
 };
-
 export default Login;

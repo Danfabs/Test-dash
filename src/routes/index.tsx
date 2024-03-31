@@ -133,6 +133,7 @@ const LoadComponent = ({ component: Component }: LoadComponentProps) => (
 );
 
 const AllRoutes = () => {
+  const loggedIn = false;
   const { appSelector } = useRedux();
 
   const { layout } = appSelector((state) => ({

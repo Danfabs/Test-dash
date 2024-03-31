@@ -6,6 +6,8 @@ import { useTranslation } from 'react-i18next';
 // images
 import LogoDark from '../../assets/images/logo-dark.png';
 import LogoLight from '../../assets/images/logo-light.png';
+import slotLogo from '../../assets/images/slot-logo.png';
+
 
 type AccountLayoutProps = {
     hasLogo?: boolean;
@@ -37,17 +39,17 @@ const AuthLayout = ({ hasLogo, bottomLinks, children }: AccountLayoutProps) => {
                                 <div className="auth-logo">
                                     <Link to="/" className="logo logo-dark text-center">
                                         <span className="logo-lg">
-                                            <img src={LogoDark} alt="" height="22" />
+                                        <img src={slotLogo} alt="logo-sm" height="30" />
                                         </span>
                                     </Link>
 
                                     <Link to="/" className="logo logo-light text-center">
                                         <span className="logo-lg">
-                                            <img src={LogoLight} alt="" height="22" />
+                                            <img src={slotLogo} alt="" height="22" />
                                         </span>
                                     </Link>
                                 </div>
-                                <p className="text-muted mt-2 mb-4">{t('Responsive Admin Dashboard')}</p>
+                                <p className="text-muted mt-2 mb-4"></p>
                             </div>
                         )}
                         <Card>
