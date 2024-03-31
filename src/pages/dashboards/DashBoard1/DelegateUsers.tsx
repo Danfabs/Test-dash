@@ -32,6 +32,7 @@ export default function DelegateUsers() {
 
     return (
         <div>
+             <h4 className="mt-0">Users</h4>
         <>
         {loading ? ( // Display spinner if data is still loading
                 <Spinner animation="border" role="status">

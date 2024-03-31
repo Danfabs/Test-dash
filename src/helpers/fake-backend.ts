@@ -65,8 +65,11 @@ export function configureFakeBackend() {
                     const firstName = userData.user.firstName;
                     const lastName = userData.user.lastName;
                     const role = userData.user.role;
+                    const mobile_number = userData.user.mobile_number;
+                    const photo_url = userData.user.photo_url;
                     const token = userData.token;
-                   
+                    
+                    
                         let user = 
                         {
                             id: 1,
@@ -76,6 +79,8 @@ export function configureFakeBackend() {
                             firstName: firstName,
                             lastName: lastName,
                             role: role,
+                            mobile_number:mobile_number,
+                            photo_url: photo_url,
                             token: token,
 
                     };

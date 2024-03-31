@@ -7,6 +7,8 @@ import { usePageTitle } from '../../../hooks';
 // component
 import { VerticalForm, FormInput } from '../../../components/form';
 import DelegateUsers from '../../dashboards/DashBoard1/DelegateUsers';
+import Swal from 'sweetalert2';
+import "../../../assets/css/generalStyle.css"
 
 const List = () => {
     // set pagetitle
@@ -60,9 +62,21 @@ const List = () => {
             if (!response.ok) {
                 throw new Error('Failed to update user role');
             }
-
+            Swal.fire({
+                icon: 'success',
+                title: 'The role has been changed!',
+                text: `The role of ${email} has been changed successfully to ${selectedRole}.`,
+                customClass: {
+                    confirmButton: 'btn-success'
+                }
+            }).then((result) => {
+                // Check if the user clicked "OK"
+                if (result.isConfirmed) {
+                    // Reload the page
+                    window.location.reload();
+                }
+            });
             toggle();
-            window.location.reload();
         } catch (error) {
             console.error('Error updating user role:', error);
         }

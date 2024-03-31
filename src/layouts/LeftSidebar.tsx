@@ -13,7 +13,7 @@ import AppMenu from './Menu';
 
 // images
 import profileImg from '../assets/images/users/user-1.jpg';
-
+import { useUser } from '../hooks';
 /* user box */
 const UserBox = () => {
     // get the profilemenu
@@ -41,7 +41,7 @@ const UserBox = () => {
     ];
 
     const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
-
+    const [user] = useUser();
     /*
      * toggle dropdown
      */
@@ -60,7 +60,7 @@ const UserBox = () => {
                     onClick={toggleDropdown}
                     className="user-name h5 mt-2 mb-1 d-block"
                 >
-                    User Name
+                   {user.firstName}
                 </Dropdown.Toggle>
                 <Dropdown.Menu className="user-pro-dropdown">
                     <div onClick={toggleDropdown}>
@@ -79,7 +79,7 @@ const UserBox = () => {
                     </div>
                 </Dropdown.Menu>
             </Dropdown>
-            <p className="text-muted left-user-info">User Type</p>
+            <p className="text-muted left-user-info">{user.role}</p>
 
             {/* <ul className="list-inline">
                 <li className="list-inline-item">

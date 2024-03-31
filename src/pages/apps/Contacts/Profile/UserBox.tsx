@@ -5,6 +5,8 @@ import { Button,  Dropdown} from 'react-bootstrap';
 import avatar5 from '../../../../assets/images/users/user-6.jpg';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import { useUser } from '../../../../hooks';
+
 // images
 import profileImg from '../../../../assets/images/users/profile.jpg';
 import { VerticalForm , FormInput} from '../../../../components/form';
@@ -14,6 +16,10 @@ import { VerticalForm , FormInput} from '../../../../components/form';
 
 const UserBox = () => {
     const [modal, setModal] = useState<boolean>(false);
+    const [user] = useUser();
+
+
+    console.log("user data :",user)
 
     type MemberData = {
         name: string;
@@ -43,41 +49,30 @@ const UserBox = () => {
         <div>
         <Card>
         <Card.Body className="text-center">
-            <Dropdown className="float-end" align="end">
-                <Dropdown.Toggle as="a" className="cursor-pointer card-drop">
-                    <i className="mdi mdi-dots-vertical"></i>
-                </Dropdown.Toggle>
-                <Dropdown.Menu>
-                    <Dropdown.Item>Action</Dropdown.Item>
-                    <Dropdown.Item>Anothther Action</Dropdown.Item>
-                    <Dropdown.Item>Something Else</Dropdown.Item>
-                    <Dropdown.Item>Separated link</Dropdown.Item>
-                </Dropdown.Menu>
-            </Dropdown>
             <div>
                 <img
-                    src={avatar5}
+                     src={user.photo_url}
                     alt="profileImage"
                     className="rounded-circle avatar-xl img-thumbnail mb-2"
                 />
-                <p className="text-muted font-13 mb-3">Hi I am Johnathn Deo, has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type.</p>
+               
                 <div className="text-start">
                     <p className="text-muted font-13">
-                        <strong>Full Name :</strong> <span className="ms-2">User Name</span>
+                        <strong>Full Name :</strong> <span className="ms-2">{user.firstName} {user.lastName}</span>
                     </p>
 
                     <p className="text-muted font-13">
                         <strong>Mobile :</strong>
-                        <span className="ms-2">9999999</span>
+                        <span className="ms-2">{user.mobile_number}</span>
                     </p>
 
                     <p className="text-muted font-13">
-                        <strong>Email :</strong> <span className="ms-2">aaa@gmail.com</span>
+                        <strong>Email :</strong> <span className="ms-2">{user.email}</span>
                     </p>
 
-                    <p className="text-muted font-13">
+                    {/* <p className="text-muted font-13">
                         <strong>Location :</strong> <span className="ms-2">Muscat</span>
-                    </p>
+                    </p> */}
                 </div>
                 {/* <Button className="rounded-pill waves-effect waves-light">Send Message</Button> */}
             </div>
