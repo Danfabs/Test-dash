@@ -19,7 +19,6 @@ export default function DelegateUsers() {
                 const data = await response.json();
                 setUsers(data.data);
                 setLoading(false);
-                console.log("users: ", data.data);
             } catch (error) {
                 console.error("Error fetching users:", error);
             }
@@ -28,7 +27,7 @@ export default function DelegateUsers() {
     }, []);
 
 
-    console.log("Rendered with users: ", users);
+    // console.log("Rendered with users: ", users);
 
     return (
         <div>

@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Button, Card, Col, Modal, Row, Dropdown } from 'react-bootstrap';
+import { useState, useEffect } from 'react';
+import { Button, Card, Col, Modal, Row, Dropdown, Table } from 'react-bootstrap';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 // hooks
@@ -7,8 +7,40 @@ import { usePageTitle } from '../../../hooks';
 // component
 import { VerticalForm, FormInput } from '../../../components/form';
 import DelegateUsers from '../../dashboards/DashBoard1/DelegateUsers';
+import { projectFirestore } from '../../../firebase';
 import Swal from 'sweetalert2';
 import "../../../assets/css/generalStyle.css"
+
+interface RoleState {
+    [role: string]: {
+        [permission: string]: boolean;
+    };
+}
+
+const initialRoleState: RoleState = {
+    'Sales Admin': {
+        'View TT': false,
+        'Manage TT': false,
+        'Delegate Users': false,
+    },
+    'Sales Staff': {
+        'View TT': false,
+        'Manage TT': false,
+        'Delegate Users': false,
+    },
+    'Technical Admin': {
+        'View TT': false,
+        'Manage TT': false,
+        'Delegate Users': false,
+    },
+    'Technical Staff': {
+        'View TT': false,
+        'Manage TT': false,
+        'Delegate Users': false,
+    },
+};
+
+
 
 const List = () => {
     // set pagetitle
@@ -28,12 +60,40 @@ const List = () => {
     });
 
     const [modal, setModal] = useState<boolean>(false);
+    const [addRolesModal, setAddRolesModal] = useState<boolean>(false);
     const [selectedRole, setSelectedRole] = useState<string | null>(null);
     const [email, setEmail] = useState<string>('');
+    const [roleState, setRoleState] = useState<RoleState>(initialRoleState);
+
+
+    useEffect(() => {
+        const savedState = localStorage.getItem('roleState');
+        if (savedState) {
+            setRoleState(JSON.parse(savedState));
+        }
+    }, []);
+
+    useEffect(() => {
+        localStorage.setItem('roleState', JSON.stringify(roleState));
+    }, [roleState]);
 
     // Show/hide the modal
     const toggle = () => {
         setModal(!modal);
+    };
+
+    const addRolestoggle = () => {
+        setAddRolesModal(!addRolesModal);
+    };
+
+    const handleCheckboxChange = (role: string, permission: string) => {
+        setRoleState(prevState => ({
+            ...prevState,
+            [role]: {
+                ...prevState[role],
+                [permission]: !prevState[role][permission],
+            },
+        }));
     };
 
     type SelectCallback = (eventKey: string | null, event: Object) => void;
@@ -62,25 +122,63 @@ const List = () => {
             if (!response.ok) {
                 throw new Error('Failed to update user role');
             }
-            Swal.fire({
-                icon: 'success',
-                title: 'The role has been changed!',
-                text: `The role of ${email} has been changed successfully to ${selectedRole}.`,
-                customClass: {
-                    confirmButton: 'btn-success'
-                }
-            }).then((result) => {
-                // Check if the user clicked "OK"
-                if (result.isConfirmed) {
-                    // Reload the page
-                    window.location.reload();
-                }
-            });
+
             toggle();
+            window.location.reload();
         } catch (error) {
             console.error('Error updating user role:', error);
         }
     };
+
+
+    const handleSubmitRole = async () => {
+        try {
+            for (const role of Object.keys(roleState)) {
+                const permissions = roleState[role];
+                const userRef = projectFirestore.collection('slot3_users').where('role', '==', role);
+                const snapshot = await userRef.get();
+        
+                snapshot.forEach(doc => {
+                    const userId = doc.id;
+                    const userDocRef = projectFirestore.collection('slot3_users').doc(userId);
+        
+                    userDocRef.update({
+                        permissions: {
+                            'View TT': permissions['View TT'],
+                            'Manage TT': permissions['Manage TT'],
+                            'Delegate Users': permissions['Delegate Users'],
+                        },
+                    });
+                });
+            }
+
+            setRoleState(initialRoleState);
+        
+            Swal.fire({
+                icon: 'success',
+                title: 'Permissions updated successfully',
+                customClass: {
+                    confirmButton: 'custom-btn-success'
+                }
+            }).then(() => {
+                window.location.reload();
+            });
+        } catch (error) {
+            console.error('Error updating permissions:', error);
+        
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'An error occurred while updating permissions. Please try again later.',
+                customClass: {
+                    confirmButton: 'custom-btn-danger'
+                }
+            });
+        }
+    };
+
+
+
 
     return (
         <>
@@ -94,6 +192,13 @@ const List = () => {
                                         <Button variant="success" className="waves-effect waves-light" onClick={toggle}>
                                             <i className="mdi mdi-plus-circle me-1"></i>
                                             Delegate Users
+                                        </Button>
+                                    </div>
+
+                                    <div className="mt-4 mt-md-2">
+                                        <Button variant="success" className="waves-effect waves-light" onClick={addRolestoggle}>
+                                            <i className="mdi mdi-plus-circle me-1"></i>
+                                            Add Roles
                                         </Button>
                                     </div>
                                 </Col>
@@ -112,50 +217,99 @@ const List = () => {
                     <Modal.Title as="h4">Delegate User</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                        <FormInput
-                            label={'Email address'}
-                            type="email"
-                            name="email"
-                            placeholder="Enter email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            containerClass={'mb-3'}
-                        />
+                    <FormInput
+                        label={'Email address'}
+                        type="email"
+                        name="email"
+                        placeholder="Enter email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        containerClass={'mb-3'}
+                    />
 
-                        <div className='mb-2'>
-                            <label>User Role</label>
+                    <div className='mb-2'>
+                        <label>User Role</label>
 
-                        </div>
+                    </div>
 
-                        <div className='mb-3'>
-                            <Dropdown
-                                style={{ border: '2px solid #d3d3d3', borderRadius: '5px' }}
-                                onSelect={handleSelect}
+                    <div className='mb-3'>
+                        <Dropdown
+                            style={{ border: '2px solid #d3d3d3', borderRadius: '5px' }}
+                            onSelect={handleSelect}
+                        >
+                            <Dropdown.Toggle
+                                variant="none"
+                                id="userRoleDropdown"
                             >
-                                <Dropdown.Toggle
-                                    variant="none"
-                                    id="userRoleDropdown"
-                                >
-                                    {selectedRole !== null ? selectedRole : 'Select Role'} <i className="mdi mdi-chevron-down"></i>
-                                </Dropdown.Toggle>
-                                <Dropdown.Menu>
-                                    <Dropdown.Item eventKey="Sales Admin">Sales Admin</Dropdown.Item>
-                                    <Dropdown.Item eventKey="Sales Staff">Sales Staff</Dropdown.Item>
-                                    <Dropdown.Item eventKey="Technical Admin">Technical Admin</Dropdown.Item>
-                                    <Dropdown.Item eventKey="Technical Staff">Technical Staff</Dropdown.Item>
-                                </Dropdown.Menu>
-                            </Dropdown>
-                        </div>
+                                {selectedRole !== null ? selectedRole : 'Select Role'} <i className="mdi mdi-chevron-down"></i>
+                            </Dropdown.Toggle>
+                            <Dropdown.Menu>
+                                <Dropdown.Item eventKey="Sales Admin">Sales Admin</Dropdown.Item>
+                                <Dropdown.Item eventKey="Sales Staff">Sales Staff</Dropdown.Item>
+                                <Dropdown.Item eventKey="Technical Admin">Technical Admin</Dropdown.Item>
+                                <Dropdown.Item eventKey="Technical Staff">Technical Staff</Dropdown.Item>
+                            </Dropdown.Menu>
+                        </Dropdown>
+                    </div>
 
-                        <Button variant="light" className="waves-effect waves-light me-1" type="submit"  onClick={handleSubmit}>
+                    <Button variant="light" className="waves-effect waves-light me-1" type="submit" onClick={handleSubmit}>
+                        Save
+                    </Button>
+                    <Button variant="danger" className="waves-effect waves-light" onClick={toggle}>
+                        Cancel
+                    </Button>
+                </Modal.Body>
+            </Modal>
+
+
+            <Modal show={addRolesModal} onHide={addRolestoggle} centered>
+                <Modal.Header closeButton>
+                    <Modal.Title as="h4">Add Roles</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <div className="table-responsive">
+                        <Table className="mb-0" striped>
+                            <thead>
+                                <tr>
+                                    <th>Roles</th>
+                                    <th>View TT</th>
+                                    <th>Manage TT</th>
+                                    <th>Delegate Users</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {['Sales Admin', 'Sales Staff', 'Technical Admin', 'Technical Staff'].map(role => (
+                                    <tr key={role}>
+                                        <td>{role}</td>
+                                        {['View TT', 'Manage TT', 'Delegate Users'].map(permission => (
+                                            <td key={permission}>
+                                                <input
+                                                    className="form-check-input"
+                                                    type="checkbox"
+                                                    checked={roleState[role][permission]}
+                                                    onChange={() => handleCheckboxChange(role, permission)}
+                                                />
+                                            </td>
+                                        ))}
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </Table>
+                    </div>
+
+                    <div className="mt-4 mt-md-2">
+                        <Button variant="light" className="waves-effect waves-light me-1" type="submit" onClick={handleSubmitRole}>
                             Save
                         </Button>
-                        <Button variant="danger" className="waves-effect waves-light" onClick={toggle}>
+                        <Button variant="danger" className="waves-effect waves-light" onClick={addRolestoggle}>
                             Cancel
                         </Button>
+                    </div>
                 </Modal.Body>
             </Modal>
         </>
     );
 };
+
+
 export default List;
