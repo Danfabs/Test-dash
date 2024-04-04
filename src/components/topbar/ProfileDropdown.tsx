@@ -34,7 +34,7 @@ const ProfileDropdown = ({ userImage, username, menuItems }: ProfileDropdownProp
                 id="page-header-user-dropdown"
                 onClick={toggleDropdown}
             >
-                <img src={userImage} alt="user" className="rounded-circle" />
+                {/* <img src={userImage} alt="user" className="rounded-circle" /> */}
                 <span className="pro-user-name ms-1">
                     {username} <i className="mdi mdi-chevron-down"></i>
                 </span>

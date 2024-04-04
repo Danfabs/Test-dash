@@ -26,7 +26,7 @@ export default function DelegateUsers() {
         fetchData();
     }, []);
 
-
+console.log("users: ",users)
     // console.log("Rendered with users: ", users);
 
     return (
@@ -62,7 +62,7 @@ export default function DelegateUsers() {
                                             <p className="text-muted font-13">
                                                 <strong>Full Name :
                                                 </strong> <span className="ms-2">
-                                                    {user.name}
+                                                    {user.firstName} {user.lastName}
                                                 </span>
                                             </p>
 

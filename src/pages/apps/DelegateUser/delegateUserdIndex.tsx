@@ -10,6 +10,7 @@ import DelegateUsers from '../../dashboards/DashBoard1/DelegateUsers';
 import { projectFirestore } from '../../../firebase';
 import Swal from 'sweetalert2';
 import "../../../assets/css/generalStyle.css"
+import { Link } from 'react-router-dom';
 
 interface RoleState {
     [role: string]: {
@@ -199,6 +200,15 @@ const List = () => {
                                         <Button variant="success" className="waves-effect waves-light" onClick={addRolestoggle}>
                                             <i className="mdi mdi-plus-circle me-1"></i>
                                             Add Roles
+                                        </Button>
+                                    </div>
+
+                                    <div className="mt-4 mt-md-2">
+                                        <Button variant="success" className="waves-effect waves-light" >
+                                            <i className="mdi mdi-plus-circle me-1"></i>
+                                            <Link to="/apps/register" className="text-decoration-none text-white">
+                                            Add User
+                                            </Link>
                                         </Button>
                                     </div>
                                 </Col>
