@@ -277,6 +277,10 @@ const AllRoutes = () => {
               path: 'contacts/profile',
               element: <LoadComponent component={Profile} />,
             },
+            {
+              path: 'register',
+              element: <LoadComponent component={Register} />,
+            },
           ],
         },
         {
