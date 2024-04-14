@@ -4,6 +4,7 @@ import { ApexOptions } from 'apexcharts';
 import { projectFirestore } from '../firebase';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useUser } from '../hooks';
 
 type PlacesWidget1Props = {
     title: string;
@@ -15,6 +16,9 @@ type PlacesWidget1Props = {
 
 const PlacesWidget1 = ({ title, color, stats, subTitle }: PlacesWidget1Props) => {
     const [totalPlaces, setTotalPlaces] = useState<number>(0);
+    const [loggedInUser] = useUser();
+console.log("role:",loggedInUser.role)
+
     const navigate = useNavigate();
     useEffect(() => {
         // Reference to the Firestore collection

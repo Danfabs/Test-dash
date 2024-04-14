@@ -3,7 +3,7 @@ import { Collapse } from 'react-bootstrap';
 import classNames from 'classnames';
 
 // helpers
-import { getHorizontalMenuItems } from '../../helpers/menu';
+// import { getHorizontalMenuItems } from '../../helpers/menu';
 
 // components
 import AppMenu from './Menu';
@@ -19,7 +19,7 @@ const Navbar = ({ isMenuOpened }: NavbarProps) => {
                 <nav className={classNames('navbar', 'navbar-expand-lg', 'topnav-menu', 'navbar-light')}>
                     <Collapse in={isMenuOpened} className="navbar-collapse">
                         <div id="topnav-menu-content">
-                            <AppMenu menuItems={getHorizontalMenuItems()} />
+                            {/* <AppMenu menuItems={getHorizontalMenuItems()} /> */}
                         </div>
                     </Collapse>
                 </nav>
