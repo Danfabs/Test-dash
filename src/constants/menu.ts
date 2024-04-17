@@ -23,13 +23,13 @@ const MENU_ITEMS: MenuItemTypes[] = [
         url: '/dashboard',
     },
 
-    {
-        key: 'troubletickets',
-        label: 'Trouble Tickets',
-        isTitle: false,
-        icon: 'mdi mdi-forum-outline',
-        url: '/apps/TroubleTickets',
-    },
+    // {
+    //     key: 'troubletickets',
+    //     label: 'Trouble Tickets',
+    //     isTitle: false,
+    //     icon: 'mdi mdi-forum-outline',
+    //     url: '/apps/TroubleTickets',
+    // },
     // { key: 'navigation', label: 'Navigation', isTitle: true },
     {
         key: 'apps-providerService',
