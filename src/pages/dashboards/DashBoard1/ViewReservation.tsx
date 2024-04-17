@@ -101,6 +101,7 @@ const ViewReservation = ({ reservations, setReservations }: ReservationsDetailsP
                                 <Card>
                                     <Card.Img src={cardImg} />
                                     <Card.Body className="project-box">
+                                        
                                         <h4 className="mt-0">
                                             <Link to="#" className="text-dark">
                                                 {reservation.customerName}
@@ -126,18 +127,19 @@ const ViewReservation = ({ reservations, setReservations }: ReservationsDetailsP
                                             <ul className="list-inline">
                                                 <li className="list-inline-item me-4">
                                                     <h5 className="mb-2 fw-semibold">Date</h5>
-                                                    <p className="mb-0">{reservation.bookedDate}</p>
+                                                    <p className="mb-0">{reservation.bookedDate?reservation.bookedDate : '-'}</p>
                                                 </li>
 
                                                 <li className="list-inline-item me-4">
                                                     <h5 className="mb-2 fw-semibold">Time</h5>
-                                                    <p className="mb-0">{reservation.bookedTime}</p>
+                                                    <p className="mb-0">{reservation.bookedTime?reservation.bookedTime : '-'}</p>
                                                 </li>
 
 
                                                 <li className="list-inline-item me-4">
                                                     <h5 className="mb-2 fw-semibold">location</h5>
-                                                    <p className="mb-0">{location.address} {paymentDetails.currency}</p>
+                                                    <p className="mb-0">{location ? location.address : '-'} </p>
+
                                                 </li>
 
                                             </ul>
@@ -153,23 +155,25 @@ const ViewReservation = ({ reservations, setReservations }: ReservationsDetailsP
                                             <ul className="list-inline">
                                                 <li className="list-inline-item me-4">
                                                     <h5 className="mb-2 fw-semibold">Slot Fee</h5>
-                                                    <p className="mb-0">{paymentDetails.slotFee}</p>
+                                                    <p className="mb-0">
+                                                    {paymentDetails ? paymentDetails.slotFee : '-'}
+                                                    </p>
                                                 </li>
 
                                                 <li className="list-inline-item me-4">
                                                     <h5 className="mb-2 fw-semibold">Tax</h5>
-                                                    <p className="mb-0">{paymentDetails.tax}</p>
+                                                    <p className="mb-0">{paymentDetails?paymentDetails.tax : '-'}</p>
                                                 </li>
 
                                                 <li className="list-inline-item me-4">
                                                     <h5 className="mb-2 fw-semibold">Voucher</h5>
-                                                    <p className="mb-0">{paymentDetails.voucher}</p>
+                                                    <p className="mb-0">{paymentDetails? paymentDetails.voucher : '-'}</p>
                                                 </li>
 
 
                                                 <li className="list-inline-item me-4">
                                                     <h5 className="mb-2 fw-semibold">Total Price</h5>
-                                                    <p className="mb-0">{paymentDetails.total} {paymentDetails.currency}</p>
+                                                    <p className="mb-0">{paymentDetails?paymentDetails.total : '-'} {paymentDetails?.currency}</p>
                                                 </li>
 
                                             </ul>

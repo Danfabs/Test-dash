@@ -7,6 +7,7 @@ export type Message = {
 };
 
 export type SlotsList = {
+    id : string;
     documentId: string;
     slotName: string;
     slotPhoto: string;

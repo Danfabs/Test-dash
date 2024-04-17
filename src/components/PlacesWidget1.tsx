@@ -17,7 +17,7 @@ type PlacesWidget1Props = {
 const PlacesWidget1 = ({ title, color, stats, subTitle }: PlacesWidget1Props) => {
     const [totalPlaces, setTotalPlaces] = useState<number>(0);
     const [loggedInUser] = useUser();
-console.log("role:",loggedInUser.role)
+    console.log("role:", loggedInUser.role)
 
     const navigate = useNavigate();
     useEffect(() => {

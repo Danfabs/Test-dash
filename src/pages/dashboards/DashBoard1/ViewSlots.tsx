@@ -39,6 +39,9 @@ const ViewSlots = ({ slots }: SlotsDetailsProps) => {
                                 <Card>
                                     {slot.slotPhoto && <Card.Img src={slot.slotPhoto} alt={`Space ${slot.slotPhoto}`} />}
                                     <Card.Body className="project-box">
+                                    <h4 className="mt-0">
+                                                {slot.id}
+                                        </h4>
                                         <h4 className="mt-0">
                                             <Link to="#" className="text-dark">
                                                 {slot.slotName}
