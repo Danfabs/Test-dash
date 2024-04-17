@@ -139,7 +139,7 @@ const Payment = () => {
                     });
                     return;
                 }
-                
+
             }
         }
 
@@ -248,12 +248,39 @@ const Payment = () => {
     };
 
 
-    const handleClickSaveSubscription = () => {
-        saveSubscriptionData(subscriptionData);
-        setBasePrice('');
-        setSubscriptionDuration(null);
-        setDiscountPercentage('');
-        setCalculatedPrice(null);
+    const handleClickSaveSubscription = async () => {
+        // window.location.reload();
+        if (!basePrice || !subscriptionDuration || !discountPercentage) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Missing Information',
+                text: 'Please fill in all fields before saving the subscription data.',
+                customClass: {
+                    confirmButton: 'custom-btn-danger'
+                }
+            });
+            return;
+        }
+        try {
+            await saveSubscriptionData(subscriptionData);
+            // Clear the subscription data after saving
+            setSubscriptionData([]);
+            setBasePrice('');
+            setSubscriptionDuration(null);
+            setDiscountPercentage('');
+            setCalculatedPrice(null);
+            Swal.fire({
+                icon: 'success',
+                title: 'Subscription Data Saved',
+                text: 'Subscription data saved successfully.',
+                customClass: {
+                    confirmButton: 'custom-btn-success'
+                }
+            });
+        } catch (error) {
+            console.error('Error saving subscription data:', error);
+        }
+
 
     };
 
