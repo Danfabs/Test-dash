@@ -7,7 +7,7 @@ export type Message = {
 };
 
 export type ProviderList = {
-    id: number;
+    id: string;
     email_address: string;
     gender: string;
     is_partner: boolean;
