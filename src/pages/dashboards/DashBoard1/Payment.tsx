@@ -3,9 +3,7 @@ import { Row, Col, Card, Form, Button, ProgressBar, Tab, Nav, Dropdown, Table } 
 import { Link } from 'react-router-dom';
 import { Wizard, Steps, Step } from 'react-albus';
 import '../../../assets/css/generalStyle.css'
-// hooks
 import { usePageTitle } from '../../../hooks';
-import { projectFirestore } from '../../../firebase';
 import Swal from 'sweetalert2';
 import "../../../assets/css/generalStyle.css"
 
@@ -62,42 +60,6 @@ const Payment = () => {
         fetchFeeValues();
 
     }, []);
-
-    // const fetchData = async () => {
-    //     try {
-    //         const snapshot = await projectFirestore.collection('slot3_users').get();
-    //         if (!snapshot.empty) {
-    //             const allSubscriptions: SubscriptionData[] = [];
-
-    //             snapshot.forEach(doc => {
-    //                 const userData = doc.data();
-    //                 const subscriptions: SubscriptionData[] = userData.subscription || [];
-
-    //                 subscriptions.forEach(subscription => {
-    //                     const existingIndex = allSubscriptions.findIndex(existingSub => (
-    //                         existingSub.id === subscription.id &&
-    //                         existingSub.basePrice === subscription.basePrice &&
-    //                         existingSub.discountPercentage === subscription.discountPercentage &&
-    //                         existingSub.duration === subscription.duration &&
-    //                         existingSub.finalPrice === subscription.finalPrice
-    //                     ));
-
-    //                     if (existingIndex === -1) {
-    //                         allSubscriptions.push(subscription);
-    //                     }
-    //                 });
-    //             });
-
-    //             setSubscriptionGetData(allSubscriptions);
-    //         } else {
-    //             console.log('No documents found.');
-    //         }
-    //     } catch (error) {
-    //         console.error('Error fetching subscription data:', error);
-    //     }
-    // };
-
-    // fetchData();
 
     const fetchFeeValues = async () => {
         try {
@@ -264,8 +226,6 @@ const Payment = () => {
 
 
     const handleClickSaveSubscription = async () => {
-     
-        // window.location.reload();
         if (!basePrice || !subscriptionDuration || !discountPercentage) {
             Swal.fire({
                 icon: 'error',
@@ -295,17 +255,6 @@ const Payment = () => {
             setCalculatedPrice(null);
 
             setSubscriptionGetData([...subscriptionGetData, newSubscription]);
-
-            // setSubscriptionData([
-            //     ...subscriptionData,
-            //     {
-            //         id: subscriptionData.length + 1,
-            //         discountPercentage: parseFloat(String(discountPercentage)),
-            //         basePrice: parseFloat(basePrice.toString()),
-            //         duration: subscriptionDuration,
-            //         finalPrice: calculatedFinalPrice !== null ? calculatedFinalPrice : 0, // Set to 0 if calculatedFinalPrice is null
-            //     },
-            // ]);
 
             Swal.fire({
                 icon: 'success',
