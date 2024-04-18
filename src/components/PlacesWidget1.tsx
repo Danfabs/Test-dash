@@ -15,28 +15,24 @@ type PlacesWidget1Props = {
 };
 
 const PlacesWidget1 = ({ title, color, stats, subTitle }: PlacesWidget1Props) => {
-    const [totalPlaces, setTotalPlaces] = useState<number>(0);
-    const [loggedInUser] = useUser();
-    console.log("role:", loggedInUser.role)
-
+    const [totalPlaces, setTotalPlaces] = useState(null);
     const navigate = useNavigate();
-    useEffect(() => {
-        // Reference to the Firestore collection
-        const spacesCollection = projectFirestore.collection('slot3_spaces');
 
-        // Fetch data and get the total count
-        const fetchTotalBranches = async () => {
+    useEffect(() => {
+        const fetchSpaceCount = async () => {
             try {
-                const snapshot = await spacesCollection.get();
-                const totalPlacesCount = snapshot.size;
-                setTotalPlaces(totalPlacesCount);
-                console.log('Total Branches:', totalPlacesCount);
+                const response = await fetch('https://us-central1-slot-145a8.cloudfunctions.net/calculateTotalSpace');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch total price');
+                }
+                const data = await response.json();
+                setTotalPlaces(data.spaceCount);
+                console.log("Total Places: ", data.spaceCount);
             } catch (error) {
-                console.error('Error fetching branches:', error);
+                console.error('Error fetching total reservations:', error);
             }
         };
-
-        fetchTotalBranches();
+        fetchSpaceCount();
     }, []);
 
     const apexOpts: ApexOptions = {
@@ -112,5 +108,4 @@ const PlacesWidget1 = ({ title, color, stats, subTitle }: PlacesWidget1Props) =>
         </Card>
     );
 };
-
 export default PlacesWidget1;
