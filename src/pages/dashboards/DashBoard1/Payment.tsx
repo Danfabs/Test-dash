@@ -27,9 +27,9 @@ const Payment = () => {
     //active tab key 
     const [key, setKey] = useState<string | null>('fee');
     const [orderFeeForms, setOrderFeeForms] = useState([{ id: 1, from: '', to: '', fee: '' }]);
-    const [basePrice, setBasePrice] = useState<number | ''>('');
+    const [basePrice, setBasePrice] = useState<number | null>(null);
     const [subscriptionDuration, setSubscriptionDuration] = useState<number | null>(6);
-    const [discountPercentage, setDiscountPercentage] = useState<number | ''>('');
+    const [discountPercentage, setDiscountPercentage] = useState<number | ''>(0); 
     const [calculatedFinalPrice, setCalculatedPrice] = useState<number | null>(null);
     const [subscriptionData, setSubscriptionData] = useState<Array<
         {
@@ -44,46 +44,60 @@ const Payment = () => {
     const [subscriptionGetData, setSubscriptionGetData] = useState<SubscriptionData[]>([]);
 
     useEffect(() => {
-        fetchData();
+        const fetchSubscriptionData = async () => {
+            try {
+                const response = await fetch('https://us-central1-slot-145a8.cloudfunctions.net/getSubscriptionData');
+                if (response.ok) {
+                    const data = await response.json();
+                    setSubscriptionGetData(data);
+                } else {
+                    console.error('Failed to fetch subscription data:', response.statusText);
+                }
+            } catch (error) {
+                console.error('Error fetching subscription data:', error);
+            }
+        };
+
+        fetchSubscriptionData();
         fetchFeeValues();
 
     }, []);
 
-    const fetchData = async () => {
-        try {
-            const snapshot = await projectFirestore.collection('slot3_users').get();
-            if (!snapshot.empty) {
-                const allSubscriptions: SubscriptionData[] = [];
+    // const fetchData = async () => {
+    //     try {
+    //         const snapshot = await projectFirestore.collection('slot3_users').get();
+    //         if (!snapshot.empty) {
+    //             const allSubscriptions: SubscriptionData[] = [];
 
-                snapshot.forEach(doc => {
-                    const userData = doc.data();
-                    const subscriptions: SubscriptionData[] = userData.subscription || [];
+    //             snapshot.forEach(doc => {
+    //                 const userData = doc.data();
+    //                 const subscriptions: SubscriptionData[] = userData.subscription || [];
 
-                    subscriptions.forEach(subscription => {
-                        const existingIndex = allSubscriptions.findIndex(existingSub => (
-                            existingSub.id === subscription.id &&
-                            existingSub.basePrice === subscription.basePrice &&
-                            existingSub.discountPercentage === subscription.discountPercentage &&
-                            existingSub.duration === subscription.duration &&
-                            existingSub.finalPrice === subscription.finalPrice
-                        ));
+    //                 subscriptions.forEach(subscription => {
+    //                     const existingIndex = allSubscriptions.findIndex(existingSub => (
+    //                         existingSub.id === subscription.id &&
+    //                         existingSub.basePrice === subscription.basePrice &&
+    //                         existingSub.discountPercentage === subscription.discountPercentage &&
+    //                         existingSub.duration === subscription.duration &&
+    //                         existingSub.finalPrice === subscription.finalPrice
+    //                     ));
 
-                        if (existingIndex === -1) {
-                            allSubscriptions.push(subscription);
-                        }
-                    });
-                });
+    //                     if (existingIndex === -1) {
+    //                         allSubscriptions.push(subscription);
+    //                     }
+    //                 });
+    //             });
 
-                setSubscriptionGetData(allSubscriptions);
-            } else {
-                console.log('No documents found.');
-            }
-        } catch (error) {
-            console.error('Error fetching subscription data:', error);
-        }
-    };
+    //             setSubscriptionGetData(allSubscriptions);
+    //         } else {
+    //             console.log('No documents found.');
+    //         }
+    //     } catch (error) {
+    //         console.error('Error fetching subscription data:', error);
+    //     }
+    // };
 
-    fetchData();
+    // fetchData();
 
     const fetchFeeValues = async () => {
         try {
@@ -205,7 +219,7 @@ const Payment = () => {
 
             setCalculatedPrice(finalPrice);
 
-            // Add the calculated subscription data to the state
+            // // Add the calculated subscription data to the state
             setSubscriptionData([
                 ...subscriptionData,
                 {
@@ -225,6 +239,7 @@ const Payment = () => {
 
 
     const saveSubscriptionData = async (subscriptionData: any) => {
+        console.log('Subscription data to be saved:', subscriptionData);
         try {
             // Call the Cloud Function endpoint with the subscription data
             const response = await fetch('https://us-central1-slot-145a8.cloudfunctions.net/addSubscription', {
@@ -249,6 +264,7 @@ const Payment = () => {
 
 
     const handleClickSaveSubscription = async () => {
+     
         // window.location.reload();
         if (!basePrice || !subscriptionDuration || !discountPercentage) {
             Swal.fire({
@@ -263,12 +279,34 @@ const Payment = () => {
         }
         try {
             await saveSubscriptionData(subscriptionData);
+            const newSubscription = {
+                id: subscriptionData.length + 1,
+                discountPercentage: parseFloat(String(discountPercentage)),
+                basePrice: parseFloat(basePrice.toString()),
+                duration: subscriptionDuration,
+                finalPrice: calculatedFinalPrice !== null ? calculatedFinalPrice : 0,
+            };
+            
             // Clear the subscription data after saving
-            setSubscriptionData([]);
-            setBasePrice('');
+            setSubscriptionData([...subscriptionData, newSubscription]);
+            setBasePrice(null);
             setSubscriptionDuration(null);
             setDiscountPercentage('');
             setCalculatedPrice(null);
+
+            setSubscriptionGetData([...subscriptionGetData, newSubscription]);
+
+            // setSubscriptionData([
+            //     ...subscriptionData,
+            //     {
+            //         id: subscriptionData.length + 1,
+            //         discountPercentage: parseFloat(String(discountPercentage)),
+            //         basePrice: parseFloat(basePrice.toString()),
+            //         duration: subscriptionDuration,
+            //         finalPrice: calculatedFinalPrice !== null ? calculatedFinalPrice : 0, // Set to 0 if calculatedFinalPrice is null
+            //     },
+            // ]);
+
             Swal.fire({
                 icon: 'success',
                 title: 'Subscription Data Saved',
@@ -442,7 +480,7 @@ const Payment = () => {
                                                             name="basePrice"
                                                             id="basePrice"
                                                             placeholder="base price"
-                                                            value={basePrice}
+                                                            value={basePrice === null ? '' : basePrice}
                                                             onChange={(e) => setBasePrice(parseFloat(e.target.value))}
                                                         />
                                                     </Col>
