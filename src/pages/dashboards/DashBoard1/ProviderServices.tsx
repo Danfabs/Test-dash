@@ -16,35 +16,31 @@ const ProviderServices = (props: UsersDetailsProps) => {
     const [usersDetails, setUsersDetails] = useState<ProviderList[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
 
+
     useEffect(() => {
         const fetchUsers = async () => {
-            try {
-                const usersCollection = projectFirestore.collection('slot3_users');
-                const snapshot = await usersCollection.where('isPartner', '==', true).get();
-
-                const usersData = snapshot.docs.map((doc) => ({
-                    id: doc.id,
-                    ...doc.data(),
-                })) as unknown as ProviderList[];
-
-                setUsersDetails(usersData);
-                setLoading(false);
-            } catch (error) {
-                console.error('Error fetching users:', error);
+          try {
+            const response = await fetch('https://us-central1-slot-145a8.cloudfunctions.net/getProviderServices');
+            if (!response.ok) {
+              throw new Error('Failed to fetch users');
             }
+            const data = await response.json();
+            setUsersDetails(data.data);
+            console.log(data.data)
+            setLoading(false);
+          } catch (error) {
+            console.error('Error fetching users:', error);
+          }
         };
-
+      
         fetchUsers();
-    }, []);
+      }, []);
+
 
 
     const acceptServiceProvider = async (documentId: string) => {
         try {
 
-            // const user = usersDetails.find((user) => user.id === documentId);
-            // if (!user || user.status !== 'Pending') {
-            //     return;
-            // }
 
             const response = await fetch(
                 `https://us-central1-slot-145a8.cloudfunctions.net/acceptServiceProvider?userId=${documentId}`,
