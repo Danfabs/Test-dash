@@ -60,7 +60,7 @@ const UserBox = () => {
                     onClick={toggleDropdown}
                     className="user-name h5 mt-2 mb-1 d-block"
                 >
-                   {user.firstName}
+                    {user.firstName}
                 </Dropdown.Toggle>
                 <Dropdown.Menu className="user-pro-dropdown">
                     <div onClick={toggleDropdown}>
@@ -117,15 +117,19 @@ type LeftSidebarProps = {
     isCondensed: boolean;
 };
 
-const LeftSidebar = ({ isCondensed }: LeftSidebarProps) => {
-    const menuNodeRef: any = useRef(null);
+const LeftSidebar = ({ isCondensed }: { isCondensed: boolean }) => {
+    const menuNodeRef = useRef<HTMLDivElement>(null);
 
     /**
      * Handle the click anywhere in doc
      */
-    const handleOtherClick = (e: any) => {
-        if (menuNodeRef && menuNodeRef.current && menuNodeRef.current.contains(e.target)) return;
-        // else hide the menubar
+    const handleOtherClick = (e: MouseEvent) => {
+        // Ensure menuNodeRef.current is not null before accessing its properties
+        if (menuNodeRef.current && menuNodeRef.current.contains(e.target as Node)) {
+            return;
+        }
+
+        // Hide the menu
         if (document.body) {
             document.body.classList.remove('sidebar-enable');
         }
@@ -138,6 +142,7 @@ const LeftSidebar = ({ isCondensed }: LeftSidebarProps) => {
             document.removeEventListener('mousedown', handleOtherClick, false);
         };
     }, []);
+
 
     return (
         <div className="left-side-menu" ref={menuNodeRef}>

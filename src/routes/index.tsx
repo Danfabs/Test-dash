@@ -46,6 +46,7 @@ const TaskDetail = React.lazy(() => import('../pages/apps/Tasks/Detail'));
 const EndUsers = React.lazy(() => import('../pages/apps/EndUsers'));
 const DelegateUsers = React.lazy(() => import('../pages/apps/DelegateUser/delegateUserdIndex'));
 const Profile = React.lazy(() => import('../pages/apps/Contacts/Profile'));
+const Interests =  React.lazy(() => import('../pages/dashboards/DashBoard1/Interests'));
 
 // extra pages
 const Starter = React.lazy(() => import('../pages/other/Starter'));
@@ -217,6 +218,10 @@ const AllRoutes = () => {
               element: <LoadComponent component={ProviderServices} />,
             },
             {
+              path: 'interests',
+              element: <LoadComponent component={Interests} />,
+            },
+            {
               path: 'viewServices/:partnerId',
               element: <LoadComponent component={ViewServices} />,
             },
@@ -277,6 +282,7 @@ const AllRoutes = () => {
               path: 'contacts/profile',
               element: <LoadComponent component={Profile} />,
             },
+           
             {
               path: 'register',
               element: <LoadComponent component={Register} />,

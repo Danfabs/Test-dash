@@ -1,7 +1,7 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import Global from '../Global';
-
+import Cookies from 'js-cookie'; 
 
 type UserData = {
     id: number;
@@ -70,8 +70,9 @@ export function configureFakeBackend() {
                     const mobile_number = userData.user.mobile_number;
                     const photo_url = userData.user.photo_url;
                     const token = userData.token;
-                    Global.userRole = role; //set user role as global varibal 
-                    console.log("user role from Global: ", Global.userRole)
+                    
+                    Cookies.set('userRole', role);
+                     console.log("User role from cookies: ", Cookies.get('userRole'));
                     
                         let user = 
                         {

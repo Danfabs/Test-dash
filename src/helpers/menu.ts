@@ -1,9 +1,9 @@
-import { MENU_ITEMS, MenuItemTypes } from '../constants/menu';
+import { getMenuItems, MenuItemTypes } from '../constants/menu';
 
-const getMenuItems = () => {
-    // NOTE - You can fetch from server and return here as well
-    return MENU_ITEMS;
-};
+// const getMenuItems = () => {
+//     // NOTE - You can fetch from server and return here as well
+//     return MENU_ITEMS;
+// };
 
 const getHorizontalMenuItems = () => {
     // NOTE - You can fetch from server and return here as well
@@ -22,6 +22,7 @@ const findAllParent = (menuItems: MenuItemTypes[], menuItem: MenuItemTypes): str
     return parents;
 };
 
+
 const findMenuItem = (
     menuItems: MenuItemTypes[] | undefined,
     menuItemKey: MenuItemTypes['key'] | undefined
@@ -38,4 +39,4 @@ const findMenuItem = (
     return null;
 };
 
-export { getMenuItems, findAllParent, findMenuItem };
+export { getHorizontalMenuItems, findAllParent, findMenuItem, getMenuItems };

@@ -1,6 +1,7 @@
 import { Global } from '../Global';
+import Cookies from 'js-cookie'; 
 
-console.log("User role from menu 111:", Global.userRole);
+console.log("User role from Menue: ", Cookies.get('userRole'));
 
 export type MenuItemTypes = {
     key: string;
@@ -62,6 +63,13 @@ const SUPER_ADMIN_MENU_ITEMS: MenuItemTypes[] = [
         isTitle: false,
         icon: 'mdi mdi-percent-outline',
         url: '/apps/discount',
+    },
+    {
+        key: 'apps-discount',
+        label: 'Interests',
+        isTitle: false,
+        icon: 'mdi mdi-format-list-bulleted',
+        url: '/apps/interests',
     },
     // Add other menu items for super admin...
 ];
@@ -139,5 +147,9 @@ const getMenuItemsByRole = (userRole: string): MenuItemTypes[] => {
     }
 };
 
-// Export the menu items based on the user's role
-export const MENU_ITEMS = getMenuItemsByRole(Global.userRole);
+export const getMenuItems = (): MenuItemTypes[] => {
+    // Retrieve the user role from the cookie
+    const userRole = Cookies.get('userRole');
+    console.log("User role from Menue: ", userRole);
+    return getMenuItemsByRole(userRole || '');
+};
