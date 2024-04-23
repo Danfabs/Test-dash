@@ -13,6 +13,8 @@ export type MenuItemTypes = {
     children?: MenuItemTypes[];
 };
 
+
+
 const MENU_ITEMS: MenuItemTypes[] = [
     // { key: 'navigation', label: 'Navigation', isTitle: true },
     {
@@ -71,7 +73,7 @@ const MENU_ITEMS: MenuItemTypes[] = [
         icon: 'mdi mdi-percent-outline',
         url: '/apps/discount',
     },
-    
+
 ];
 
 

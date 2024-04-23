@@ -14,8 +14,7 @@ import Root from './Root';
 import { LayoutTypes } from '../constants';
 
 // hooks
-import { useRedux } from '../hooks';
-
+import { useRedux , useUser } from '../hooks';
 // lazy load all the views
 // auth
 
@@ -135,7 +134,8 @@ const LoadComponent = ({ component: Component }: LoadComponentProps) => (
 const AllRoutes = () => {
   const loggedIn = false;
   const { appSelector } = useRedux();
-
+  // const [user] = useUser();
+  // console.log("user role: ", user.role);
   const { layout } = appSelector((state) => ({
     layout: state.Layout,
   }));

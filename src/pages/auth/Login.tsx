@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import { Button, Alert, Row, Col } from 'react-bootstrap';
-import { Navigate, Link, useLocation , useNavigate} from 'react-router-dom';
+import { Navigate, Link, useLocation, useNavigate } from 'react-router-dom';
 
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useTranslation } from 'react-i18next';
 
 // hooks
-import { useRedux } from '../../hooks/';
+import { useRedux, useUser } from '../../hooks/';
 
 // actions
 import { resetAuth, loginUser } from '../../redux/actions';
@@ -29,6 +29,8 @@ type UserData = {
 /* bottom links */
 const BottomLink = () => {
     const { t } = useTranslation();
+    // const [user] = useUser();
+    // console.log("user role111: ", user);
 
     return (
         <Row className="mt-3">
