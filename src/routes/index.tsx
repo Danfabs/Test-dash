@@ -14,8 +14,7 @@ import Root from './Root';
 import { LayoutTypes } from '../constants';
 
 // hooks
-import { useRedux } from '../hooks';
-
+import { useRedux , useUser } from '../hooks';
 // lazy load all the views
 // auth
 
@@ -47,6 +46,7 @@ const TaskDetail = React.lazy(() => import('../pages/apps/Tasks/Detail'));
 const EndUsers = React.lazy(() => import('../pages/apps/EndUsers'));
 const DelegateUsers = React.lazy(() => import('../pages/apps/DelegateUser/delegateUserdIndex'));
 const Profile = React.lazy(() => import('../pages/apps/Contacts/Profile'));
+const Interests =  React.lazy(() => import('../pages/dashboards/DashBoard1/Interests'));
 
 // extra pages
 const Starter = React.lazy(() => import('../pages/other/Starter'));
@@ -135,7 +135,8 @@ const LoadComponent = ({ component: Component }: LoadComponentProps) => (
 const AllRoutes = () => {
   const loggedIn = false;
   const { appSelector } = useRedux();
-
+  // const [user] = useUser();
+  // console.log("user role: ", user.role);
   const { layout } = appSelector((state) => ({
     layout: state.Layout,
   }));
@@ -217,6 +218,10 @@ const AllRoutes = () => {
               element: <LoadComponent component={ProviderServices} />,
             },
             {
+              path: 'interests',
+              element: <LoadComponent component={Interests} />,
+            },
+            {
               path: 'viewServices/:partnerId',
               element: <LoadComponent component={ViewServices} />,
             },
@@ -277,6 +282,7 @@ const AllRoutes = () => {
               path: 'contacts/profile',
               element: <LoadComponent component={Profile} />,
             },
+           
             {
               path: 'register',
               element: <LoadComponent component={Register} />,

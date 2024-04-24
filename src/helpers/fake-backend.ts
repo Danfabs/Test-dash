@@ -1,5 +1,7 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
+import Global from '../Global';
+import Cookies from 'js-cookie'; 
 
 type UserData = {
     id: number;
@@ -69,6 +71,8 @@ export function configureFakeBackend() {
                     const photo_url = userData.user.photo_url;
                     const token = userData.token;
                     
+                    Cookies.set('userRole', role);
+                     console.log("User role from cookies: ", Cookies.get('userRole'));
                     
                         let user = 
                         {

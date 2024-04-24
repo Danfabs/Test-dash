@@ -6,10 +6,8 @@ import PlacesWidget1 from '../../../components/PlacesWidget1';
 import ReservationWidget2 from '../../../components/ReservationWidget2';
 import ReservationInfoWidget4 from '../../../components/ReservationInfoWidget4';
 import AmountWidget3 from '../../../components/AmountWidget3';
-
 const Statistics = () => {
     const [totalPrice, setTotalPrice] = useState<number | null>(null);
-
     useEffect(() => {
         const fetchTotalPrice = async () => {
             try {

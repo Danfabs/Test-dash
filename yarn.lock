@@ -2716,6 +2716,11 @@
     "jest-diff" "^27.0.0"
     "pretty-format" "^27.0.0"
 
+"@types/js-cookie@^3.0.6":
+  "integrity" "sha512-wkw9yd1kEXOPnvEeEV1Go1MmxtBJL0RR79aOTAApecWFVu7w0NNXNqhcWgvw2YgZDYadliXkl14pa3WXw5jlCQ=="
+  "resolved" "https://registry.npmjs.org/@types/js-cookie/-/js-cookie-3.0.6.tgz"
+  "version" "3.0.6"
+
 "@types/json-schema@*", "@types/json-schema@^7.0.4", "@types/json-schema@^7.0.5", "@types/json-schema@^7.0.8", "@types/json-schema@^7.0.9":
   "integrity" "sha512-qcUXuemtEu+E5wZSJHNxUXeCZhAfXKQ41D+duX+VYPde7xyEVZci+/oXKJL13tnRs9lR2pr4fod59GT6/X1/yQ=="
   "resolved" "https://registry.npmjs.org/@types/json-schema/-/json-schema-7.0.9.tgz"
@@ -7361,6 +7366,11 @@
     "@jest/core" "^27.4.7"
     "import-local" "^3.0.2"
     "jest-cli" "^27.4.7"
+
+"js-cookie@^3.0.5":
+  "integrity" "sha512-cEiJEAEoIbWfCZYKWhVwFuvPX1gETRYPw6LlaTKoxD3s2AkXzkCjnp6h0V77ozyqj0jakteJ4YqDJT830+lVGw=="
+  "resolved" "https://registry.npmjs.org/js-cookie/-/js-cookie-3.0.5.tgz"
+  "version" "3.0.5"
 
 "js-tokens@^3.0.0 || ^4.0.0", "js-tokens@^4.0.0":
   "integrity" "sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ=="

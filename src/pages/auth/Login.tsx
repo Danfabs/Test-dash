@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import { Button, Alert, Row, Col } from 'react-bootstrap';
-import { Navigate, Link, useLocation , useNavigate} from 'react-router-dom';
+import { Navigate, Link, useLocation, useNavigate } from 'react-router-dom';
 
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useTranslation } from 'react-i18next';
 
 // hooks
-import { useRedux } from '../../hooks/';
+import { useRedux, useUser } from '../../hooks/';
 
 // actions
 import { resetAuth, loginUser } from '../../redux/actions';
@@ -16,6 +16,8 @@ import { resetAuth, loginUser } from '../../redux/actions';
 import { VerticalForm, FormInput } from '../../components/form/';
 import Loader from '../../components/Loader';
 import AuthLayout from './AuthLayout';
+import Global from '../../Global';
+
 
 type LocationState = {
     from?: Location;
@@ -29,6 +31,8 @@ type UserData = {
 /* bottom links */
 const BottomLink = () => {
     const { t } = useTranslation();
+    // const [user] = useUser();
+    // console.log("user role111: ", user);
 
     return (
         <Row className="mt-3">
@@ -52,7 +56,8 @@ const BottomLink = () => {
 
 const Login = () => {
     const { t } = useTranslation();
-    const { dispatch, appSelector } = useRedux();
+    const { dispatch, appSelector } = useRedux(); 
+    const [userLoggingData] = useUser();
     const navigate = useNavigate();
 
     const { user, userLoggedIn, loading, error } = appSelector((state) => ({
@@ -84,6 +89,9 @@ const Login = () => {
 
     const onSubmit = (formData: UserData) => {
         dispatch(loginUser(formData['email'], formData['password']));
+        // console.log("user logging data: ",userLoggingData)
+        // const userRole = userLoggingData.role;
+        // console.log("user Role: ", userRole);
     };
 
 
