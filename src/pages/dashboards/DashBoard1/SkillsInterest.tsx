@@ -3,131 +3,127 @@ import { Row, Col, Card, Form, Button, Table } from 'react-bootstrap';
 import { FaPlus } from 'react-icons/fa'; // Import plus icon from react-icons library
 import Swal from 'sweetalert2';
 import '../../../assets/css/generalStyle.css';
-import SkillsInterest from './SkillsInterest';
 
-const Interests = () => {
-    const [interests, setInterests] = useState(['']);
-    const [interestsData, setInterestsData] = useState<string[]>([]);
+const SkillsInterest = () => {
+    const [skillsInterest, setSkillsInterest] = useState(['']);
+    const [skillsInterestData, setSkillsInterestData] = useState<string[]>([]);
 
 
     useEffect(() => {
         // Fetch interests data when the component mounts
-        const fetchInterestsData = async () => {
+        const fetchSkillsInterestsData = async () => {
             try {
-                const response = await fetch('https://us-central1-slot-145a8.cloudfunctions.net/getInterests');
+                const response = await fetch('https://us-central1-slot-145a8.cloudfunctions.net/getSkillsInterest');
                 if (response.ok) {
                     const data = await response.json();
-                    setInterestsData(data);
+                    setSkillsInterestData(data);
                 } else {
-                    console.error('Failed to fetch interests data:', response);
+                    console.error('Failed to fetch skills interests data:', response);
                 }
             } catch (error) {
-                console.error('Error fetching interests data:', error);
+                console.error('Error fetching skills interests data:', error);
             }
         };
 
-        fetchInterestsData(); // Call the function
+        fetchSkillsInterestsData(); // Call the function
     }, []);
 
     const handleAddInterestField = () => {
-        setInterests([...interests, '']);
+        setSkillsInterest([...skillsInterest, '']);
     };
 
     const handleInterestChange = (index: number, value: string) => {
-        const updatedInterests = [...interests];
+        const updatedInterests = [...skillsInterest];
         updatedInterests[index] = value;
-        setInterests(updatedInterests);
+        setSkillsInterest(updatedInterests);
     };
 
-    const saveInterestsData = async (interests: string[]) => {
+    const saveSkillsInterestsData = async (skillsInterest: string[]) => {
         try {
             // Call the Cloud Function endpoint to fetch existing interests data from Firebase
-            const existingInterestsResponse = await fetch('https://us-central1-slot-145a8.cloudfunctions.net/getInterests');
-            const existingInterestsData = await existingInterestsResponse.json();
+            const existingSkillsInterestsResponse = await fetch('https://us-central1-slot-145a8.cloudfunctions.net/getSkillsInterest');
+            const existingSkillsInterestsData = await existingSkillsInterestsResponse.json();
 
             // Check if the new interest already exists in Firebase
-            const duplicateInterest = interests.find(interest => existingInterestsData.includes(interest));
-            if (duplicateInterest) {
+            const duplicateSkillsInterest = skillsInterest.find(skillsInterest => existingSkillsInterestsData.includes(skillsInterest));
+            if (duplicateSkillsInterest) {
                 // Show a Swal alert indicating that the input value is a duplicate
                 Swal.fire({
                     icon: 'error',
-                    title: 'Duplicate Interest',
-                    text: `The interest "${duplicateInterest}" already exists in the list.`,
+                    title: 'Duplicate Skills Interest',
+                    text: `The Skills interest "${duplicateSkillsInterest}" already exists in the list.`,
                     customClass: {
                         confirmButton: 'custom-btn-danger'
                     }
                 });
-                return; // Exit the function early if it's a duplicate
+                return; 
             }
 
             // If it's not a duplicate, proceed to add the interest to Firebase
-            const response = await fetch('https://us-central1-slot-145a8.cloudfunctions.net/addInterests', {
+            const response = await fetch('https://us-central1-slot-145a8.cloudfunctions.net/addSkillsInterest', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ interests }),
+                body: JSON.stringify({ skillsInterest }),
             });
 
             if (response.ok) {
-                console.log('Interests data saved successfully to Firebase.');
+                console.log('Skills Interests data saved successfully to Firebase.');
                 Swal.fire({
                     icon: 'success',
                     title: 'Saved Successfully',
-                    text: 'Interests data saved successfully',
+                    text: 'Skills Interests Data Saved Successfully',
                     customClass: {
                         confirmButton: 'custom-btn-success'
                     }
                 });
 
                 // Fetch the updated interests data
-                const updatedInterestsResponse = await fetch('https://us-central1-slot-145a8.cloudfunctions.net/getInterests');
+                const updatedInterestsResponse = await fetch('https://us-central1-slot-145a8.cloudfunctions.net/getSkillsInterest');
                 if (updatedInterestsResponse.ok) {
                     const updatedInterestsData = await updatedInterestsResponse.json();
-                    setInterestsData(updatedInterestsData); // Update the interestsData state
+                    setSkillsInterestData(updatedInterestsData); // Update the interestsData state
                 } else {
-                    console.error('Failed to fetch updated interests data:', updatedInterestsResponse);
+                    console.error('Failed to fetch updated skills interests data:', updatedInterestsResponse);
                 }
 
                 // Clear the interests array
-                setInterests(['']);
+                setSkillsInterest(['']);
 
             } else {
-                console.error('Error saving interests data to Firebase:', response);
+                console.error('Error saving skills interests data to Firebase:', response);
             }
         }
         catch (error) {
-            console.error('Error saving interests data to Firebase:', error);
+            console.error('Error saving skills interests data to Firebase:', error);
         }
     };
 
     const handleAddInterest = () => {
-        saveInterestsData(interests);
-        console.log('Interests:', interests);
+        saveSkillsInterestsData(skillsInterest);
+        console.log('skills Interest:', skillsInterest);
     };
-
-
-
 
     return (
         <div>
             <Card>
                 <Card.Body >
                     <div dir="ltr" className='card-div'>
-                        <h4 className="header-title mb-4 payment-cardBody">Add Spaces Interests</h4>
+                        <h4 className="header-title mb-4 payment-cardBody">Add Skills Interests</h4>
                         <Form>
-                            {interests.map((interest, index) => (
+                            {skillsInterest.map((skillsInterest, index) => (
                                 <Form.Group as={Row} className="mb-3" key={index}>
-                                    <Form.Label htmlFor={`interest${index}`} column md={3}>
-                                        Interest Name
+                                    <Form.Label htmlFor={`skillsInterest${index}`} column md={3}>
+                                        Skills Interest
                                     </Form.Label>
                                     <Col md={4}>
                                         <Form.Control
                                             type="text"
-                                            name={`interest${index}`}
-                                            id={`interest${index}`}
+                                            name={`skillsInterest${index}`}
+                                            id={`skillsInterest${index}`}
                                             placeholder="Table, Room, Tour, ..."
-                                            value={interest}
+                                            value={skillsInterest}
                                             onChange={(e) => handleInterestChange(index, e.target.value)}
                                         />
                                     </Col>
@@ -146,9 +142,9 @@ const Interests = () => {
                                 <Button
                                     variant="success"
                                     className='add-interest-button'
-                                    onClick={handleAddInterest}
+                                onClick={handleAddInterest}
                                 >
-                                    Add Space Interests
+                                    Add Skills Interests
                                 </Button>
                             </div>
                         </Form>
@@ -157,15 +153,15 @@ const Interests = () => {
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Space Interests</th>
+                                        <th>Skills Interests</th>
 
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {interestsData.map((interest, index) => (
+                                    {skillsInterestData.map((skillsInterest, index) => (
                                         <tr key={index}>
                                             <td>{index + 1}</td>
-                                            <td>{interest}</td>
+                                            <td>{skillsInterest}</td>
                                         </tr>
                                     ))}
                                 </tbody>
@@ -174,12 +170,8 @@ const Interests = () => {
                     </div>
                 </Card.Body>
             </Card>
-            <div>
-            <SkillsInterest/>
-            </div>
-            
         </div>
     );
 };
 
-export default Interests;
+export default SkillsInterest;
