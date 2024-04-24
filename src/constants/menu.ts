@@ -65,13 +65,12 @@ const SUPER_ADMIN_MENU_ITEMS: MenuItemTypes[] = [
         url: '/apps/discount',
     },
     {
-        key: 'apps-discount',
+        key: 'apps-interests',
         label: 'Interests',
         isTitle: false,
         icon: 'mdi mdi-format-list-bulleted',
         url: '/apps/interests',
     },
-    // Add other menu items for super admin...
 ];
 
 const SALES_ADMIN_MENU_ITEMS: MenuItemTypes[] = [

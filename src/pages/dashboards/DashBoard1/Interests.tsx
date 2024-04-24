@@ -1,75 +1,72 @@
-import { Card, Dropdown } from 'react-bootstrap';
-import Chart from 'react-apexcharts';
-import { ApexOptions } from 'apexcharts';
+import React, { useState } from 'react';
+import { Row, Col, Card, Form, Button} from 'react-bootstrap';
+import { FaPlus } from 'react-icons/fa'; // Import plus icon from react-icons library
+
 import '../../../assets/css/generalStyle.css';
+
 const Interests = () => {
-    const apexOpts: ApexOptions = {
-        chart: {
-            type: 'donut',
-        },
-        plotOptions: {
-            pie: {
-                expandOnClick: true,
-                donut: {
-                    labels: {
-                        show: true,
-                        name: {
-                            show: true,
-                            formatter: (val: string) => {
-                                return val;
-                            },
-                            offsetY: 4,
-                            color: '#98a6ad',
-                        },
-                        value: {
-                            show: true,
-                            formatter: (val: string) => {
-                                return val;
-                            },
-                            color: '#98a6ad',
-                        },
-                    },
-                },
-            },
-        },
-        dataLabels: {
-            enabled: false,
-        },
-        colors: ['#FFD653FF', '#006747FF', '#F0E1B9FF'],
-        legend: {
-            show: true,
-            position: 'bottom',
-            height: 40,
-            labels: {
-                useSeriesColors: true,
-            },
-        },
-        labels: ['Customer', 'Vendor', 'Staff'],
-        tooltip: {
-            enabled: false,
-        },
+    const [interests, setInterests] = useState(['']);
+
+    const handleAddInterestField = () => {
+        setInterests([...interests, '']);
     };
 
-    const apexData = [30, 12, 20];
+    const handleInterestChange = (index: number, value: string) => {
+        const updatedInterests = [...interests];
+        updatedInterests[index] = value;
+        setInterests(updatedInterests);
+    };
+
+    const handleAddInterest = () => {
+        // Do something with interests array, like sending it to backend
+        console.log('Interests:', interests);
+    };
 
     return (
-        <div >
-            <Card >
-                <Card.Body>
-                    
+        <div>
+            <Card>
+                <Card.Body >
                     <div dir="ltr" className='card-div'>
-                        <h4 className="header-title mb-3">Add Spaces Interests</h4>
-                        {/* <Chart
-                            options={apexOpts}
-                            series={apexData}
-                            type="donut"
-                            height={502}
-                            className="apex-charts mt-2"
-                        /> */}
+                        <h4 className="header-title mb-4 payment-cardBody">Add Spaces Interests</h4>
+                        <Form>
+                            {interests.map((interest, index) => (
+                                <Form.Group as={Row} className="mb-3" key={index}>
+                                    <Form.Label htmlFor={`interest${index}`} column md={3}>
+                                        Interest Name
+                                    </Form.Label>
+                                    <Col md={4}>
+                                        <Form.Control
+                                            type="text"
+                                            name={`interest${index}`}
+                                            id={`interest${index}`}
+                                            placeholder="Table, Room, Tour, ..."
+                                            value={interest}
+                                            onChange={(e) => handleInterestChange(index, e.target.value)}
+                                        />
+                                    </Col>
+                                </Form.Group>
+                            ))}
+                            <Col md={1}>
+                            <Button
+                                variant="outline-success"
+                                className='add-interest-button'
+                                onClick={handleAddInterestField}
+                            >
+                                <FaPlus /> 
+                            </Button>
+                            </Col>
+                            <div className="text-end mt-3">
+                            <Button
+                                variant="success"
+                                className='add-interest-button'
+                                onClick={handleAddInterest}
+                            >
+                                Add Interests
+                            </Button>
+                            </div>
+                        </Form>
                     </div>
-
                 </Card.Body>
-
             </Card>
         </div>
     );
