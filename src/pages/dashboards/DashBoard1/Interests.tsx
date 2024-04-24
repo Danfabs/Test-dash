@@ -156,7 +156,7 @@ const Interests = () => {
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Interest</th>
+                                        <th>Space Interests</th>
 
                                     </tr>
                                 </thead>
