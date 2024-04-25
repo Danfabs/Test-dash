@@ -4,6 +4,7 @@ import { FaPlus } from 'react-icons/fa'; // Import plus icon from react-icons li
 import Swal from 'sweetalert2';
 import '../../../assets/css/generalStyle.css';
 import SkillsInterest from './SkillsInterest';
+import ExperienceInterest from './ExperienceInterest';
 
 const Interests = () => {
     const [interests, setInterests] = useState(['']);
@@ -176,6 +177,10 @@ const Interests = () => {
             </Card>
             <div>
             <SkillsInterest/>
+            </div>
+
+            <div>
+            <ExperienceInterest/>
             </div>
             
         </div>
