@@ -122,7 +122,7 @@ const SkillsInterest = () => {
                                             type="text"
                                             name={`skillsInterest${index}`}
                                             id={`skillsInterest${index}`}
-                                            placeholder="Table, Room, Tour, ..."
+                                            // placeholder="Table, Room, Tour, ..."
                                             value={skillsInterest}
                                             onChange={(e) => handleInterestChange(index, e.target.value)}
                                         />

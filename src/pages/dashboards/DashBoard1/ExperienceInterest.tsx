@@ -9,24 +9,25 @@ const ExperienceInterest = () => {
     const [experienceInterestData, setExperienceInterestData] = useState<string[]>([]);
 
 
-    // useEffect(() => {
-    //     // Fetch interests data when the component mounts
-    //     const fetchSkillsInterestsData = async () => {
-    //         try {
-    //             const response = await fetch('https://us-central1-slot-145a8.cloudfunctions.net/getSkillsInterest');
-    //             if (response.ok) {
-    //                 const data = await response.json();
-    //                 setSkillsInterestData(data);
-    //             } else {
-    //                 console.error('Failed to fetch skills interests data:', response);
-    //             }
-    //         } catch (error) {
-    //             console.error('Error fetching skills interests data:', error);
-    //         }
-    //     };
+    useEffect(() => {
+        // Fetch interests data when the component mounts
+        const fetchExperienceInterestData = async () => {
+            try {
+                const response = await fetch('https://us-central1-slot-145a8.cloudfunctions.net/getExperienceInterest');
+                if (response.ok) {
+                    const data = await response.json();
+                    setExperienceInterestData(data);
+                    console.log("Experience Interest Data: ",experienceInterestData)
+                } else {
+                    console.error('Failed to fetch experience Interest data:', response);
+                }
+            } catch (error) {
+                console.error('Error fetching experience Interest data:', error);
+            }
+        };
 
-    //     fetchSkillsInterestsData(); // Call the function
-    // }, []);
+        fetchExperienceInterestData(); // Call the function
+    }, []);
 
     const handleAddExperienceInterestField = () => {
         setExperienceInterests([...experienceInterests, '']);
@@ -38,72 +39,72 @@ const ExperienceInterest = () => {
         setExperienceInterests(updatedExperienceInterests);
     };
 
-    // const saveSkillsInterestsData = async (skillsInterest: string[]) => {
-    //     try {
-    //         // Call the Cloud Function endpoint to fetch existing interests data from Firebase
-    //         const existingSkillsInterestsResponse = await fetch('https://us-central1-slot-145a8.cloudfunctions.net/getSkillsInterest');
-    //         const existingSkillsInterestsData = await existingSkillsInterestsResponse.json();
+    const saveSkillsInterestsData = async (experienceInterests: string[]) => {
+        try {
+            // Call the Cloud Function endpoint to fetch existing interests data from Firebase
+            const existingSExperienceInterestResponse = await fetch('https://us-central1-slot-145a8.cloudfunctions.net/getExperienceInterest');
+            const existingExperienceInterestData = await existingSExperienceInterestResponse.json();
 
-    //         // Check if the new interest already exists in Firebase
-    //         const duplicateSkillsInterest = skillsInterest.find(skillsInterest => existingSkillsInterestsData.includes(skillsInterest));
-    //         if (duplicateSkillsInterest) {
-    //             // Show a Swal alert indicating that the input value is a duplicate
-    //             Swal.fire({
-    //                 icon: 'error',
-    //                 title: 'Duplicate Skills Interest',
-    //                 text: `The Skills interest "${duplicateSkillsInterest}" already exists in the list.`,
-    //                 customClass: {
-    //                     confirmButton: 'custom-btn-danger'
-    //                 }
-    //             });
-    //             return; 
-    //         }
+            // Check if the new interest already exists in Firebase
+            const duplicateExperienceInterest = experienceInterests.find(experienceInterests => existingExperienceInterestData.includes(experienceInterests));
+            if (duplicateExperienceInterest) {
+                // Show a Swal alert indicating that the input value is a duplicate
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Duplicate Skills Interest',
+                    text: `The experience Interests "${duplicateExperienceInterest}" already exists in the list.`,
+                    customClass: {
+                        confirmButton: 'custom-btn-danger'
+                    }
+                });
+                return; 
+            }
 
-    //         // If it's not a duplicate, proceed to add the interest to Firebase
-    //         const response = await fetch('https://us-central1-slot-145a8.cloudfunctions.net/addSkillsInterest', {
-    //             method: 'POST',
-    //             headers: {
-    //                 'Content-Type': 'application/json',
-    //             },
-    //             body: JSON.stringify({ skillsInterest }),
-    //         });
+            // If it's not a duplicate, proceed to add the interest to Firebase
+            const response = await fetch('https://us-central1-slot-145a8.cloudfunctions.net/addExperienceInterest', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ experienceInterests }),
+            });
 
-    //         if (response.ok) {
-    //             console.log('Skills Interests data saved successfully to Firebase.');
-    //             Swal.fire({
-    //                 icon: 'success',
-    //                 title: 'Saved Successfully',
-    //                 text: 'Skills Interests Data Saved Successfully',
-    //                 customClass: {
-    //                     confirmButton: 'custom-btn-success'
-    //                 }
-    //             });
+            if (response.ok) {
+                console.log('Experience interest data saved successfully to Firebase.');
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Saved Successfully',
+                    text: 'Experience interest Data Saved Successfully',
+                    customClass: {
+                        confirmButton: 'custom-btn-success'
+                    }
+                });
 
-    //             // Fetch the updated interests data
-    //             const updatedInterestsResponse = await fetch('https://us-central1-slot-145a8.cloudfunctions.net/getSkillsInterest');
-    //             if (updatedInterestsResponse.ok) {
-    //                 const updatedInterestsData = await updatedInterestsResponse.json();
-    //                 setSkillsInterestData(updatedInterestsData); // Update the interestsData state
-    //             } else {
-    //                 console.error('Failed to fetch updated skills interests data:', updatedInterestsResponse);
-    //             }
+                // Fetch the updated interests data
+                const updatedInterestsResponse = await fetch('https://us-central1-slot-145a8.cloudfunctions.net/getExperienceInterest');
+                if (updatedInterestsResponse.ok) {
+                    const updatedExperienceInterestData = await updatedInterestsResponse.json();
+                    setExperienceInterestData(updatedExperienceInterestData); // Update the interestsData state
+                } else {
+                    console.error('Failed to fetch updated Experience interest data:', updatedInterestsResponse);
+                }
 
-    //             // Clear the interests array
-    //             setSkillsInterest(['']);
+                // Clear the interests array
+                setExperienceInterests(['']);
 
-    //         } else {
-    //             console.error('Error saving skills interests data to Firebase:', response);
-    //         }
-    //     }
-    //     catch (error) {
-    //         console.error('Error saving skills interests data to Firebase:', error);
-    //     }
-    // };
+            } else {
+                console.error('Error saving Experience interest data to Firebase:', response);
+            }
+        }
+        catch (error) {
+            console.error('Error saving Experience interest data to Firebase:', error);
+        }
+    };
 
-    // const handleAddInterest = () => {
-    //     saveSkillsInterestsData(skillsInterest);
-    //     console.log('skills Interest:', skillsInterest);
-    // };
+    const handleAddExperienceInterest = () => {
+        saveSkillsInterestsData(experienceInterests);
+        console.log('skills Interest:', experienceInterests);
+    };
 
     return (
         <div>
@@ -122,7 +123,7 @@ const ExperienceInterest = () => {
                                             type="text"
                                             name={`experienceInterest${index}`}
                                             id={`experienceInterest${index}`}
-                                            placeholder="Table, Room, Tour, ..."
+                                            // placeholder="Table, Room, Tour, ..."
                                             value={experienceInterest}
                                             onChange={(e) => handleExperienceInterestChange(index, e.target.value)}
                                         />
@@ -142,9 +143,9 @@ const ExperienceInterest = () => {
                                 <Button
                                     variant="success"
                                     className='add-interest-button'
-                                // onClick={handleAddInterest}
+                                onClick={handleAddExperienceInterest}
                                 >
-                                    Add Experience Interest
+                                    Add Experience Interests
                                 </Button>
                             </div>
                         </Form>
@@ -153,7 +154,7 @@ const ExperienceInterest = () => {
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Experience Interest</th>
+                                        <th>Experience Interests</th>
 
                                     </tr>
                                 </thead>

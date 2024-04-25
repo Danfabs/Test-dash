@@ -127,7 +127,7 @@ const Interests = () => {
                                             type="text"
                                             name={`interest${index}`}
                                             id={`interest${index}`}
-                                            placeholder="Table, Room, Tour, ..."
+                                            // placeholder="Table, Room, Tour, ..."
                                             value={interest}
                                             onChange={(e) => handleInterestChange(index, e.target.value)}
                                         />
