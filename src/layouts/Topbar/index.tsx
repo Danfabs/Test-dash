@@ -76,9 +76,9 @@ const Topbar = ({ openLeftMenuCallBack, containerClass }: TopbarProps) => {
                         {/* User */}
                         <ProfileDropdown userImage={user.photo_url} username={user.firstName} menuItems={profileMenus} />
                     </li>
-                    <li className="dropdown notification-list">
+                    {/* <li className="dropdown notification-list">
                         <ThemeSetting handleRightSideBar={handleRightSideBar} />
-                    </li>
+                    </li> */}
                 </ul>
 
                 {/* LOGO  */}
@@ -97,7 +97,7 @@ const Topbar = ({ openLeftMenuCallBack, containerClass }: TopbarProps) => {
                             <img src={slotLogo} alt="logo-sm" height="30" />
                         </span>
                         <span className="logo-lg">
-                            <img src={logoLight} alt="logo-light" height="16" />
+                            <img src={slotLogo} alt="logo-light" height="30" />
                         </span>
                     </Link>
                 </div>
