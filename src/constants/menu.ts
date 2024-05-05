@@ -30,6 +30,13 @@ const SUPER_ADMIN_MENU_ITEMS: MenuItemTypes[] = [
         url: '/dashboard',
     },
     {
+        key: 'troubletickets',
+        label: 'trouble tickets',
+        isTitle: false,
+        icon: 'mdi mdi-view-dashboard-outline',
+        url: '/apps/troubletickets',
+    },
+    {
         key: 'apps-providerService',
         label: 'Service Provider',
         isTitle: false,

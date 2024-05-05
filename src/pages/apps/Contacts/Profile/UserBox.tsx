@@ -53,7 +53,7 @@ const UserBox = () => {
                 <img
                      src={user.photo_url}
                     alt="profileImage"
-                    className="rounded-circle avatar-xl img-thumbnail mb-2"
+                    className="rounded-circle avatar-xxl img-thumbnail mb-2"
                 />
                
                 <div className="text-start">
@@ -68,6 +68,9 @@ const UserBox = () => {
 
                     <p className="text-muted font-13">
                         <strong>Email :</strong> <span className="ms-2">{user.email}</span>
+                    </p>
+                    <p className="text-muted font-13">
+                        <strong>Role :</strong> <span className="ms-2">{user.role} </span>
                     </p>
 
                     {/* <p className="text-muted font-13">
