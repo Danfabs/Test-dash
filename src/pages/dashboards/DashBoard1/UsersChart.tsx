@@ -1,9 +1,66 @@
-import { Card, Dropdown } from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
+
+import { Card, } from 'react-bootstrap';
 import Chart from 'react-apexcharts';
 import { ApexOptions } from 'apexcharts';
 import '../../../assets/css/generalStyle.css';
+
+
 const UsersChart = () => {
-    const apexOpts: ApexOptions = {
+    const [providerServiceCount, setProviderServiceCount] = useState(0);
+    const [customerCount, setCustomerCount] = useState(0);
+    const [staffCount, setStaffCount] = useState(0);
+
+    useEffect(() => {
+        fetchProviderServiceCount();
+        fetchCustomerCount();
+        fetchStaffCount();
+    }, []);
+
+    const fetchProviderServiceCount = async () => {
+        try {
+            const response = await fetch('https://us-central1-slot-145a8.cloudfunctions.net/calculateTotalProviderServices');
+            const data = await response.json();
+            if (response.ok) {
+                setProviderServiceCount(data.providerServiceCount);
+            } else {
+                throw new Error(data.error);
+            }
+        } catch (error) {
+            console.error('Error fetching provider service count:', error);
+        }
+    };
+
+    const fetchCustomerCount = async () => {
+        try {
+            const response = await fetch('https://us-central1-slot-145a8.cloudfunctions.net/calculateTotalCustomer');
+            const data = await response.json();
+            if (response.ok) {
+                setCustomerCount(data.customerCount);
+            } else {
+                throw new Error(data.error);
+            }
+        } catch (error) {
+            console.error('Error fetching customer count:', error);
+        }
+    };
+
+    const fetchStaffCount = async () => {
+        try {
+            const response = await fetch('https://us-central1-slot-145a8.cloudfunctions.net/calculateTotalStaff');
+            const data = await response.json();
+            if (response.ok) {
+                setStaffCount(data.staffCount);
+            } else {
+                throw new Error(data.error);
+            }
+        } catch (error) {
+            console.error('Error fetching staff count:', error);
+        }
+    };
+
+
+     const apexOpts: ApexOptions = {
         chart: {
             type: 'donut',
         },
@@ -44,13 +101,14 @@ const UsersChart = () => {
                 useSeriesColors: true,
             },
         },
-        labels: ['Customer', 'Vendor', 'Staff'],
+        labels: ['Customer', 'Service Provider ', 'Staff'],
         tooltip: {
             enabled: false,
         },
     };
 
-    const apexData = [30, 12, 20];
+
+    const apexData = [customerCount, providerServiceCount, staffCount];
 
     return (
         <div >
