@@ -9,7 +9,7 @@ import "../../../assets/css/generalStyle.css"
 
 interface SubscriptionData {
     id: number;
-    discountPercentage: number;
+    discount: number;
     basePrice: number;
     duration: number;
     finalPrice: number;
@@ -27,13 +27,13 @@ const Payment = () => {
     const [orderFeeForms, setOrderFeeForms] = useState([{ id: 1, from: '', to: '', fee: '' }]);
     const [basePrice, setBasePrice] = useState<number | null>(null);
     const [subscriptionDuration, setSubscriptionDuration] = useState<number | null>(6);
-    const [discountPercentage, setDiscountPercentage] = useState<number | ''>(0); 
+    const [discount, setDiscount] = useState<number | ''>(0);
     const [calculatedFinalPrice, setCalculatedPrice] = useState<number | null>(null);
     const [subscriptionData, setSubscriptionData] = useState<Array<
         {
             id: number;
             basePrice: number;
-            discountPercentage: number;
+            discount: number;
             duration: number;
             finalPrice: number
         }>
@@ -60,6 +60,13 @@ const Payment = () => {
         fetchFeeValues();
 
     }, []);
+
+    const handleSubscriptionEdit = (index: number, field: keyof SubscriptionData, value: number) => {
+        const updatedSubscriptionData = [...subscriptionGetData];
+        updatedSubscriptionData[index][field] = value;
+        setSubscriptionGetData(updatedSubscriptionData);
+    };
+
 
     const fetchFeeValues = async () => {
         try {
@@ -163,20 +170,48 @@ const Payment = () => {
         ));
     };
 
+    const calculateFinalPrice = (index: number) => {
+        const subscription = subscriptionGetData[index];
+        const parsedBasePrice = subscription.basePrice;
+        const parsedDiscount = subscription.discount;
+        const subscriptionDuration = subscription.duration;
+
+        if (!parsedBasePrice || !parsedDiscount || !subscriptionDuration) {
+            // Check if any of the required values are missing
+            // Swal.fire({
+            //     icon: 'error',
+            //     title: 'Missing Information',
+            //     text: 'Please fill in all fields before calculating the final price.',
+            //     customClass: {
+            //         confirmButton: 'custom-btn-danger'
+            //     }
+            // });
+            return;
+        }
+
+        const totalBeforeDiscount = parsedBasePrice * subscriptionDuration;
+        const discountAmount = (totalBeforeDiscount * parsedDiscount) / 100;
+        const finalPrice = totalBeforeDiscount - discountAmount;
+
+        const updatedSubscriptionData = [...subscriptionGetData];
+        updatedSubscriptionData[index].finalPrice = finalPrice;
+        setSubscriptionGetData(updatedSubscriptionData);
+    };
+
     // Function to calculate the final price
     const calculatePrice = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         if (subscriptionDuration !== null) {
             const parsedBasePrice = parseFloat(String(basePrice));
-            const parsedDiscountPercentage = parseFloat(String(discountPercentage));
+            const parsedDiscount = parseFloat(String(discount));
 
-            if (isNaN(parsedBasePrice) || isNaN(parsedDiscountPercentage)) {
+            if (isNaN(parsedBasePrice) || isNaN(parsedDiscount)) {
                 alert('Please enter valid numbers for base price and discount percentage.');
                 return;
             }
 
             const totalBeforeDiscount = parsedBasePrice * subscriptionDuration;
-            const discountAmount = (totalBeforeDiscount * parsedDiscountPercentage) / 100;
+            const discountAmount = (totalBeforeDiscount * parsedDiscount) / 100;
             const finalPrice = totalBeforeDiscount - discountAmount;
 
             setCalculatedPrice(finalPrice);
@@ -186,7 +221,7 @@ const Payment = () => {
                 ...subscriptionData,
                 {
                     id: subscriptionData.length + 1,
-                    discountPercentage: parsedDiscountPercentage,
+                    discount: parsedDiscount,
                     basePrice: parsedBasePrice,
                     duration: subscriptionDuration,
                     finalPrice: finalPrice,
@@ -199,81 +234,140 @@ const Payment = () => {
     };
     console.log("subscriptionData: ",subscriptionData)
 
-
-    const saveSubscriptionData = async (subscriptionData: any) => {
-        console.log('Subscription data to be saved:', subscriptionData);
+    const handleEditSubscription = async (index: any) => {
         try {
-            // Call the Cloud Function endpoint with the subscription data
-            const response = await fetch('https://us-central1-slot-145a8.cloudfunctions.net/addSubscription', {
+            const editedSubscription = { ...subscriptionGetData[index] };
+            // Here you can implement the logic to edit the subscription data
+            // For demonstration, let's assume we're updating the base price by adding 10 to it
+            // editedSubscription.basePrice += 10;
+
+            const response = await fetch('https://us-central1-slot-145a8.cloudfunctions.net/updateSubscriptionData', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ subscription: subscriptionData }),
+                body: JSON.stringify({
+                    index: index,
+                    subscription: editedSubscription,
+                }),
             });
 
             if (response.ok) {
-                console.log('Subscription data saved successfully to Firebase.');
-                await fetchFeeValues();
+                // Update the state with the edited subscription data
+                const updatedSubscriptionData = [...subscriptionGetData];
+                updatedSubscriptionData[index] = editedSubscription;
+                setSubscriptionGetData(updatedSubscriptionData);
+
+                // Show success message
+                Swal.fire({
+                    title: 'Subscription Data',
+                    text: `Subscription data updated successfully.`,
+                    icon: 'success',
+                    customClass: {
+                        confirmButton: 'custom-btn-success'
+                    }
+                });
             } else {
-                console.error('Error saving subscription data to Firebase:', response);
+                console.error('Failed to update subscription data:', response.statusText);
+                Swal.fire({
+                    title: 'Error',
+                    text: 'Failed to update subscription data. Please try again later.',
+                    icon: 'error',
+                    customClass: {
+                        confirmButton: 'custom-btn-danger'
+                    }
+                });
             }
-        }
-        catch (error) {
-            console.error('Error saving subscription data to Firebase:', error);
-        }
-    };
-
-
-    const handleClickSaveSubscription = async () => {
-        if (!basePrice || !subscriptionDuration || !discountPercentage) {
+        } catch (error) {
+            console.error('Error updating subscription data:', error);
             Swal.fire({
+                title: 'Error',
+                text: 'An error occurred while updating subscription data. Please try again later.',
                 icon: 'error',
-                title: 'Missing Information',
-                text: 'Please fill in all fields before saving the subscription data.',
                 customClass: {
                     confirmButton: 'custom-btn-danger'
                 }
             });
-            return;
         }
-        try {
-            await saveSubscriptionData(subscriptionData);
-            const newSubscription = {
-                id: subscriptionData.length + 1,
-                discountPercentage: parseFloat(String(discountPercentage)),
-                basePrice: parseFloat(basePrice.toString()),
-                duration: subscriptionDuration,
-                finalPrice: calculatedFinalPrice !== null ? calculatedFinalPrice : 0,
-            };
-            
-            // Clear the subscription data after saving
-            setSubscriptionData([...subscriptionData, newSubscription]);
-            setBasePrice(null);
-            setSubscriptionDuration(null);
-            setDiscountPercentage('');
-            setCalculatedPrice(null);
-
-            setSubscriptionGetData([...subscriptionGetData, newSubscription]);
-
-            Swal.fire({
-                icon: 'success',
-                title: 'Subscription Data Saved',
-                text: 'Subscription data saved successfully.',
-                customClass: {
-                    confirmButton: 'custom-btn-success'
-                }
-            });
-        } catch (error) {
-            console.error('Error saving subscription data:', error);
-        }
-
-
     };
 
+
+
+
+    // const saveSubscriptionData = async (subscriptionData: any) => {
+    //     console.log('Subscription data to be saved:', subscriptionData);
+    //     try {
+    //         // Call the Cloud Function endpoint with the subscription data
+    //         const response = await fetch('https://us-central1-slot-145a8.cloudfunctions.net/addSubscription', {
+    //             method: 'POST',
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //             },
+    //             body: JSON.stringify({ subscription: subscriptionData }),
+    //         });
+
+    //         if (response.ok) {
+    //             console.log('Subscription data saved successfully to Firebase.');
+    //             await fetchFeeValues();
+    //         } else {
+    //             console.error('Error saving subscription data to Firebase:', response);
+    //         }
+    //     }
+    //     catch (error) {
+    //         console.error('Error saving subscription data to Firebase:', error);
+    //     }
+    // };
+
+
+    // const handleClickSaveSubscription = async () => {
+    //     if (!basePrice || !subscriptionDuration || !discount) {
+    //         Swal.fire({
+    //             icon: 'error',
+    //             title: 'Missing Information',
+    //             text: 'Please fill in all fields before saving the subscription data.',
+    //             customClass: {
+    //                 confirmButton: 'custom-btn-danger'
+    //             }
+    //         });
+    //         return;
+    //     }
+    //     try {
+    //         await saveSubscriptionData(subscriptionData);
+    //         const newSubscription = {
+    //             id: subscriptionData.length + 1,
+    //             discount: parseFloat(String(discount)),
+    //             basePrice: parseFloat(basePrice.toString()),
+    //             duration: subscriptionDuration,
+    //             finalPrice: calculatedFinalPrice !== null ? calculatedFinalPrice : 0,
+    //         };
+
+    //         // Clear the subscription data after saving
+    //         setSubscriptionData([...subscriptionData, newSubscription]);
+    //         setBasePrice(null);
+    //         setSubscriptionDuration(null);
+    //         setDiscount('');
+    //         setCalculatedPrice(null);
+
+    //         setSubscriptionGetData([...subscriptionGetData, newSubscription]);
+
+    //         Swal.fire({
+    //             icon: 'success',
+    //             title: 'Subscription Data Saved',
+    //             text: 'Subscription data saved successfully.',
+    //             customClass: {
+    //                 confirmButton: 'custom-btn-success'
+    //             }
+    //         });
+    //     } catch (error) {
+    //         console.error('Error saving subscription data:', error);
+    //     }
+
+
+    // };
+
     return (
-        <Card className='payment-card'>
-            <Card.Body className='payment-cardBody'>
+        <Card className='payment-card' >
+            <Card.Body className='payment-cardBody' >
                 <h4 className="header-title mb-3">Payment</h4>
 
                 <Wizard>
@@ -413,128 +507,78 @@ const Payment = () => {
                                     />
                                 </Tab.Pane>
                                 <Tab.Pane eventKey="subscription">
-                                    <Step
-                                        id="subscription"
-                                        render={({ }) => (
-                                            <Form>
-                                                <Form.Group as={Row} className="mb-3">
-                                                    <Form.Label
-                                                        htmlFor="basePrice"
-                                                        column md={4}>
-                                                        Enter Base Price
-                                                    </Form.Label>
-                                                    <Col md={2}>
-                                                        <Form.Control
-                                                            type="number"
-                                                            name="basePrice"
-                                                            id="basePrice"
-                                                            placeholder="base price"
-                                                            value={basePrice === null ? '' : basePrice}
-                                                            onChange={(e) => setBasePrice(parseFloat(e.target.value))}
-                                                        />
-                                                    </Col>
-                                                </Form.Group>
-
-                                                <Form.Group as={Row} className="mb-3">
-                                                    <Form.Label
-                                                        htmlFor="subscriptionDuration"
-                                                        column md={4}>
-                                                        Choose Subscription Duration
-                                                    </Form.Label>
-                                                    <Col md={2}>
-                                                        <Dropdown
-                                                            style={{ border: '2px solid #d3d3d3', borderRadius: '5px' }}
-                                                            onSelect={handleSelect}
-                                                        >
-                                                            <Dropdown.Toggle
-                                                                variant="none"
-                                                                id="subscriptionDuration"
-                                                            > {subscriptionDuration !== null ? `${subscriptionDuration} Months` : 'Duration'}  <i className="mdi mdi-chevron-down"></i>
-                                                                <Dropdown.Menu>
-                                                                    <Dropdown.Item eventKey="6">6 Months</Dropdown.Item>
-                                                                    <Dropdown.Item eventKey="12">12 Months</Dropdown.Item>
-                                                                </Dropdown.Menu>
-
-                                                            </Dropdown.Toggle>
-                                                        </Dropdown>
-                                                    </Col>
-                                                </Form.Group>
-
-                                                <Form.Group as={Row} className="mb-3">
-                                                    <Form.Label
-                                                        htmlFor="discountPercentage"
-                                                        column md={4}>
-                                                        Enter Discount Percentage
-                                                    </Form.Label>
-                                                    <Col md={2}>
-                                                        <Form.Control
-                                                            type="number"
-                                                            name="discountPercentage"
-                                                            id="discountPercentage"
-                                                            placeholder="Percentage"
-                                                            value={discountPercentage}
-                                                            onChange={(e) => setDiscountPercentage(parseInt(e.target.value))}
-                                                        />
-                                                    </Col>
-                                                    <Col xs={12} md={3}>
-                                                        <Button
-                                                            variant="outline-success"
-                                                            className='payment-saveButton '
-                                                            onClick={(e) => calculatePrice(e)}
-                                                        >
-                                                            Calculate Price</Button>
-                                                    </Col>
-
-                                                </Form.Group>
-
-                                                <Form.Group as={Row} className="mb-3">
-                                                    <Form.Label htmlFor="lname2" column md={4}>
-                                                        Final Price
-                                                    </Form.Label>
-                                                    <Col md={2}>
-                                                        <Form.Label >
-                                                            {calculatedFinalPrice} OMR
-                                                        </Form.Label>
-                                                    </Col>
-                                                </Form.Group>
-                                                <div className="text-end mt-3">
-                                                    <Button
-                                                        variant="outline-success"
-                                                        className='payment-saveButton'
-                                                        onClick={handleClickSaveSubscription}
-                                                    >
-                                                        Save</Button>
-                                                </div>
+                                    <Form>
+                                        <div className="table-responsive">
+                                            <Table className="mb-0" striped>
+                                                <thead>
+                                                    <tr>
+                                                        <th>Base Price</th>
+                                                        <th>Duration</th>
+                                                        <th>Discount Percentage</th>
+                                                        <th>Final Price</th>
+                                                        <th></th>
 
 
-                                                <hr className="hr" />
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {subscriptionGetData.map((subscription, index) => (
+                                                        <tr key={index}>
+                                                            <td>
+                                                                <input
+                                                                    type="number"
+                                                                    value={subscription.basePrice}
+                                                                    onChange={(e) => {
+                                                                        handleSubscriptionEdit(index, 'basePrice', parseFloat(e.target.value));
+                                                                        calculateFinalPrice(index);
+                                                                    }}
+                                                                />
+                                                            </td>
+                                                            <td>
+                                                                <input
+                                                                    type="number"
+                                                                    value={subscription.duration}
+                                                                    onChange={(e) => {
+                                                                        handleSubscriptionEdit(index, 'duration', parseInt(e.target.value));
+                                                                        calculateFinalPrice(index);
+                                                                    }}
+                                                                />
+                                                            </td>
+                                                            <td>
+                                                                <input
+                                                                    type="number"
+                                                                    value={subscription.discount}
+                                                                    onChange={(e) => {
+                                                                        handleSubscriptionEdit(index, 'discount', parseInt(e.target.value));
+                                                                        calculateFinalPrice(index);
+                                                                    }}
+                                                                />
+                                                            </td>
+                                                            <td>
+                                                                <input
+                                                                    type="number"
+                                                                    value={subscription.finalPrice}
+                                                                    onChange={(e) => handleSubscriptionEdit(index, 'finalPrice', parseFloat(e.target.value))}
+                                                                />
+                                                            </td>
+                                                            <td>
+                                                                <Button
+                                                                    variant="outline-success"
+                                                                    className='payment-saveButton'
+                                                                    onClick={() => handleEditSubscription(index)}
+                                                                >
+                                                                    Edit
+                                                                </Button>
+                                                            </td>
+                                                        </tr>
+                                                    ))}
+                                                </tbody>
+                                            </Table>
+                                        </div>
+                                        {/* <div className="text-end mt-3">
 
-                                                {/* subscription data */}
-                                                <div className="table-responsive">
-                                                    <Table className="mb-0" striped>
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Base Price</th>
-                                                                <th>Duration</th>
-                                                                <th>Discount Percentage</th>
-                                                                <th>Final Price</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            {subscriptionGetData.map((subscription, index) => (
-                                                                <tr key={index}>
-                                                                    <td>{subscription.basePrice}</td>
-                                                                    <td>{subscription.duration}</td>
-                                                                    <td>{subscription.discountPercentage}</td>
-                                                                    <td>{subscription.finalPrice}</td>
-                                                                </tr>
-                                                            ))}
-                                                        </tbody>
-                                                    </Table>
-                                                </div>
-                                            </Form>
-                                        )}
-                                    />
+                                        </div> */}
+                                    </Form>
                                 </Tab.Pane>
 
                             </Tab.Content>
