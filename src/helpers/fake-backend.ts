@@ -1,6 +1,5 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import Global from '../Global';
 import Cookies from 'js-cookie'; 
 
 type UserData = {

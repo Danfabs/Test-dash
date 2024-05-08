@@ -1,4 +1,3 @@
-import { Global } from '../Global';
 import Cookies from 'js-cookie'; 
 
 console.log("User role from Menue: ", Cookies.get('userRole'));

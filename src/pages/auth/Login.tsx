@@ -16,7 +16,6 @@ import { resetAuth, loginUser } from '../../redux/actions';
 import { VerticalForm, FormInput } from '../../components/form/';
 import Loader from '../../components/Loader';
 import AuthLayout from './AuthLayout';
-import Global from '../../Global';
 
 
 type LocationState = {
