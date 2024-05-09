@@ -36,7 +36,7 @@ const Statistics = () => {
                     // data={58}
                     stats={256}
                     color={'#f05050'}
-                    subTitle="Places"
+                    subTitle="Spaces"
                 />
             </Col>
            
