@@ -14,7 +14,7 @@ const ViewSpaces = ({ spaces }: { spaces: SpacesList[] | null }) => {
     return (
         <div>
             <h4 className="mt-0">Spaces</h4>
-            {spaces === null ? (
+            {spaces === null || typeof spaces === 'undefined' ? (
                 <Spinner animation="border" role="status">
                     <span className="visually-hidden">Loading...</span>
                 </Spinner>
@@ -113,7 +113,7 @@ const Spaces = () => {
                 }
 
                 const data = await response.json();
-                setSpaces(data.spaces);
+                setSpaces(data.data);
                 console.log("spaces", spaces)
             } catch (error) {
                 console.error('Error fetching spaces:', error);
