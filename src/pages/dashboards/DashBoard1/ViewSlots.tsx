@@ -48,9 +48,9 @@ const ViewSlots = ({ slots }: SlotsDetailsProps) => {
                                             </Link>
                                         </h4>
 
-                                        <ul className="list-inline">
+                                        {/* <ul className="list-inline">
                                             <Badge bg="success" >Accepted</Badge>
-                                        </ul>
+                                        </ul> */}
 
 
                                         {/* basePricing */}
