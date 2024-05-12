@@ -70,7 +70,7 @@ const ReservationInfoWidget4 = () => {
     return (
         <Card>
             <Card.Body>
-                <h4 className="header-title mb-3">Reservations Reports</h4>
+                <h4 className="header-title mb-3">Reservations Report</h4>
                 <Chart
                     options={apexDonutOpts}
                     series={reservationCounts}

@@ -126,7 +126,7 @@ const UsersChart = () => {
                     </Dropdown.Menu>
                 </Dropdown> */}
                     <div dir="ltr" className='card-div'>
-                        <h4 className="header-title mb-3">Users Reports</h4>
+                        <h4 className="header-title mb-3">Users Report</h4>
                         <Chart
                             options={apexOpts}
                             series={apexData}

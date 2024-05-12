@@ -51,7 +51,7 @@ const ReservationWidget2 = ({ title, color, stats, subTitle }: ReservationWidget
                 <h4 className="header-title mt-0 mb-3">{title}</h4>
                 <div className="widget-detail-1 text-center">
                     <h2 className="fw-normal mb-1">{totalReservations}</h2>
-                    <p className="text-muted mb-1">{subtitle}</p>
+                    <p className="text-muted mb-1">{totalReservations === 1 ? 'reservation' : 'reservations'}</p>
                 </div>
 
             </Card.Body>

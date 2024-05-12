@@ -102,7 +102,7 @@ const PlacesWidget1 = ({ title, color, stats, subTitle }: PlacesWidget1Props) =>
                 <h4 className="header-title mt-0 mb-3">{title}</h4>
                 <div className="widget-detail-1 text-center">
                     <h2 className="fw-normal mb-1">{totalPlaces}</h2>
-                    <p className="text-muted mb-1">{subTitle}</p>
+                    <p className="text-muted mb-1">{totalPlaces === 1 ? 'space' : 'spaces'}</p>
                 </div>
             </Card.Body>
         </Card>

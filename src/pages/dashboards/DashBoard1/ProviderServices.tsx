@@ -107,7 +107,7 @@ const ProviderServices = (props: UsersDetailsProps) => {
 
     return (
         <div>
-            <h4 className="mt-0">Provider Services</h4>
+            <h4 className="mt-0">Service Providers</h4>
             {loading ? ( // Display spinner if data is still loading
                 <Spinner animation="border" role="status">
                     <span className="visually-hidden">Loading...</span>

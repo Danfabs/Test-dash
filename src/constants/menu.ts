@@ -37,7 +37,7 @@ const SUPER_ADMIN_MENU_ITEMS: MenuItemTypes[] = [
     },
     {
         key: 'apps-providerService',
-        label: 'Service Provider',
+        label: 'Service Providers',
         isTitle: false,
         icon: 'mdi mdi-account-multiple',
         url: '/apps/providerService',
