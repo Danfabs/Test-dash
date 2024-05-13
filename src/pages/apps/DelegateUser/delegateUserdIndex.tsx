@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { useState, useEffect } from 'react';
 import { Button, Card, Col, Modal, Row, Dropdown, Table } from 'react-bootstrap';
 import * as yup from 'yup';
@@ -65,7 +66,7 @@ const List = () => {
     const [selectedRole, setSelectedRole] = useState<string | null>(null);
     const [email, setEmail] = useState<string>('');
     const [roleState, setRoleState] = useState<RoleState>(initialRoleState);
-
+    const { t } = useTranslation();
 
     useEffect(() => {
         const savedState = localStorage.getItem('roleState');
@@ -192,14 +193,14 @@ const List = () => {
                                     <div className="mt-3 mt-md-0">
                                         <Button variant="success" className="waves-effect waves-light" onClick={toggle}>
                                             <i className="mdi mdi-plus-circle me-1"></i>
-                                            Delegate Users
+                                            {t('Delegate Users')}
                                         </Button>
                                     </div>
 
                                     <div className="mt-4 mt-md-2">
                                         <Button variant="success" className="waves-effect waves-light" onClick={addRolestoggle}>
                                             <i className="mdi mdi-plus-circle me-1"></i>
-                                            Add Roles
+                                            {t('Add Roles')}
                                         </Button>
                                     </div>
 
@@ -207,7 +208,7 @@ const List = () => {
                                         <Button variant="success" className="waves-effect waves-light" >
                                             <i className="mdi mdi-plus-circle me-1"></i>
                                             <Link to="/apps/register" className="text-decoration-none text-white">
-                                            Add User
+                                            {t('Add User')}
                                             </Link>
                                         </Button>
                                     </div>
@@ -224,21 +225,21 @@ const List = () => {
             </Row>
             <Modal show={modal} onHide={toggle} centered>
                 <Modal.Header closeButton>
-                    <Modal.Title as="h4">Delegate User</Modal.Title>
+                    <Modal.Title as="h4">{t('Delegate User')}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <FormInput
-                        label={'Email address'}
+                        label={t('Email address')}
                         type="email"
                         name="email"
-                        placeholder="Enter email"
+                        placeholder={t('Enter email')}
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         containerClass={'mb-3'}
                     />
 
                     <div className='mb-2'>
-                        <label>User Role</label>
+                        <label>{t('User Role')}</label>
 
                     </div>
 
@@ -251,22 +252,22 @@ const List = () => {
                                 variant="none"
                                 id="userRoleDropdown"
                             >
-                                {selectedRole !== null ? selectedRole : 'Select Role'} <i className="mdi mdi-chevron-down"></i>
+                                {selectedRole !== null ? selectedRole : t('Select Role')} <i className="mdi mdi-chevron-down"></i>
                             </Dropdown.Toggle>
                             <Dropdown.Menu>
-                                <Dropdown.Item eventKey="Sales Admin">Sales Admin</Dropdown.Item>
-                                <Dropdown.Item eventKey="Sales Staff">Sales Staff</Dropdown.Item>
-                                <Dropdown.Item eventKey="Technical Admin">Technical Admin</Dropdown.Item>
-                                <Dropdown.Item eventKey="Technical Staff">Technical Staff</Dropdown.Item>
+                                <Dropdown.Item eventKey="Sales Admin">{t('Sales Admin')}</Dropdown.Item>
+                                <Dropdown.Item eventKey="Sales Staff">{t('Sales Staff')}</Dropdown.Item>
+                                <Dropdown.Item eventKey="Technical Admin">{t('Technical Admin')}</Dropdown.Item>
+                                <Dropdown.Item eventKey="Technical Staff">{t('Technical Staff')}</Dropdown.Item>
                             </Dropdown.Menu>
                         </Dropdown>
                     </div>
 
                     <Button variant="light" className="waves-effect waves-light me-1" type="submit" onClick={handleSubmit}>
-                        Save
+                        {t('Save')}
                     </Button>
                     <Button variant="danger" className="waves-effect waves-light" onClick={toggle}>
-                        Cancel
+                        {t('Cancel')}
                     </Button>
                 </Modal.Body>
             </Modal>
@@ -274,17 +275,17 @@ const List = () => {
 
             <Modal show={addRolesModal} onHide={addRolestoggle} centered>
                 <Modal.Header closeButton>
-                    <Modal.Title as="h4">Add Roles</Modal.Title>
+                    <Modal.Title as="h4">{t('Add Roles')}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <div className="table-responsive">
                         <Table className="mb-0" striped>
                             <thead>
                                 <tr>
-                                    <th>Roles</th>
-                                    <th>View TT</th>
-                                    <th>Manage TT</th>
-                                    <th>Delegate Users</th>
+                                    <th>{t('Roles')}</th>
+                                    <th>{t('View TT')}</th>
+                                    <th>{t('Manage TT')}</th>
+                                    <th>{t('Delegate Users')}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -309,10 +310,10 @@ const List = () => {
 
                     <div className="mt-4 mt-md-2">
                         <Button variant="light" className="waves-effect waves-light me-1" type="submit" onClick={handleSubmitRole}>
-                            Save
+                            {t('Save')}
                         </Button>
                         <Button variant="danger" className="waves-effect waves-light" onClick={addRolestoggle}>
-                            Cancel
+                            {t('Cancel')}
                         </Button>
                     </div>
                 </Modal.Body>

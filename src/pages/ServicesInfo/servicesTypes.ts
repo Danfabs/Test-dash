@@ -13,13 +13,21 @@ export type ServicesList = {
     spaceLogo: string;
     spacePhoto: string;
     totalBookings: number;
-    slotsMinPrice : number;
-    minimumReservationFee : number;
+    slotsMinPrice: number;
+    minimumReservationFee: number;
     location: {
         country: string;
         address: string;
         city: string;
-      };
-      spaceAmenities: string[];
+    };
+    spaceAmenities: string[];
+    financialDetails: {
+        accountNumber:String;
+        bankBranch:String;
+        bankName:String;
+        currency:string;
+        iban:string;
+        swiftCode:string;
+    }
 
 };

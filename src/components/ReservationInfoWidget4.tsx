@@ -2,9 +2,12 @@ import Chart from 'react-apexcharts';
 import { Card, Dropdown } from 'react-bootstrap';
 import { ApexOptions } from 'apexcharts';
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+
 
 // simple pie chart
 const ReservationInfoWidget4 = () => {
+    const { t } = useTranslation();
     const [reservationCounts, setReservationCounts] = useState([0, 0, 0, 0]);
 
     useEffect(() => {
@@ -38,7 +41,7 @@ const ReservationInfoWidget4 = () => {
             height: 320,
             type: 'pie', // Set the type to "pie" for a pie chart
         },
-        labels: [ 'Confirmed', 'Rejected', 'Pending', 'Completed' ],
+        labels: [ t('Confirmed'), t('Rejected'), t('Pending'), t('Completed') ],
         colors: [ '#189431', '#E62C1D', '#7E7D7D', '#24A5F3' ],
         legend: {
             show: true,
@@ -70,7 +73,7 @@ const ReservationInfoWidget4 = () => {
     return (
         <Card>
             <Card.Body>
-                <h4 className="header-title mb-3">Reservations Report</h4>
+                <h4 className="header-title mb-3">{t('Reservations Report')}</h4>
                 <Chart
                     options={apexDonutOpts}
                     series={reservationCounts}

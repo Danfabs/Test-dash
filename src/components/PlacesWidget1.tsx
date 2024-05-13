@@ -5,6 +5,7 @@ import { projectFirestore } from '../firebase';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../hooks';
+import { useTranslation } from 'react-i18next';
 
 type PlacesWidget1Props = {
     title: string;
@@ -17,7 +18,8 @@ type PlacesWidget1Props = {
 const PlacesWidget1 = ({ title, color, stats, subTitle }: PlacesWidget1Props) => {
     const [totalPlaces, setTotalPlaces] = useState(null);
     const navigate = useNavigate();
-
+    const { t } = useTranslation(); 
+    
     useEffect(() => {
         const fetchSpaceCount = async () => {
             try {
@@ -102,7 +104,7 @@ const PlacesWidget1 = ({ title, color, stats, subTitle }: PlacesWidget1Props) =>
                 <h4 className="header-title mt-0 mb-3">{title}</h4>
                 <div className="widget-detail-1 text-center">
                     <h2 className="fw-normal mb-1">{totalPlaces}</h2>
-                    <p className="text-muted mb-1">{totalPlaces === 1 ? 'space' : 'spaces'}</p>
+                    <p className="text-muted mb-1">{totalPlaces === 1 ? t('space') : t('spaces')}</p>
                 </div>
             </Card.Body>
         </Card>

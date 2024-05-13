@@ -17,7 +17,7 @@ import ThemeSetting from '../../components/topbar/ThemeSetting';
 import TopbarSearch from '../../components/topbar/TopbarSearch';
 import NotificationDropdown from '../../components/topbar/NotificationDropdown';
 import ProfileDropdown from '../../components/topbar/ProfileDropdown';
-
+import LanguageSwitcher from '../../LanguageSwitcher';
 // dummy data
 import { notifications, profileMenus, searchOptions } from './data';
 
@@ -27,6 +27,7 @@ import avatar1 from '../../assets/images/users/user-1.jpg';
 import logoDark from '../../assets/images/logo-dark.png';
 import logoLight from '../../assets/images/logo-light.png';
 import { useUser } from '../../hooks';
+import { Button } from 'react-bootstrap';
 
 type TopbarProps = {
     openLeftMenuCallBack: () => void;
@@ -61,6 +62,9 @@ const Topbar = ({ openLeftMenuCallBack, containerClass }: TopbarProps) => {
     return (
         <div className="navbar-custom">
             <div className={containerClass}>
+                <ul className="list-unstyled topnav-menu float-end mt-mb-0 mt-2 ">
+                  <LanguageSwitcher/>
+                </ul>
                 <ul className="list-unstyled topnav-menu float-end mb-0">
                     {/* <li className="d-none d-lg-block">
                         <TopbarSearch options={searchOptions} />
@@ -80,6 +84,8 @@ const Topbar = ({ openLeftMenuCallBack, containerClass }: TopbarProps) => {
                         <ThemeSetting handleRightSideBar={handleRightSideBar} />
                     </li> */}
                 </ul>
+
+
 
                 {/* LOGO  */}
                 <div className="logo-box">

@@ -7,20 +7,22 @@ import { Card, Col, Row, Spinner} from 'react-bootstrap';
 import { SpacesList } from '../../apps/Spaces/spacesTypes';
 // hooks
 import { usePageTitle } from '../../../hooks';
+import { useTranslation } from 'react-i18next';
 
 
 
 const ViewSpaces = ({ spaces }: { spaces: SpacesList[] | null }) => {
+    const { t } = useTranslation();
     return (
         <div>
-            <h4 className="mt-0">Spaces</h4>
+            <h4 className="mt-0">{t('Spaces')}</h4>
             {spaces === null || typeof spaces === 'undefined' ? (
                 <Spinner animation="border" role="status">
-                    <span className="visually-hidden">Loading...</span>
+                    <span className="visually-hidden">{t('Loading...')}</span>
                 </Spinner>
             ) : (
                 spaces.length === 0 ? (
-                    <p>No Spaces available</p>
+                    <p>{t('No Spaces available')}</p>
                 ) : (
                     <Row>
                         {(spaces || []).map((spaces, index) => {
@@ -48,18 +50,18 @@ const ViewSpaces = ({ spaces }: { spaces: SpacesList[] | null }) => {
                                             <ul className="list-inline">
 
                                                 <li className="list-inline-item me-4">
-                                                    <h5 className="mb-2 fw-semibold">Slots Minimum Price</h5>
+                                                    <h5 className="mb-2 fw-semibold">{t('Slots Minimum Price')}</h5>
                                                     <p className="mb-0">{spaces.slotsMinPrice}</p>
                                                 </li>
 
                                                 <li className="list-inline-item me-4">
-                                                    <h5 className="mb-2 fw-semibold">Minimum Reservation Fee</h5>
+                                                    <h5 className="mb-2 fw-semibold">{t('Minimum Reservation Fee')}</h5>
                                                     <p className="mb-0">{spaces.minimumReservationFee}</p>
                                                 </li>
 
                                                 {spaceAmenities && spaceAmenities.length > 0 && (
                                                     <li className="list-inline-item me-4">
-                                                        <h5 className="mb-2 fw-semibold">Space Amenities</h5>
+                                                        <h5 className="mb-2 fw-semibold">{t('Space Amenities')}</h5>
                                                         {spaceAmenities.map((amenity, amenityIndex) => (
                                                             <i key={amenityIndex} className={`mdi mdi-${amenity.toLowerCase()}`}></i>
                                                         ))}
@@ -69,19 +71,19 @@ const ViewSpaces = ({ spaces }: { spaces: SpacesList[] | null }) => {
 
                                             <ul className="list-inline">
                                                 <li className="list-inline-item me-4">
-                                                    <h5 className="mb-2 fw-semibold">Country</h5>
+                                                    <h5 className="mb-2 fw-semibold">{t('Country')}</h5>
                                                     <p className="mb-0">{location.country}</p>
 
 
                                                 </li>
                                                 <li className="list-inline-item me-4">
 
-                                                    <h5 className="mb-2 fw-semibold">City</h5>
+                                                    <h5 className="mb-2 fw-semibold">{t('City')}</h5>
                                                     <p className="mb-0">{location.city}</p>
                                                 </li>
                                                 <li className="list-inline-item">
 
-                                                    <h5 className="mb-2 fw-semibold">Address</h5>
+                                                    <h5 className="mb-2 fw-semibold">{t('Address')}</h5>
                                                     <p className="mb-0">{location.address}</p>
                                                 </li>
 

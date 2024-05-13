@@ -6,6 +6,7 @@ import '../../../assets/css/generalStyle.css'
 import { usePageTitle } from '../../../hooks';
 import Swal from 'sweetalert2';
 import "../../../assets/css/generalStyle.css"
+import { useTranslation } from 'react-i18next';
 
 interface SubscriptionData {
     id: number;
@@ -22,7 +23,7 @@ interface FeeValue {
 }
 
 const Payment = () => {
-    //active tab key 
+    const { t } = useTranslation();
     const [key, setKey] = useState<string | null>('fee');
     const [orderFeeForms, setOrderFeeForms] = useState([{ id: 1, from: '', to: '', fee: '' }]);
     const [basePrice, setBasePrice] = useState<number | null>(null);
@@ -177,15 +178,7 @@ const Payment = () => {
         const subscriptionDuration = subscription.duration;
 
         if (!parsedBasePrice || !parsedDiscount || !subscriptionDuration) {
-            // Check if any of the required values are missing
-            // Swal.fire({
-            //     icon: 'error',
-            //     title: 'Missing Information',
-            //     text: 'Please fill in all fields before calculating the final price.',
-            //     customClass: {
-            //         confirmButton: 'custom-btn-danger'
-            //     }
-            // });
+           
             return;
         }
 
@@ -237,9 +230,6 @@ const Payment = () => {
     const handleEditSubscription = async (index: any) => {
         try {
             const editedSubscription = { ...subscriptionGetData[index] };
-            // Here you can implement the logic to edit the subscription data
-            // For demonstration, let's assume we're updating the base price by adding 10 to it
-            // editedSubscription.basePrice += 10;
 
             const response = await fetch('https://us-central1-slot-145a8.cloudfunctions.net/updateSubscriptionData', {
                 method: 'POST',
@@ -291,84 +281,10 @@ const Payment = () => {
         }
     };
 
-
-
-
-    // const saveSubscriptionData = async (subscriptionData: any) => {
-    //     console.log('Subscription data to be saved:', subscriptionData);
-    //     try {
-    //         // Call the Cloud Function endpoint with the subscription data
-    //         const response = await fetch('https://us-central1-slot-145a8.cloudfunctions.net/addSubscription', {
-    //             method: 'POST',
-    //             headers: {
-    //                 'Content-Type': 'application/json',
-    //             },
-    //             body: JSON.stringify({ subscription: subscriptionData }),
-    //         });
-
-    //         if (response.ok) {
-    //             console.log('Subscription data saved successfully to Firebase.');
-    //             await fetchFeeValues();
-    //         } else {
-    //             console.error('Error saving subscription data to Firebase:', response);
-    //         }
-    //     }
-    //     catch (error) {
-    //         console.error('Error saving subscription data to Firebase:', error);
-    //     }
-    // };
-
-
-    // const handleClickSaveSubscription = async () => {
-    //     if (!basePrice || !subscriptionDuration || !discount) {
-    //         Swal.fire({
-    //             icon: 'error',
-    //             title: 'Missing Information',
-    //             text: 'Please fill in all fields before saving the subscription data.',
-    //             customClass: {
-    //                 confirmButton: 'custom-btn-danger'
-    //             }
-    //         });
-    //         return;
-    //     }
-    //     try {
-    //         await saveSubscriptionData(subscriptionData);
-    //         const newSubscription = {
-    //             id: subscriptionData.length + 1,
-    //             discount: parseFloat(String(discount)),
-    //             basePrice: parseFloat(basePrice.toString()),
-    //             duration: subscriptionDuration,
-    //             finalPrice: calculatedFinalPrice !== null ? calculatedFinalPrice : 0,
-    //         };
-
-    //         // Clear the subscription data after saving
-    //         setSubscriptionData([...subscriptionData, newSubscription]);
-    //         setBasePrice(null);
-    //         setSubscriptionDuration(null);
-    //         setDiscount('');
-    //         setCalculatedPrice(null);
-
-    //         setSubscriptionGetData([...subscriptionGetData, newSubscription]);
-
-    //         Swal.fire({
-    //             icon: 'success',
-    //             title: 'Subscription Data Saved',
-    //             text: 'Subscription data saved successfully.',
-    //             customClass: {
-    //                 confirmButton: 'custom-btn-success'
-    //             }
-    //         });
-    //     } catch (error) {
-    //         console.error('Error saving subscription data:', error);
-    //     }
-
-
-    // };
-
     return (
         <Card className='payment-card' >
             <Card.Body className='payment-cardBody' >
-                <h4 className="header-title mb-3">Payment</h4>
+                <h4 className="header-title mb-3">{t('Payment')}</h4>
 
                 <Wizard>
                     <Steps>
@@ -385,12 +301,12 @@ const Payment = () => {
                                         to="#"
                                         eventKey="fee"
                                         className="rounded-0 pt-2 pb-2">
-                                        <span className="d-none d-sm-inline">Order Fee</span>
+                                        <span className="d-none d-sm-inline">{t('Order Fee')}</span>
                                     </Nav.Link>
                                 </Nav.Item>
                                 <Nav.Item as="li">
                                     <Nav.Link as={Link} to="#" eventKey="subscription" className="rounded-0 pt-2 pb-2">
-                                        <span className="d-none d-sm-inline">Service Providers subscriptions</span>
+                                        <span className="d-none d-sm-inline">{t('Service Providers subscriptions')}</span>
                                     </Nav.Link>
                                 </Nav.Item>
 
@@ -408,12 +324,12 @@ const Payment = () => {
                                                             <Form.Label
                                                                 htmlFor="minOrder"
                                                                 column md={2}>
-                                                                Min Order:
+                                                                {t('Minimum Order:')}
                                                             </Form.Label>
                                                             <Form.Label
                                                                 htmlFor="minOrder"
                                                                 column md={1}>
-                                                                From
+                                                                {t('From')}
                                                             </Form.Label>
                                                             <Col md={2}>
                                                                 <Form.Control
@@ -427,7 +343,7 @@ const Payment = () => {
                                                             </Col>
 
                                                             <Form.Label column md={1}>
-                                                                To
+                                                                {t('To')}
                                                             </Form.Label>
 
                                                             <Col md={2}>
@@ -442,7 +358,7 @@ const Payment = () => {
                                                             </Col>
 
                                                             <Form.Label htmlFor="fee" column sm={1}>
-                                                                Fee (%)
+                                                                {t('Fee (%)')}
                                                             </Form.Label>
 
                                                             <Col md={2}>
@@ -474,7 +390,7 @@ const Payment = () => {
                                                     <Button variant="outline-success" className='payment-saveButton'
                                                         onClick={addOrderFeeForms}
                                                     >
-                                                        Save Order Fee
+                                                        {t('Save Order Fee')}
                                                     </Button>
                                                 </div>
 
@@ -485,9 +401,9 @@ const Payment = () => {
                                                     <Table className="mb-0" striped>
                                                         <thead>
                                                             <tr>
-                                                                <th>From</th>
-                                                                <th>To</th>
-                                                                <th>Fee</th>
+                                                                <th>{t('From')}</th>
+                                                                <th>{t('To')}</th>
+                                                                <th>{t('Fee')}</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -512,10 +428,10 @@ const Payment = () => {
                                             <Table className="mb-0" striped>
                                                 <thead>
                                                     <tr>
-                                                        <th>Base Price</th>
-                                                        <th>Duration</th>
-                                                        <th>Discount Percentage</th>
-                                                        <th>Final Price</th>
+                                                        <th>{t('Base Price')}</th>
+                                                        <th>{t('Duration')}</th>
+                                                        <th>{t('Discount Percentage')}</th>
+                                                        <th>{t('Final Price')}</th>
                                                         <th></th>
 
 
@@ -567,7 +483,7 @@ const Payment = () => {
                                                                     className='payment-saveButton'
                                                                     onClick={() => handleEditSubscription(index)}
                                                                 >
-                                                                    Edit
+                                                                    {t('Edit')}
                                                                 </Button>
                                                             </td>
                                                         </tr>

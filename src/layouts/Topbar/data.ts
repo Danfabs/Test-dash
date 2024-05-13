@@ -57,11 +57,11 @@ const profileMenus: ProfileMenu[] = [
         icon: 'fe-user',
         redirectTo: '/apps/contacts/profile',
     },
-    {
-        label: 'Lock Screen',
-        icon: 'fe-lock',
-        redirectTo: '/auth/lock-screen',
-    },
+    // {
+    //     label: 'Lock Screen',
+    //     icon: 'fe-lock',
+    //     redirectTo: '/auth/lock-screen',
+    // },
     {
         label: 'Logout',
         icon: 'fe-log-out',

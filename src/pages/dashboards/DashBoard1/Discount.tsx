@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Row, Col, Card, Form, Button, ProgressBar, Tab, Nav, Dropdown } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { Wizard, Steps, Step } from 'react-albus';
 import '../../../assets/css/generalStyle.css'
@@ -10,6 +11,7 @@ import Swal from 'sweetalert2';
 import "../../../assets/css/generalStyle.css"
 
 const Discount = () => {
+    const { t } = useTranslation();
     const [phoneNumber, setPhoneNumber] = useState('');
     const [discountPercentage, setDiscountPercentage] = useState('');
 
@@ -63,11 +65,11 @@ const Discount = () => {
     return (
         <Card className='payment-card'>
             <Card.Body className='payment-cardBody'>
-                <h4 className="header-title mb-4">Discount</h4>
+                <h4 className="header-title mb-4">{t('Discount')}</h4>
                 <Form>
                     <Form.Group as={Row} className="mb-3">
                         <Form.Label htmlFor="fname2" column md={3}>
-                            Enter phone number to get discount
+                            {t('Enter phone number to get discount')}
                         </Form.Label>
                         <Col md={4}>
                             <Form.Control
@@ -82,14 +84,14 @@ const Discount = () => {
                     </Form.Group>
                     <Form.Group as={Row} className="mb-3">
                         <Form.Label htmlFor="lname2" column md={3}>
-                            How many discount (%)
+                            {t('How many discount (%)')}
                         </Form.Label>
                         <Col md={4}>
                             <Form.Control
                                 type="number"
                                 name="discount"
                                 id="discount"
-                                placeholder="discount (%)"
+                                placeholder={t('discount (%)')}
                                 value={discountPercentage}
                                 onChange={(e) => setDiscountPercentage(e.target.value)}
                             />
@@ -100,7 +102,7 @@ const Discount = () => {
                         className='payment-saveButton'
                         onClick={handleDiscount}
                     >
-                        Give Discount
+                        {t('Give Discount')}
                     </Button>
                 </Form>
 

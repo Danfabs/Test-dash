@@ -189,7 +189,7 @@ const Register = () => {
                         name="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        placeholder={t('email@swiftbeam.co OR @slotyourspase.com')}
+                        placeholder={t('@swiftbeam.co OR @slotyourspase.com')}
                         containerClass={'mb-3'}
                     />
                     <FormInput
@@ -215,10 +215,10 @@ const Register = () => {
                     <div className="mb-3">
                         <label>{t('Select Role')}</label>
                         <select className="form-select" onChange={(e) => handleRoleSelect(e.target.value)} value={selectedRole}>
-                            <option value="Sales Admin">Sales Admin</option>
-                            <option value="Sales Staff">Sales Staff</option>
-                            <option value="Technical Admin">Technical Admin</option>
-                            <option value="Technical Staff">Technical Staff</option>
+                            <option value="Sales Admin">{t('Sales Admin')}</option>
+                            <option value="Sales Staff">{t('Sales Staff')}</option>
+                            <option value="Technical Admin">{t('Technical Admin')}</option>
+                            <option value="Technical Staff">{t('Technical Staff')}</option>
                         </select>
                     </div>
 

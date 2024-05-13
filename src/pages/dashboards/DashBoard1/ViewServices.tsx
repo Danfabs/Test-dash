@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next';
+
 import { Badge, Card, Dropdown, Row, Table, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { usePageTitle } from '../../../hooks';
@@ -19,6 +21,7 @@ type ServicesListWithId = ServicesList & { id: string };
 
 
 const ViewServices = ({ servicesDetails }: ServicesDetailsProps) => {
+    const { t } = useTranslation();
     const navigate = useNavigate();
 
     const handleViewSlotsClick = (documentId: string) => {
@@ -28,11 +31,12 @@ const ViewServices = ({ servicesDetails }: ServicesDetailsProps) => {
     
     return (
         <div>
-            <h4 className="mt-0">Services</h4>
+            <h4 className="mt-0">{t('Services')}</h4>
             <Row>
                 {(servicesDetails || []).map((service, index) => {
                     const { location } = service;
                     const { spaceAmenities } = service;
+                    const {financialDetails} = service;
                     return (
                         <Col xl={4} key={index.toString()}>
                             <Card>
@@ -55,18 +59,18 @@ const ViewServices = ({ servicesDetails }: ServicesDetailsProps) => {
                                     <ul className="list-inline">
 
                                         <li className="list-inline-item me-4">
-                                            <h5 className="mb-2 fw-semibold">Slots Minimum Price</h5>
+                                            <h5 className="mb-2 fw-semibold">{t('Slots Minimum Price')}</h5>
                                             <p className="mb-0">{service.slotsMinPrice}</p>
                                         </li>
 
                                         <li className="list-inline-item me-4">
-                                            <h5 className="mb-2 fw-semibold">Minimum Reservation Fee</h5>
+                                            <h5 className="mb-2 fw-semibold">{t('Minimum Reservation Fee')}</h5>
                                             <p className="mb-0">{service.minimumReservationFee}</p>
                                         </li>
 
                                         {spaceAmenities && spaceAmenities.length > 0 && (
                                             <li className="list-inline-item me-4">
-                                                <h5 className="mb-2 fw-semibold">Space Amenities</h5>
+                                                <h5 className="mb-2 fw-semibold">{t('Space Amenities')}</h5>
                                                 {spaceAmenities.map((amenity, amenityIndex) => (
                                                     <i key={amenityIndex} className={`mdi mdi-${amenity.toLowerCase()}`}></i>
                                                 ))}
@@ -79,27 +83,54 @@ const ViewServices = ({ servicesDetails }: ServicesDetailsProps) => {
 
                                     <ul className="list-inline">
                                         <li className="list-inline-item me-4">
-                                            <h5 className="mb-2 fw-semibold">Country</h5>
+                                            <h5 className="mb-2 fw-semibold">{t('Country')}</h5>
                                             <p className="mb-0">{location.country}</p>
 
 
                                         </li>
                                         <li className="list-inline-item me-4">
 
-                                            <h5 className="mb-2 fw-semibold">City</h5>
+                                            <h5 className="mb-2 fw-semibold">{t('City')}</h5>
                                             <p className="mb-0">{location.city}</p>
                                         </li>
                                         <li className="list-inline-item">
 
-                                            <h5 className="mb-2 fw-semibold">Address</h5>
+                                            <h5 className="mb-2 fw-semibold">{t('Address')}</h5>
                                             <p className="mb-0">{location.address}</p>
                                         </li>
 
                                     </ul>
 
+                                      <ul className="list-inline">
+                                            <li className="list-inline-item me-4">
+
+                                                <h5 className="mb-2 fw-semibold">{t('Bank Details')}</h5>
+                                            </li>
+
+                                            <ul className="list-inline">
+                                                <li className="list-inline-item me-4">
+                                                    <h5 className="mb-2 fw-semibold">{t('Bank Name')}</h5>
+                                                    <p className="mb-0">{financialDetails.bankName}</p>
+                                                </li>
+
+                                                <li className="list-inline-item me-4">
+                                                    <h5 className="mb-2 fw-semibold">{t('Bank Branch')}</h5>
+                                                    <p className="mb-0">{financialDetails.bankBranch}</p>
+                                                </li>
+
+                                                <li className="list-inline-item me-4">
+                                                    <h5 className="mb-2 fw-semibold">{t('Account Number')}</h5>
+                                                    <p className="mb-0">{financialDetails.accountNumber}</p>
+                                                </li>
+
+                                            </ul>
+
+
+                                        </ul>
+
                                     <ul className="list-inline">
                                         <li className="list-inline-item">
-                                            <Button variant="success" onClick={() => { handleViewSlotsClick(service.id) }}>View Slots</Button>
+                                            <Button variant="success" onClick={() => { handleViewSlotsClick(service.id) }}>{t('View Slots')}</Button>
                                         </li>
                                     </ul>
 

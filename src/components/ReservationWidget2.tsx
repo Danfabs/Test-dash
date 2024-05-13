@@ -1,6 +1,8 @@
 import { Card, Dropdown } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+
 type ReservationWidget2Props = {
     title: string;
     color: string;
@@ -9,6 +11,7 @@ type ReservationWidget2Props = {
 };
 
 const ReservationWidget2 = ({ title, color, stats, subTitle }: ReservationWidget2Props) => {
+    const { t } = useTranslation();
     const [totalReservations, setTotalReservations] = useState<number | null>(null);
     const navigate = useNavigate();
 
@@ -44,14 +47,14 @@ const ReservationWidget2 = ({ title, color, stats, subTitle }: ReservationWidget
                         <i className="mdi mdi-dots-vertical"></i>
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
-                        <Dropdown.Item onClick={handleShowAllReservationClick}>Show All Reservations</Dropdown.Item>
+                        <Dropdown.Item onClick={handleShowAllReservationClick}>{t('Show All Reservations')}</Dropdown.Item>
                     </Dropdown.Menu>
                 </Dropdown>
 
                 <h4 className="header-title mt-0 mb-3">{title}</h4>
                 <div className="widget-detail-1 text-center">
                     <h2 className="fw-normal mb-1">{totalReservations}</h2>
-                    <p className="text-muted mb-1">{totalReservations === 1 ? 'reservation' : 'reservations'}</p>
+                    <p className="text-muted mb-1">{totalReservations === 1 ? t('reservation') : t('reservations')}</p>
                 </div>
 
             </Card.Body>

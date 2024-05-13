@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 // bootstrap
@@ -9,6 +10,7 @@ import { EndUsersList } from './endUsersTypes';
 import { usePageTitle } from '../../../hooks';
 
 const SingleUser = ({ users, setUsers }: { users: EndUsersList[]; setUsers: React.Dispatch<React.SetStateAction<EndUsersList[]>> }) => {
+    const { t } = useTranslation();
 
     const [filters, setFilters] = useState({
         searchText: '',
@@ -112,13 +114,13 @@ const SingleUser = ({ users, setUsers }: { users: EndUsersList[]; setUsers: Reac
 
     return (
         <div>
-            <h4 className="mt-0">Filter</h4>
+            <h4 className="mt-0">{t('Filter')}</h4>
             <Row className="mb-4" style={{width:'350px'}}>
                 <Col >
                     <Form>
                         <Form.Control
                             type="text"
-                            placeholder={`Filter by ${currentFilter}`}
+                            placeholder={t('Filter by')}
                             value={filters.searchText}
                             onChange={handleFilterChange}
                         />
@@ -127,16 +129,16 @@ const SingleUser = ({ users, setUsers }: { users: EndUsersList[]; setUsers: Reac
                                 handleFilterCriterionChange(e.target.value)
                             }
                         >
-                            <option value="Name">Name</option>
-                            <option value="Email Address">Emai Address</option>
-                            <option value="Mobile Number">Mobile Number</option>
-                            <option value="Birthdate">Birthdate</option>
-                            <option value="Gender">Gender</option>
+                            <option value="Name">{t('Name')}</option>
+                            <option value="Email Address">{t('Emai Address')}</option>
+                            <option value="Mobile Number">{t('Mobile Number')}</option>
+                            <option value="Birthdate">{t('Birthdate')}</option>
+                            <option value="Gender">{t('Gender')}</option>
                         </Form.Select>
                     </Form>
                 </Col>
             </Row>
-            <h4 className="mt-0">End Users</h4>
+            <h4 className="mt-0">{t('End Users')}</h4>
             <Row>
                 {filteredUsers.map((user, index) => (
                     // return (
@@ -157,11 +159,11 @@ const SingleUser = ({ users, setUsers }: { users: EndUsersList[]; setUsers: Reac
                                     <li className="list-inline-item me-4">
                                         {user.is_partner ? (
                                             <>
-                                                <Badge bg="success">Partner</Badge>
+                                                <Badge bg="success">{t('Partner')}</Badge>
                                             </>
                                         ) : (
                                             <>
-                                                <Badge bg="danger">Not Partner</Badge>
+                                                <Badge bg="danger">{t('Not Partner')}</Badge>
                                             </>
                                         )}
                                     </li>
@@ -182,21 +184,21 @@ const SingleUser = ({ users, setUsers }: { users: EndUsersList[]; setUsers: Reac
                                 <ul className="list-inline">
                                     {user.mobile_number && (
                                         <li className="list-inline-item me-3">
-                                            <h5 className="mb-2 fw-semibold">Mobile Number</h5>
+                                            <h5 className="mb-2 fw-semibold">{t('Mobile Number')}</h5>
                                             <p className="mb-0">{user.mobile_number}</p>
                                         </li>
                                     )}
 
                                     {user.email_address && (
                                         <li className="list-inline-item me-4">
-                                            <h5 className="mb-2 fw-semibold">Email</h5>
+                                            <h5 className="mb-2 fw-semibold">{t('Email')}</h5>
                                             <p className="mb-0">{user.email_address}</p>
                                         </li>
                                     )}
 
                                     {user.gender && (
                                         <li className="list-inline-item ">
-                                            <h5 className="mb-2 fw-semibold">Gender</h5>
+                                            <h5 className="mb-2 fw-semibold">{t('Gender')}</h5>
                                             <p className="mb-0">{user.gender}</p>
                                         </li>
                                     )}
@@ -205,7 +207,7 @@ const SingleUser = ({ users, setUsers }: { users: EndUsersList[]; setUsers: Reac
                                 <ul className="list-inline">
                                     {user.birthdate && (
                                         <li className="list-inline-item me-4">
-                                            <h5 className="mb-2 fw-semibold">Birthday</h5>
+                                            <h5 className="mb-2 fw-semibold">{t('Birthdate')}</h5>
                                             <p className="mb-0">{user.birthdate}</p>
                                         </li>
                                     )}
@@ -216,11 +218,11 @@ const SingleUser = ({ users, setUsers }: { users: EndUsersList[]; setUsers: Reac
                                 </h4>
 
                                 {user.status === 'Active' && (
-                                    <Button variant="secondary" onClick={() => suspendUser(user.id)}>Suspend User</Button>
+                                    <Button variant="secondary" onClick={() => suspendUser(user.id)}>{t('Suspend User')}</Button>
                                 )}
 
                                 {user.status === 'Suspended' && (
-                                    <Button variant="success" onClick={() => reActiveUser(user.id)}>Reactivate User</Button>
+                                    <Button variant="success" onClick={() => reActiveUser(user.id)}>{t('Reactivate User')}</Button>
                                 )}
                             </Card.Body>
                         </Card>
@@ -235,7 +237,7 @@ const SingleUser = ({ users, setUsers }: { users: EndUsersList[]; setUsers: Reac
 const Users = () => {
     const [users, setUsers] = useState<EndUsersList[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
-
+    const { t } = useTranslation();
     useEffect(() => {
         async function fetchData() {
             await fetch(
@@ -275,7 +277,7 @@ const Users = () => {
         <>
             {loading ? ( // Show loading spinner if loading is true
                 <Spinner animation="border" role="status">
-                    <span className="visually-hidden">Loading...</span>
+                    <span className="visually-hidden">{t('Loading...')}</span>
                 </Spinner>
             ) : (
                 <SingleUser users={users} setUsers={setUsers} />

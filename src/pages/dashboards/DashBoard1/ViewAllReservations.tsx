@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 //States
 import { useEffect, useState } from 'react';
@@ -12,16 +13,17 @@ import cardImg from '../../../assets/images/gallery/1.jpg';
 
 
 const ViewAllReservations = ({ reservations }: { reservations: ReservationsList[] | null}) => {
+    const { t } = useTranslation();
     return (
         <div>
-            <h4 className="mt-0">Reservations</h4>
+            <h4 className="mt-0">{t('Reservations')}</h4>
             {reservations === null ? (
                 <Spinner animation="border" role="status">
-                    <span className="visually-hidden">Loading...</span>
+                    <span className="visually-hidden">{t('Loading...')}</span>
                 </Spinner>
             ) : (
                 reservations.length === 0 ? ( 
-                    <p>No Reservations available</p>
+                    <p>{t('No Reservations available')}</p>
                 ) : (
                     <Row>
                         {reservations.map((reservation, index) => {
@@ -53,23 +55,23 @@ const ViewAllReservations = ({ reservations }: { reservations: ReservationsList[
                                             <ul className="list-inline">
                                                 <li className="list-inline-item me-4">
 
-                                                    <h5 className="mb-2 fw-semibold">Booking Details</h5>
+                                                    <h5 className="mb-2 fw-semibold">{t('Booking Details')}</h5>
                                                 </li>
 
                                                 <ul className="list-inline">
                                                     <li className="list-inline-item me-4">
-                                                        <h5 className="mb-2 fw-semibold">Date</h5>
+                                                        <h5 className="mb-2 fw-semibold">{t('Date')}</h5>
                                                         <p className="mb-0">{reservation.bookedDate}</p>
                                                     </li>
 
                                                     <li className="list-inline-item me-4">
-                                                        <h5 className="mb-2 fw-semibold">Time</h5>
+                                                        <h5 className="mb-2 fw-semibold">{t('Time')}</h5>
                                                         <p className="mb-0">{reservation.bookedTime}</p>
                                                     </li>
 
 
                                                     <li className="list-inline-item me-4">
-                                                        <h5 className="mb-2 fw-semibold">location</h5>
+                                                        <h5 className="mb-2 fw-semibold">{t('location')}</h5>
                                                         <p className="mb-0">{location && location.address} </p>
                                                     </li>
 
@@ -78,25 +80,25 @@ const ViewAllReservations = ({ reservations }: { reservations: ReservationsList[
                                             </ul>
                                             <ul className="list-inline">
                                                 <li className="list-inline-item me-4">
-                                                    <h5 className="mb-2 fw-semibold">Payment Details</h5>
+                                                    <h5 className="mb-2 fw-semibold">{t('Payment Details')}</h5>
                                                 </li>
                                                 <ul className="list-inline">
                                                     {paymentDetails && (
                                                         <>
                                                             <li className="list-inline-item me-4">
-                                                                <h5 className="mb-2 fw-semibold">Slot Fee</h5>
+                                                                <h5 className="mb-2 fw-semibold">{t('Slot Fee')}</h5>
                                                                 <p className="mb-0">{paymentDetails.slotFee}</p>
                                                             </li>
                                                             <li className="list-inline-item me-4">
-                                                                <h5 className="mb-2 fw-semibold">Tax</h5>
+                                                                <h5 className="mb-2 fw-semibold">{t('Tax')}</h5>
                                                                 <p className="mb-0">{paymentDetails.tax}</p>
                                                             </li>
                                                             <li className="list-inline-item me-4">
-                                                                <h5 className="mb-2 fw-semibold">Voucher</h5>
+                                                                <h5 className="mb-2 fw-semibold">{t('Voucher')}</h5>
                                                                 <p className="mb-0">{paymentDetails.voucher}</p>
                                                             </li>
                                                             <li className="list-inline-item me-4">
-                                                                <h5 className="mb-2 fw-semibold">Total Price</h5>
+                                                                <h5 className="mb-2 fw-semibold">{t('Total Price')}</h5>
                                                                 <p className="mb-0">{paymentDetails.total} {paymentDetails.currency}</p>
                                                             </li>
                                                         </>

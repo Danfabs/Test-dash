@@ -1,6 +1,6 @@
 import { Col, Row } from 'react-bootstrap';
 import React, { useState, useEffect } from 'react';
-
+import { useTranslation } from 'react-i18next';
 // component
 import PlacesWidget1 from '../../../components/PlacesWidget1';
 import ReservationWidget2 from '../../../components/ReservationWidget2';
@@ -8,6 +8,9 @@ import ReservationInfoWidget4 from '../../../components/ReservationInfoWidget4';
 import AmountWidget3 from '../../../components/AmountWidget3';
 const Statistics = () => {
     const [totalPrice, setTotalPrice] = useState<number | null>(null);
+    const { t } = useTranslation();
+
+
     useEffect(() => {
         const fetchTotalPrice = async () => {
             try {
@@ -32,7 +35,7 @@ const Statistics = () => {
         <Row className="no-gutters">
             <Col className="mx-auto">
                 <PlacesWidget1
-                    title="Spaces"
+                    title={t('Spaces')}
                     // data={58}
                     stats={256}
                     color={'#f05050'}
@@ -42,21 +45,21 @@ const Statistics = () => {
            
             <Col  className="mx-auto">
                 <ReservationWidget2
-                    title="Total Reservations"
+                    title={t('Total Reservations')}
                     color={'#ffbd4a'}
                     // data={80}
                     stats={256}
-                    subTitle="Reservations"
+                    subTitle={t('Reservations')}
                 />
             </Col>
             <Col  className="mx-auto">
                 <AmountWidget3
                     variant="success"
-                    title="Total Amount"
+                    title={t('Total Amount')}
                     trendValue="12%"
                     trendIcon="mdi mdi-trending-up"
                      stats={totalPrice !== null ? totalPrice : 0}
-                    subTitle="OMR"
+                    subTitle={t('OMR')}
                     progress={77}
                 />
             </Col>

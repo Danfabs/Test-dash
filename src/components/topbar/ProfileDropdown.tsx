@@ -8,6 +8,7 @@ import { useToggle } from '../../hooks/';
 
 // types
 import { ProfileMenu } from '../../layouts/types';
+import { useTranslation } from 'react-i18next';
 
 type ProfileDropdownProps = {
     userImage: string;
@@ -17,7 +18,7 @@ type ProfileDropdownProps = {
 
 const ProfileDropdown = ({ userImage, username, menuItems }: ProfileDropdownProps) => {
     const [isOpen, show, hide] = useToggle();
-
+    const { t } = useTranslation();
     /*
      * toggle apps-dropdown
      */
@@ -43,7 +44,7 @@ const ProfileDropdown = ({ userImage, username, menuItems }: ProfileDropdownProp
             <Dropdown.Menu align="end" className="profile-dropdown">
                 <div onClick={toggleDropdown}>
                     <Dropdown.Header className="noti-title">
-                        <h6 className="text-overflow m-0">Welcome !</h6>
+                        <h6 className="text-overflow m-0">{t('Welcome!')}</h6>
                     </Dropdown.Header>
 
                     {(menuItems || []).map((menu, i) => {

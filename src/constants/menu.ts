@@ -30,7 +30,7 @@ const SUPER_ADMIN_MENU_ITEMS: MenuItemTypes[] = [
     },
     {
         key: 'troubletickets',
-        label: 'trouble tickets',
+        label: 'Trouble Tickets',
         isTitle: false,
         icon: 'mdi mdi-view-dashboard-outline',
         url: '/apps/troubletickets',

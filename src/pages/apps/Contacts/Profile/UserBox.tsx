@@ -58,19 +58,19 @@ const UserBox = () => {
                
                 <div className="text-start">
                     <p className="text-muted font-13">
-                        <strong>Full Name :</strong> <span className="ms-2">{user.firstName} {user.lastName}</span>
+                        <strong>Full Name:</strong> <span className="ms-2">{user.firstName} {user.lastName}</span>
                     </p>
 
                     <p className="text-muted font-13">
-                        <strong>Mobile :</strong>
+                        <strong>Mobile:</strong>
                         <span className="ms-2">{user.mobile_number}</span>
                     </p>
 
                     <p className="text-muted font-13">
-                        <strong>Email :</strong> <span className="ms-2">{user.email}</span>
+                        <strong>Email:</strong> <span className="ms-2">{user.email}</span>
                     </p>
                     <p className="text-muted font-13">
-                        <strong>Role :</strong> <span className="ms-2">{user.role} </span>
+                        <strong>Role:</strong> <span className="ms-2">{user.role} </span>
                     </p>
 
                     {/* <p className="text-muted font-13">

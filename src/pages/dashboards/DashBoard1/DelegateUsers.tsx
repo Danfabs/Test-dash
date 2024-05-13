@@ -1,5 +1,5 @@
 import { Button, Card, Dropdown, Row, Col , Spinner } from 'react-bootstrap';
-
+import { useTranslation } from 'react-i18next';
 import Avatar1 from '../../../assets/images/users/user-3.jpg'
 import { useEffect, useState } from 'react';
 import { EndUsersList } from '../../apps/EndUsers/endUsersTypes';
@@ -7,6 +7,7 @@ import { EndUsersList } from '../../apps/EndUsers/endUsersTypes';
 
 
 export default function DelegateUsers() {
+    const { t } = useTranslation();
     const [users, setUsers] = useState<EndUsersList[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
 
@@ -31,11 +32,11 @@ console.log("users: ",users)
 
     return (
         <div>
-             <h4 className="mt-0">Users</h4>
+             <h4 className="mt-0">{t('Users')}</h4>
         <>
         {loading ? ( // Display spinner if data is still loading
                 <Spinner animation="border" role="status">
-                    <span className="visually-hidden">Loading...</span>
+                    <span className="visually-hidden">{t('Loading...')}</span>
                 </Spinner>
             ) : (
             <Row>
@@ -60,27 +61,27 @@ console.log("users: ",users)
                                     <Card.Body className="project-box">
                                         <div className="text-start">
                                             <p className="text-muted font-13">
-                                                <strong>Full Name :
+                                                <strong>{t('Full Name')}
                                                 </strong> <span className="ms-2">
                                                     {user.firstName} {user.lastName}
                                                 </span>
                                             </p>
 
                                             <p className="text-muted font-13">
-                                                <strong>Mobile :</strong>
+                                                <strong>{t('Mobile')}</strong>
                                                 <span className="ms-2">
                                                     {user.mobile_number}
                                                 </span>
                                             </p>
 
                                             <p className="text-muted font-13">
-                                                <strong>Email :</strong> <span className="ms-2">
+                                                <strong>{t('Email')}</strong> <span className="ms-2">
                                                     {user.email_address}
                                                 </span>
                                             </p>
 
                                             <p className="text-muted font-13">
-                                                <strong>User Role :</strong> <span className="ms-2">
+                                                <strong>{t('User Role')}</strong> <span className="ms-2">
                                                     {user.role}
                                                 </span>
                                             </p>

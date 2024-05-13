@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { Badge, Card, Dropdown, Row, Table, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { usePageTitle } from '../../../hooks';
@@ -5,10 +6,7 @@ import Button from 'react-bootstrap/Button';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { projectFirestore } from '../../../firebase';
 
-//image
-import cardImg from '../../../assets/images/gallery/1.jpg';
 //types
 import { SlotsList } from '../../apps/Slots/slotsTypes';
 
@@ -19,6 +17,7 @@ type SlotsDetailsProps = {
 type SlotsListWithId = SlotsList & { id: string };
 
 const ViewSlots = ({ slots }: SlotsDetailsProps) => {
+    const { t } = useTranslation();
     const navigate = useNavigate();
 
     const handleViewReservationClick = (slotId: string) => {
@@ -27,9 +26,9 @@ const ViewSlots = ({ slots }: SlotsDetailsProps) => {
 
     return (
         <div>
-            <h4 className="mt-0">Slots</h4>
+            <h4 className="mt-0">{t('Slots')}</h4>
             {slots.length === 0 ? (
-                <p>No slot available</p>
+                <p>{t('No slot available')}</p>
             ) : (
                 <Row>
                     {(slots || []).map((slot, index) => {
@@ -56,9 +55,9 @@ const ViewSlots = ({ slots }: SlotsDetailsProps) => {
                                         {/* basePricing */}
                                         <ul className="list-inline">
                                             <li className="list-inline-item me-4">
-                                                <p className="mb-2 fw-semibold"> Starts at &nbsp;
-                                                    {basePricing.price} OMR for {basePricing.minimumDuration}&nbsp;
-                                                    {basePricing.minimumDuration > 1 ? 'hours' : 'hour'}
+                                                <p className="mb-2 fw-semibold">{t('Starts at')} &nbsp;
+                                                    {basePricing.price} {t('OMR for')} {basePricing.minimumDuration}&nbsp;
+                                                    {basePricing.minimumDuration > 1 ? t('hours') : t('hour')}
                                                 </p>
                                             </li>
                                         </ul>
@@ -67,24 +66,28 @@ const ViewSlots = ({ slots }: SlotsDetailsProps) => {
                                         <ul className="list-inline">
 
                                             <li className="list-inline-item me-4">
+                                            <h5 className="mb-2 fw-semibold">{t('Slot Description')}</h5>
                                                 <p className="mb-0">
                                                     {slot.slotDescription}
                                                 </p>
                                             </li>
 
                                             <li className="list-inline-item me-4">
+                                            <h5 className="mb-2 fw-semibold">{t('Seats Available')}</h5>
                                                 <p className="mb-0">
                                                     {slot.seatsAvailable}
                                                 </p>
                                             </li>
 
                                             <li className="list-inline-item me-4">
+                                            <h5 className="mb-2 fw-semibold">{t('Scheme')}</h5>
                                                 <p className="mb-0">
                                                     {slot.scheme}
                                                 </p>
                                             </li>
 
                                             <li className="list-inline-item me-4">
+                                            <h5 className="mb-2 fw-semibold">{t('Makeup Buffer')}</h5>
                                                 <p className="mb-0">
                                                     {slot.makeupBuffer}
                                                 </p>
@@ -94,7 +97,7 @@ const ViewSlots = ({ slots }: SlotsDetailsProps) => {
                                         {/* View Reservations button */}
                                         <ul className="list-inline">
                                             <li className="list-inline-item">
-                                                <Button variant="success" onClick={() => { handleViewReservationClick(slot.documentId) }}>View Reservations</Button>
+                                                <Button variant="success" onClick={() => { handleViewReservationClick(slot.documentId) }}>{t('View Reservations')}</Button>
                                             </li>
                                         </ul>
                                     </Card.Body>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Row, Col, Card, Form, Button, Table } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 import { FaPlus } from 'react-icons/fa'; // Import plus icon from react-icons library
 import Swal from 'sweetalert2';
 import '../../../assets/css/generalStyle.css';
@@ -7,6 +8,7 @@ import SkillsInterest from './SkillsInterest';
 import ExperienceInterest from './ExperienceInterest';
 
 const Interests = () => {
+    const { t } = useTranslation();
     const [interests, setInterests] = useState(['']);
     const [interestsData, setInterestsData] = useState<string[]>([]);
 
@@ -115,12 +117,12 @@ const Interests = () => {
             <Card>
                 <Card.Body >
                     <div dir="ltr" className='card-div'>
-                        <h4 className="header-title mb-4 payment-cardBody">Add Spaces Interests</h4>
+                        <h4 className="header-title mb-4 payment-cardBody">{t('Add Spaces Interests')}</h4>
                         <Form>
                             {interests.map((interest, index) => (
                                 <Form.Group as={Row} className="mb-3" key={index}>
                                     <Form.Label htmlFor={`interest${index}`} column md={3}>
-                                        Interest Name
+                                        {t('Interest Name')}
                                     </Form.Label>
                                     <Col md={4}>
                                         <Form.Control
@@ -149,7 +151,7 @@ const Interests = () => {
                                     className='add-interest-button'
                                     onClick={handleAddInterest}
                                 >
-                                    Add Space Interests
+                                    {t('Add Space Interests')}
                                 </Button>
                             </div>
                         </Form>
@@ -158,7 +160,7 @@ const Interests = () => {
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Space Interests</th>
+                                        <th>{t('Space Interests')}</th>
 
                                     </tr>
                                 </thead>

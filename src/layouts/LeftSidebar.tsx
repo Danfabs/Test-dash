@@ -14,12 +14,16 @@ import AppMenu from './Menu';
 // images
 import profileImg from '../assets/images/users/user-1.jpg';
 import { useUser } from '../hooks';
+import { useTranslation } from 'react-i18next';
+
+
 /* user box */
 const UserBox = () => {
+    const { t } = useTranslation();
     // get the profilemenu
     const ProfileMenus = [
         {
-            label: 'My Account',
+            label: t('My Account'),
             icon: 'fe-user',
             redirectTo: '/apps/contacts/profile',
         },
@@ -28,11 +32,11 @@ const UserBox = () => {
             icon: 'fe-settings',
             redirectTo: '#',
         },
-        {
-            label: 'Lock Screen',
-            icon: 'fe-lock',
-            redirectTo: '/auth/lock-screen',
-        },
+        // {
+        //     label: 'Lock Screen',
+        //     icon: 'fe-lock',
+        //     redirectTo: '/auth/lock-screen',
+        // },
         {
             label: 'Logout',
             icon: 'fe-log-out',

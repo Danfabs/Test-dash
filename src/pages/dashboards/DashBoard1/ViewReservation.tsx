@@ -1,4 +1,5 @@
 import { Badge, Card, Row, Col } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { usePageTitle } from '../../../hooks';
 import { useParams } from 'react-router-dom';
@@ -15,6 +16,7 @@ type ReservationsDetailsProps = {
 };
 
 const ViewReservation = ({ reservations, setReservations }: ReservationsDetailsProps) => {
+    const { t } = useTranslation();
     const { slotId } = useParams();
 
 
@@ -88,9 +90,9 @@ const ViewReservation = ({ reservations, setReservations }: ReservationsDetailsP
 
     return (
         <div>
-            <h4 className="mt-0">Reservations</h4>
+            <h4 className="mt-0">{t('Reservations')}</h4>
             {(!reservations || reservations.length === 0) ? (
-                <p>No Reservations available</p>
+                <p>{t('No Reservations available')}</p>
             ) : (
                 <Row>
                     {(reservations || []).map((reservation, index) => {
@@ -121,23 +123,23 @@ const ViewReservation = ({ reservations, setReservations }: ReservationsDetailsP
                                         <ul className="list-inline">
                                             <li className="list-inline-item me-4">
 
-                                                <h5 className="mb-2 fw-semibold">Booking Details</h5>
+                                                <h5 className="mb-2 fw-semibold">{t('Booking Details')}</h5>
                                             </li>
 
                                             <ul className="list-inline">
                                                 <li className="list-inline-item me-4">
-                                                    <h5 className="mb-2 fw-semibold">Date</h5>
+                                                    <h5 className="mb-2 fw-semibold">{t('Date')}</h5>
                                                     <p className="mb-0">{reservation.bookedDate?reservation.bookedDate : '-'}</p>
                                                 </li>
 
                                                 <li className="list-inline-item me-4">
-                                                    <h5 className="mb-2 fw-semibold">Time</h5>
+                                                    <h5 className="mb-2 fw-semibold">{t('Time')}</h5>
                                                     <p className="mb-0">{reservation.bookedTime?reservation.bookedTime : '-'}</p>
                                                 </li>
 
 
                                                 <li className="list-inline-item me-4">
-                                                    <h5 className="mb-2 fw-semibold">location</h5>
+                                                    <h5 className="mb-2 fw-semibold">{t('location')}</h5>
                                                     <p className="mb-0">{location ? location.address : '-'} </p>
 
                                                 </li>
@@ -149,69 +151,35 @@ const ViewReservation = ({ reservations, setReservations }: ReservationsDetailsP
                                         <ul className="list-inline">
                                             <li className="list-inline-item me-4">
 
-                                                <h5 className="mb-2 fw-semibold">Payment Details</h5>
+                                                <h5 className="mb-2 fw-semibold">{t('Payment Details')}</h5>
                                             </li>
 
                                             <ul className="list-inline">
                                                 <li className="list-inline-item me-4">
-                                                    <h5 className="mb-2 fw-semibold">Slot Fee</h5>
+                                                    <h5 className="mb-2 fw-semibold">{t('Slot Fee')}</h5>
                                                     <p className="mb-0">
                                                     {paymentDetails ? paymentDetails.slotFee : '-'}
                                                     </p>
                                                 </li>
 
                                                 <li className="list-inline-item me-4">
-                                                    <h5 className="mb-2 fw-semibold">Tax</h5>
+                                                    <h5 className="mb-2 fw-semibold">{t('Tax')}</h5>
                                                     <p className="mb-0">{paymentDetails?paymentDetails.tax : '-'}</p>
                                                 </li>
 
                                                 <li className="list-inline-item me-4">
-                                                    <h5 className="mb-2 fw-semibold">Voucher</h5>
+                                                    <h5 className="mb-2 fw-semibold">{t('Voucher')}</h5>
                                                     <p className="mb-0">{paymentDetails? paymentDetails.voucher : '-'}</p>
                                                 </li>
 
 
                                                 <li className="list-inline-item me-4">
-                                                    <h5 className="mb-2 fw-semibold">Total Price</h5>
+                                                    <h5 className="mb-2 fw-semibold">{t('Total Price')}</h5>
                                                     <p className="mb-0">{paymentDetails?paymentDetails.total : '-'} {paymentDetails?.currency}</p>
                                                 </li>
 
                                             </ul>
-
                                         </ul>
-
-                                        <ul className="list-inline">
-                                            {reservation.status === 'Confirmed' && (
-                                                <li className="list-inline-item me-4">
-                                                    <Button variant="danger"
-                                                        onClick={() => handleReject(reservation.id)}
-                                                    >Reject</Button>
-                                                </li>
-                                            )}
-                                            {reservation.status === 'Rejected' && (
-                                                <li className="list-inline-item me-4">
-                                                    <Button variant="success"
-                                                        onClick={() => handleAccept(reservation.id)}>
-                                                        Accept
-                                                    </Button>
-                                                </li>
-                                            )}
-
-                                            {reservation.status === 'Pending' && (
-                                                <li className="list-inline-item me-4">
-                                                    <Button variant="danger"
-                                                        onClick={() => handleReject(reservation.id)}>
-                                                        Reject
-                                                    </Button>
-                                                    <Button variant="success"
-                                                        onClick={() => handleAccept(reservation.id)}>
-                                                        Accept
-                                                    </Button>
-                                                </li>
-                                            )}
-                                        </ul>
-
-
                                     </Card.Body>
                                 </Card>
                             </Col>

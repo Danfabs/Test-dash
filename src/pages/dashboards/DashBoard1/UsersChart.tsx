@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-
+import { useTranslation } from 'react-i18next';
 import { Card, } from 'react-bootstrap';
 import Chart from 'react-apexcharts';
 import { ApexOptions } from 'apexcharts';
@@ -7,6 +7,7 @@ import '../../../assets/css/generalStyle.css';
 
 
 const UsersChart = () => {
+    const { t } = useTranslation();
     const [providerServiceCount, setProviderServiceCount] = useState(0);
     const [customerCount, setCustomerCount] = useState(0);
     const [staffCount, setStaffCount] = useState(0);
@@ -101,7 +102,7 @@ const UsersChart = () => {
                 useSeriesColors: true,
             },
         },
-        labels: ['Customer', 'Service Provider ', 'Staff'],
+        labels: [t('Customer'), t('Service Provider'), t('Staff')],
         tooltip: {
             enabled: false,
         },
@@ -126,7 +127,7 @@ const UsersChart = () => {
                     </Dropdown.Menu>
                 </Dropdown> */}
                     <div dir="ltr" className='card-div'>
-                        <h4 className="header-title mb-3">Users Report</h4>
+                        <h4 className="header-title mb-3">{t('Users Report')}</h4>
                         <Chart
                             options={apexOpts}
                             series={apexData}

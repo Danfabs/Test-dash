@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Row, Col, Card, Form, Button, Table } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 import { FaPlus } from 'react-icons/fa'; // Import plus icon from react-icons library
 import Swal from 'sweetalert2';
 import '../../../assets/css/generalStyle.css';
 
 const SkillsInterest = () => {
+    const { t } = useTranslation();
     const [skillsInterest, setSkillsInterest] = useState(['']);
     const [skillsInterestData, setSkillsInterestData] = useState<string[]>([]);
 
@@ -110,12 +112,12 @@ const SkillsInterest = () => {
             <Card>
                 <Card.Body >
                     <div dir="ltr" className='card-div'>
-                        <h4 className="header-title mb-4 payment-cardBody">Add Skills Interests</h4>
+                        <h4 className="header-title mb-4 payment-cardBody">{t('Add Skills Interests')}</h4>
                         <Form>
                             {skillsInterest.map((skillsInterest, index) => (
                                 <Form.Group as={Row} className="mb-3" key={index}>
                                     <Form.Label htmlFor={`skillsInterest${index}`} column md={3}>
-                                        Skills Interest
+                                    {t('Skills Interest')}
                                     </Form.Label>
                                     <Col md={4}>
                                         <Form.Control
@@ -144,7 +146,7 @@ const SkillsInterest = () => {
                                     className='add-interest-button'
                                 onClick={handleAddInterest}
                                 >
-                                    Add Skills Interests
+                                    {t('Add Skills Interests')}
                                 </Button>
                             </div>
                         </Form>
@@ -153,7 +155,7 @@ const SkillsInterest = () => {
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Skills Interests</th>
+                                        <th>{t('Skills Interests')}</th>
 
                                     </tr>
                                 </thead>

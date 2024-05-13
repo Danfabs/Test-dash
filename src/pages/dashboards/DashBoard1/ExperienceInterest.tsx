@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Row, Col, Card, Form, Button, Table } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 import { FaPlus } from 'react-icons/fa'; // Import plus icon from react-icons library
 import Swal from 'sweetalert2';
 import '../../../assets/css/generalStyle.css';
 
 const ExperienceInterest = () => {
+    const { t } = useTranslation();
     const [experienceInterests, setExperienceInterests] = useState(['']);
     const [experienceInterestData, setExperienceInterestData] = useState<string[]>([]);
 
@@ -111,12 +113,12 @@ const ExperienceInterest = () => {
             <Card>
                 <Card.Body >
                     <div dir="ltr" className='card-div'>
-                        <h4 className="header-title mb-4 payment-cardBody">Add Experience Interest</h4>
+                        <h4 className="header-title mb-4 payment-cardBody">{t('Add Experience Interest')}</h4>
                         <Form>
                             {experienceInterests.map((experienceInterest, index) => (
                                 <Form.Group as={Row} className="mb-3" key={index}>
                                     <Form.Label htmlFor={`experienceInterest${index}`} column md={3}>
-                                        Experience Interest
+                                        {t('Experience Interest')}
                                     </Form.Label>
                                     <Col md={4}>
                                         <Form.Control
@@ -145,7 +147,7 @@ const ExperienceInterest = () => {
                                     className='add-interest-button'
                                 onClick={handleAddExperienceInterest}
                                 >
-                                    Add Experience Interests
+                                    {t('Add Experience Interests')}
                                 </Button>
                             </div>
                         </Form>
@@ -154,7 +156,7 @@ const ExperienceInterest = () => {
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Experience Interests</th>
+                                        <th>{t('Experience Interests')}</th>
 
                                     </tr>
                                 </thead>

@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';
 import { Badge, Card, Dropdown, Row, Table, Col, Spinner } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
@@ -13,6 +14,7 @@ type UsersDetailsProps = {};
 
 
 const ProviderServices = (props: UsersDetailsProps) => {
+    const { t } = useTranslation();
     const [usersDetails, setUsersDetails] = useState<ProviderList[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
 
@@ -107,10 +109,10 @@ const ProviderServices = (props: UsersDetailsProps) => {
 
     return (
         <div>
-            <h4 className="mt-0">Service Providers</h4>
+            <h4 className="mt-0">{t('Service Providers')}</h4>
             {loading ? ( // Display spinner if data is still loading
                 <Spinner animation="border" role="status">
-                    <span className="visually-hidden">Loading...</span>
+                    <span className="visually-hidden">{t('Loading...')}</span>
                 </Spinner>
             ) : (
                 <Row>
@@ -139,8 +141,8 @@ const ProviderServices = (props: UsersDetailsProps) => {
                                                         user.status === 'Rejected' ? 'danger' :
                                                             'secondary'
                                                 }>
-                                                    {user.status === 'Accepted' ? 'Accepted' :
-                                                        user.status === 'Rejected' ? 'Rejected' :
+                                                    {user.status === 'Accepted' ? t('Accepted') :
+                                                        user.status === 'Rejected' ? t('Rejected') :
                                                             'Pending'}
                                                 </Badge>
                                             </li>
@@ -150,11 +152,11 @@ const ProviderServices = (props: UsersDetailsProps) => {
                                             <li className="list-inline-item me-4">
                                                 {user.is_partner ? (
                                                     <>
-                                                        <Badge bg="success">Partner</Badge>
+                                                        <Badge bg="success">{t('Partner')}</Badge>
                                                     </>
                                                 ) : (
                                                     <>
-                                                        <Badge bg="danger">Not Partner</Badge>
+                                                        <Badge bg="danger">{t('Not Partner')}</Badge>
                                                     </>
                                                 )}
                                             </li>
@@ -162,7 +164,7 @@ const ProviderServices = (props: UsersDetailsProps) => {
 
                                         <Link to={`../ViewServices/${user.id}`}>
                                             {/* <Link to="../ViewServices"> */}
-                                            Space Name
+                                            {t('Space Name')}
                                         </Link>
 
 
@@ -170,48 +172,48 @@ const ProviderServices = (props: UsersDetailsProps) => {
                                         <ul className="list-inline">
 
                                             <li className="list-inline-item me-4">
-                                                <h5 className="mb-2 fw-semibold">Gender</h5>
+                                                <h5 className="mb-2 fw-semibold">{t('Gender')}</h5>
                                                 <p className="mb-0">{user.gender}</p>
                                             </li>
 
                                             <li className="list-inline-item me-4">
-                                                <h5 className="mb-2 fw-semibold">Phone Number</h5>
+                                                <h5 className="mb-2 fw-semibold">{t('Phone Number')}</h5>
                                                 <p className="mb-0">{user.mobile_number}</p>
                                             </li>
 
                                             <li className="list-inline-item me-4">
-                                                <h5 className="mb-2 fw-semibold">Owner Email</h5>
+                                                <h5 className="mb-2 fw-semibold">{t('Owner Email')}</h5>
                                                 <p className="mb-0">{user.email_address}</p>
                                             </li>
 
                                         </ul>
 
-                                        <ul className="list-inline">
+                                        {/* <ul className="list-inline">
                                             <li className="list-inline-item me-4">
 
-                                                <h5 className="mb-2 fw-semibold">Bank Details</h5>
+                                                <h5 className="mb-2 fw-semibold">{t('Bank Details')}</h5>
                                             </li>
 
                                             <ul className="list-inline">
                                                 <li className="list-inline-item me-4">
-                                                    <h5 className="mb-2 fw-semibold">Bank Name</h5>
+                                                    <h5 className="mb-2 fw-semibold">{t('Bank Name')}</h5>
                                                     <p className="mb-0">Muscat</p>
                                                 </li>
 
                                                 <li className="list-inline-item me-4">
-                                                    <h5 className="mb-2 fw-semibold">Bank Branch</h5>
+                                                    <h5 className="mb-2 fw-semibold">{t('Bank Branch')}</h5>
                                                     <p className="mb-0">Muscat</p>
                                                 </li>
 
                                                 <li className="list-inline-item me-4">
-                                                    <h5 className="mb-2 fw-semibold">Account Number</h5>
+                                                    <h5 className="mb-2 fw-semibold">{t('Account Number')}</h5>
                                                     <p className="mb-0">143 152 153 158</p>
                                                 </li>
 
                                             </ul>
 
 
-                                        </ul>
+                                        </ul> */}
 
                                         <ul>
 
@@ -224,13 +226,13 @@ const ProviderServices = (props: UsersDetailsProps) => {
                                                         variant="success"
                                                         onClick={() => acceptServiceProvider(user.id)}
                                                     >
-                                                        Accept
+                                                        {t('Accept')}
                                                     </Button>
                                                     <Button
                                                         onClick={() => rejectServiceProvider(user.id)}
                                                         variant="danger"
                                                     >
-                                                        Reject
+                                                        {t('Reject')}
                                                     </Button>
                                                 </li>
                                             )}
@@ -241,7 +243,7 @@ const ProviderServices = (props: UsersDetailsProps) => {
                                                         onClick={() => rejectServiceProvider(user.id)}
                                                         variant="danger"
                                                     >
-                                                        Reject
+                                                        {t('Reject')}
                                                     </Button>
                                                 </li>
                                             )}
@@ -252,7 +254,7 @@ const ProviderServices = (props: UsersDetailsProps) => {
                                                         variant="success"
                                                         onClick={() => acceptServiceProvider(user.id)}
                                                     >
-                                                        Accept
+                                                        {t('Accept')}
                                                     </Button>
                                                 </li>
                                             )}
